@@ -1,0 +1,45 @@
+.tabs {
+    border-bottom: 1px solid #858484;
+    margin-top: 80px;
+}
+
+.tabs a {
+    margin-left: 50px;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.tabs a:nth-child(1) {
+    margin-left: 100px;
+    color: #000;
+}
+
+.tabs a:last-child {
+    color: #ff0000;
+}
+
+.item-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    margin: 60px 30px;
+}
+
+.item {
+    text-align: center;
+}
+
+.item-image img {
+    width: 300px;
+    height: 300px;
+    border-radius: 5px;
+}
+
+.item-name {
+    text-align: left;
+    font-size: 18px;
+    padding: 10px;
+}
