@@ -52,7 +52,7 @@ class ProfileController extends Controller
        $profile->fill($request->only(['name']));
        
        if ($request->hasFile('img')) {
-           $path = $request->file('img')->store('public/image/profile_images');
+           $path = $request->file('img')->store('public/profile_images');
            $profile->image = basename($path);
        }
        $profile->save();

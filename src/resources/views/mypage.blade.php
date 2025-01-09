@@ -34,8 +34,8 @@
                     <div class="item-image">
                     <a href="{{ route('item.detail', ['item_id' => $item->id]) }}">
                         <img src="{{ $item->user->profile->image 
-                            ? asset('storage/app/public/image/profile_images/' . $item->user->profile->image) 
-                            : asset('storage/app/public/image/default.png') }}" 
+                            ? asset('storage/app/public/profile_images/' . $item->user->profile->image) 
+                            : asset('storage/app/public/profile_images/default.png') }}" 
                      alt="{{ $item->name }}">
                     </a>
                 </div>
