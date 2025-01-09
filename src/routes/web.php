@@ -27,19 +27,28 @@ Route::get('/item/{item_id}', [ItemController::class, 'itemDetail'])->name('item
 Route::post('/item/{item}/like', [ItemController::class, 'toggleLike'])->name('item.like');
 Route::post('/item/{item_id}/comments', [ItemController::class, 'comment'])->name('item.comment');
 
-// プロフィール作成が必須のルートにのみ has.profile ミドルウェアを適用
+// プロフィール設定が完了していない場合、リダイレクトするミドルウェアを適用
 Route::middleware(['auth', 'has.profile'])->group(function () {
     Route::get('/mypage', [ProfileController::class, 'index'])->name('mypage');
-    Route::get('/mypage?page=buy', [ProfileController::class, 'purchasedItem'])->name('mypage.purchased');
-    Route::get('/mypage?page=sell', [ProfileController::class, 'listItem'])->name('mypage.listed');
 });
 
-// プロフィール編集画面は has.profile ミドルウェアを適用しない
+// プロフィール編集と更新は has.profile ミドルウェアを適用しない
 Route::middleware(['auth'])->group(function () {
     Route::get('/mypage/profile', [ProfileController::class, 'edit'])->name('mypage.profile.edit');
     Route::put('/mypage/profile', [ProfileController::class, 'update'])->name('mypage.profile.update');
 });
 
-
-Route::post('/purchase/{item_id}', [PurchaseController::class, 'itemPurchase'])->name('item.purchase');
-Route::post('/purchase/address/{item_id}', [PurchaseController::class, 'changeAddress'])->name('change.address');
+Route::middleware(['auth'])->group(function () {
+    // 購入ページの表示（GET）
+    Route::get('/purchase/{item_id}', [PurchaseController::class, 'showPurchasePage'])->name('purchase');
+ 
+    // 購入処理の実行（POST）
+    Route::post('/purchase/{item_id}', [PurchaseController::class, 'itemPurchase'])->name('item.purchase');
+ 
+    // 配送先変更ページの表示（GET）
+    Route::get('/purchase/address/{item_id}', [PurchaseController::class, 'changeAddressPage'])->name('change.address.page');
+ 
+    // 配送先変更処理の実行（POST）
+    Route::post('/purchase/address/{item_id}', [PurchaseController::class, 'changeAddress'])->name('change.address');
+ });
+ 

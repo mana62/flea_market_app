@@ -27,7 +27,7 @@
                     </div>
                     <div class="item-name">{{ $item->name }}</div>
                     @if ($item->is_sold)
-                        <div class="item-status">Sold</div>
+                        <span class="item-status">Sold</span>
                     @endif
                 </div>
             @endforeach

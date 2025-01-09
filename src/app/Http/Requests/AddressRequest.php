@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProfileRequest extends FormRequest
+class AddressRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,6 @@ class ProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string', 'max:50'],
-            'image' => ['nullable', 'file', 'mimes:jpeg,png', 'max:2048'],
             'post_number' => ['required', 'string', 'regex:/^\d{3}-\d{4}$/'],
             'address' => ['required', 'string', 'max:255'],
             'building' => ['nullable', 'string', 'max:255'],
@@ -35,10 +33,6 @@ class ProfileRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'ユーザー名を入力してください',
-            'name.max' => 'ユーザー名は50文字以内で入力してください',
-            'image.mimes' => '画像はjpegまたはpng形式でアップロードしてください',
-            'image.max' => '画像サイズは2MB以内にしてください',
             'post_number.required' => '郵便番号を入力してください',
             'post_number.regex' => '郵便番号はハイフンありの8桁の数字を入力してください',
             'address.required' => '住所を入力してください',
@@ -47,3 +41,4 @@ class ProfileRequest extends FormRequest
         ];
     }
 }
+

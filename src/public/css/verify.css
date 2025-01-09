@@ -15,6 +15,17 @@
   text-align: center;
 }
 
+.message {
+  text-align: center;
+  margin-top: 10px;
+  color: red;
+  font-size: 18px;
+}
+
+.message-session {
+  display: block;
+}
+
 .verify-email-button {
   text-align: center;
 }

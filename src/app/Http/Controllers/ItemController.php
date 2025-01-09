@@ -49,7 +49,7 @@ class ItemController extends Controller
             'item_id' => $itemId,
             'content' => $request->input('comment')
         ]);
-        return redirect()->route('item.detail', $itemId);
+        return redirect()->route('item.detail', $itemId)->with('message', 'コメントを投稿しました');
     }
 
 }

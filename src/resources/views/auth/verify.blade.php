@@ -12,6 +12,13 @@
         <p>メールが届いていない場合は以下のボタンをクリックしてください</p>
         <form class="verify-email__form" method="post" action="{{ route('verification.send') }}">
             @csrf
+            <div class="message">
+            @if (session('message'))
+                <div class="message-session">
+                    {{ session('message') }}
+                </div>
+            @endif
+            </div>
             <div class="verify-email-button">
                 <button class="verify-email-button__submit" type="submit">再送信</button>
             </div>
