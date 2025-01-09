@@ -10,12 +10,15 @@ class Address extends Model
     use HasFactory;
 
     protected $fillable = [
-        'profile_id',
+        'user_id',
+        'post_number',
         'address',
+        'building',
+        'is_default',
     ];
 
-    public function profile()
+    public function user()
     {
-        return $this->belongsTo(Profile::class);
+        return $this->belongsTo(User::class);
     }
 }

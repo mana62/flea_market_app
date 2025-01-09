@@ -27,8 +27,10 @@ class AuthController extends Controller
         ]);
 
     Auth::login($user);
+    $user->sendEmailVerificationNotification();
     
-    return redirect()->route('mypage.profile.edit');
+    //新規会員登録後メール認証ページへリダイレクト
+    return redirect()->route('verification.notice');
     }
 
     public function showVerifyEmail()
@@ -36,16 +38,22 @@ class AuthController extends Controller
     return view('auth.verify');
 }
 
-    public function verifyEmail(EmailVerificationRequest $request)
-    {
-        $request->fulfill();
+public function verifyEmail(EmailVerificationRequest $request)
+{
+    $request->fulfill();
+
+    //初回のみプロフィール設定画面へリダイレクト
+    if (!$request->user()->has_profile) {
         return redirect()->route('mypage.profile.edit');
     }
 
+    //既にプロフィールが設定されている場合は商品一覧画面へ
+    return redirect()->route('item');
+}
     public function resendVerificationEmail(Request $request)
     {
         $request->user()->sendEmailVerificationNotification();
-        return back()->with('status', '認証メールを再送信しました');
+        return back()->with('message', '認証メールを再送信しました');
     }
 
     public function loginView()
@@ -63,7 +71,7 @@ class AuthController extends Controller
         $credentials[$loginField] = $request->input('name-or-mail');
 
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('/');
+            return redirect()->route('item');
         }
 
         return back()->withErrors([

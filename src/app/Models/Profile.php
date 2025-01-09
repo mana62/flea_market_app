@@ -11,9 +11,8 @@ class Profile extends Model
 
     protected $fillable = [
         'user_id',
+        'name',
         'image',
-        'post_number',
-        'address',
     ];
 
     public function user()
@@ -21,13 +20,13 @@ class Profile extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function addresses()
-    {
-        return $this->hasMany(Address::class);
-    }
-
     public function purchases()
     {
         return $this->hasMany(Purchase::class);
     }
+
+    // public function addresses()
+    // {
+    //     return $this->hasMany(Address::class);
+    // }
 }

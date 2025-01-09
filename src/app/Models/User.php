@@ -61,12 +61,27 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function likedItems()
-{
-    return $this->belongsToMany(Item::class, 'likes');
-}
+    {
+        return $this->belongsToMany(Item::class, 'likes');
+    }
 
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function purchasedItems()
+    {
+        return $this->hasManyThrough(Item::class, Purchase::class, 'profile_id', 'id', 'id', 'item_id');
+    }
+
+    public function listedItems()
+    {
+        return $this->hasMany(Item::class);
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany(Address::class);
     }
 }

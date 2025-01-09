@@ -15,11 +15,14 @@ class HasProfile
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next)
+    public function handle($request, Closure $next)
     {
-        if (Auth::check() && !Auth::user()->has_profile) {
+        $user = Auth::user();
+
+        if (!$user->has_profile) {
             return redirect()->route('mypage.profile.edit');
         }
+
         return $next($request);
     }
 }
