@@ -1,3 +1,5 @@
 *
 !.gitignore
+
 !profile_image/.gitkeep
+!item_image/.gitkeep

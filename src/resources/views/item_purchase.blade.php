@@ -23,7 +23,7 @@
         <div class="item-purchase__left">
             <figure class="item-detail">
                 <div class="item-image">
-                    <img src="{{ $item->image }}" alt="{{ $item->name }}" class="item-detail__image">
+                    <img src="{{ $item->image ? asset('storage/item_images/' . $item->image) : asset('image/dummy.jpg') }}" alt="{{ $item->name }}">
                 </div>
                 <figcaption class="item-detail__info">
                     <h1 class="item-detail__name">{{ $item->name }}</h1>
@@ -45,7 +45,7 @@
                     <h2>配送先</h2>
                     <a href="{{ route('change.address.page', ['item_id' => $item->id]) }}">変更する</a>
                 </header>
-                @if ($address && $address->post_number && $address->address)
+                @if ($address)
                     <div class="shipping-address__detail">
                         <p>〒{{ $address->post_number }}</p>
                         <p>{{ $address->address }}</p>
@@ -54,7 +54,6 @@
                         @endif
                     </div>
                 @else
-                    <div class="shipping-address__detail">
                         <p>住所を登録してください</p>
                     </div>
                 @endif
@@ -78,5 +77,5 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset('js/payment.js') }}"></script>
+    <script src="{{ asset('js/item_purchase.js') }}"></script>
 @endsection

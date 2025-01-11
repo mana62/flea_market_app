@@ -11,9 +11,12 @@
 
 @section('content')
     <div class="mypage__content">
+
         {{-- プロフィール情報の表示 --}}
-        <img src="{{ $profile->image }}" alt="{{ $profile->name }}">
+        <div class="user-detail">
+        <img src="{{ asset('storage/profile_images/' . $profile->image) }}" alt="{{ $profile->name }}">        
         <h1>{{ $profile->name }}</h1>
+    </div>
         <div class="profile-link">
         <a href="{{ route('mypage.profile.edit') }}">プロフィールを編集</a>
     </div>
@@ -26,17 +29,14 @@
 
     {{-- 商品リストの表示 --}}
     @if ($items->isEmpty())
-        <p>{{ $tab === 'buy' ? '購入した商品はありません' : '出品した商品はありません' }}</p>
+        <p class="empty">{{ $tab === 'buy' ? '購入した商品はありません' : '出品した商品はありません' }}</p>
     @else
         <div class="item-list"> <!-- 修正ポイント -->
             @foreach ($items as $item)
                 <div class="item">
                     <div class="item-image">
                     <a href="{{ route('item.detail', ['item_id' => $item->id]) }}">
-                        <img src="{{ $item->user->profile->image 
-                            ? asset('storage/app/public/profile_images/' . $item->user->profile->image) 
-                            : asset('storage/app/public/profile_images/default.png') }}" 
-                     alt="{{ $item->name }}">
+                        <img class="item-detail__image" src="{{ $item->image ? asset('storage/item_images/' . $item->image) : asset('image/dummy.jpg') }}" alt="アイテム画像">
                     </a>
                 </div>
                 <div class="item-name">{{ $item->name }}</div>
@@ -47,4 +47,8 @@
             @endforeach
         </div>
     @endif
+@endsection
+
+@section('js')
+<script src="{{ asset('js/mypage.js') }}"></script>
 @endsection

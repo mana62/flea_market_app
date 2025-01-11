@@ -2,24 +2,27 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: 0 auto;
+    width: 80%;
+    padding-top: 50px;
 }
 
 .mypage__content img {
-    width: 70px;
-    height: 70px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
-    margin-right: 20px;
+    margin: 0 50px 0 120px;
     background: #ddd;
 }
 
 .mypage__content h1 {
-    flex: 1;
-    font-size: 30px;
-    margin: 0;
+    display: inline-block;
+    font-size: 40px;
+    margin-left: 50px;
 }
 
 .profile-link {
-    text-align: right;
+    display: inline-block;
     text-decoration: none;
     border: none;
     border-radius: 3px;
@@ -29,8 +32,6 @@
     padding: 10px;
     font-size: 14px;
     font-weight: bold;
-    margin-top: 10px;
-    display: inline-block;
 }
 
 .mypage__content a {
@@ -48,12 +49,12 @@
 }
 
 .mypage__content a:hover {
-    background: #ee7f7f;
+    color: #ee7f7f;
 }
 
 .tabs {
     border-bottom: 1px solid #858484;
-    margin-top: 80px;
+    margin-top: 50px;
 }
 
 .tabs a {
@@ -63,15 +64,16 @@
     font-weight: bold;
     font-size: 20px;
     text-decoration: none;
-}
-
-.tabs a:nth-child(1) {
-    margin-left: 100px;
     color: #000;
 }
 
-.tabs a:last-child {
-    color: #ff0000;
+.tabs a.active {
+    color: red;
+}
+
+.empty {
+    margin: 20px;
+    font-size: 20px;
 }
 
 .item-list {

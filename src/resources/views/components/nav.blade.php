@@ -26,10 +26,9 @@
                 <a href={{ route('mypage') }}>マイページ</a>
             </li>
             <li class="sell">
-                <form action="" method="post">
-                    @csrf
-                    <button type="submit">出品</button>
-                </form>
+                <div class="sell-link">
+                <a class="" href={{ route('item.sell.page') }}>出品</a>
+            </div>
             </li>
         </ul>
     </div>

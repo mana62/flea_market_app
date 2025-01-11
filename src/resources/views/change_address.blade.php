@@ -11,15 +11,9 @@
 
 @section('content')
     <div class="change-address__content">
-        <div class="message">
-            @if (session('message'))
-                <div class="message-session">
-                    {{ session('message') }}
-                </div>
-            @endif
-            </div>
         <header class="change-address-form__heading">
             <h1>住所の変更</h1>
+
         </header>
         <form class="form" action="{{ route('change.address', ['item_id' => $item->id]) }}" method="post" enctype="multipart/form-data">
             @csrf

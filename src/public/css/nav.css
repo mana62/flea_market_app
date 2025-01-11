@@ -48,19 +48,24 @@
     color: #dcdbdb;
 }
 
-.sell button {
-    padding: 10px 20px;
+.sell-link {
+    display: inline-block;
     background: #fff;
-    color: #000;
     border: none;
     border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
+    font-size: 13px;
     margin-right: 20px;
+    padding: 10px 20px;
+    text-align: center;
 }
 
-.sell button:hover {
-    background: #dcdbdb;
+.sell-link a {
+    color: #000;
+    cursor: pointer;
+}
+
+.sell-link:hover {
+    color: #dcdbdb;
 }
 
 @media (min-width: 481px) and (max-width: 860px) {
@@ -92,6 +97,16 @@
 
     .nav a {
         margin-top: 8px;
+    }
+
+    .sell-link {
+        text-align: center;
+        padding: 5px 10px;
+    }
+
+    .sell-link a {
+        padding: 0;
+        margin: 0;
     }
 }
 

@@ -1,0 +1,195 @@
+.sell__content {
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px;
+}
+
+.sell-form__heading {
+  margin-bottom: 30px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #000;
+}
+
+.message {
+  margin-top: 10px;
+  text-align: center;
+  color: red;
+  font-size: 18px;
+}
+
+.message-session {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+.form {
+  margin: 0 auto;
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
+}
+
+.form__group {
+  text-align: left;
+  color: #000;
+}
+
+.section-title {
+  border-bottom: 1px solid #ddd;
+  color: #8b8989;
+  margin-bottom: 30px;
+}
+
+.form__group-content h3 {
+  margin-bottom: 20px;
+  font-size: 22px;
+}
+
+/* 画像選択部分 */
+.image-upload {
+  border: 1px dotted #000;
+  border-radius: 5px;
+  padding: 20px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 150px;
+}
+
+.file-name {
+  cursor: pointer;
+  border: 1px solid #ff5555;
+  color: #ff5555;
+  border-radius: 5px;
+  font-size: 16px;
+  padding: 10px 20px;
+  display: inline-block;
+  text-align: center;
+  width: auto;
+  position: relative;
+  font-weight: bold;
+}
+
+.image-upload__label {
+  cursor: pointer;
+  border: 1px solid #ff5555;
+  color: #ff5555;
+  border-radius: 5px;
+  font-size: 16px;
+  padding: 10px 20px;
+  display: inline-block;
+  text-align: center;
+  width: auto;
+  position: relative;
+}
+
+.image-upload__label input {
+  display: none;
+}
+
+.image-upload__label:hover {
+  color: #ee7f7f;
+}
+
+/* カテゴリーを個別に枠で囲む */
+.category-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.category-item {
+  position: relative;
+  display: inline-block;
+  border: 1px solid #ff5555;
+  border-radius: 20px;
+  color: #ff5555;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-bottom: 10px;
+}
+
+.category-item span {
+  pointer-events: none;
+  padding: 5px 15px;
+}
+
+.category-item input {
+  display: none;
+}
+
+.category-item:hover {
+  background-color: #f9f9f9;
+}
+
+.category-item input:checked + span {
+  background: #ff5555;
+  color: #fff;
+  border-radius: 20px;
+}
+
+.form__group-content label {
+  display: block;
+  font-size: 17px;
+  font-weight: bold;
+  text-align: left;
+}
+
+.form__group-content input,
+.form__group-content select,
+.form__group-content textarea {
+  padding: 10px;
+  width: 100%;
+  border: 1px solid #000;
+  border-radius: 3px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+textarea {
+  height: 100px;
+  resize: none;
+}
+
+.form__error {
+  color: #ff0000;
+  text-align: center;
+  padding: 10px;
+  font-weight: 400;
+}
+
+.form__button {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.form__button-submit {
+  border: none;
+  border-radius: 3px;
+  background: #ff5555;
+  color: #fff;
+  cursor: pointer;
+  padding: 10px;
+  margin-top: 30px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.form__button-submit:hover {
+  color: #ee7f7f;
+}
+
+@media (max-width: 768px) {
+  .form {
+    width: 80%;
+  }
+}

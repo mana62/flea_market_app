@@ -10,16 +10,16 @@
 @endsection
 
 @section('content')
-<div class="message">
-    @if (session('message'))
-        <div class="message-session">
-            {{ session('message') }}
-        </div>
-    @endif
+    <div class="message">
+        @if (session('message'))
+            <div class="message-session">
+                {{ session('message') }}
+            </div>
+        @endif
     </div>
     <div class="item-detail__container">
         <section class="item-detail__left">
-            <img src="{{ $item->image }}" alt="{{ $item->name }}" class="item-detail__image">
+            <img class="item-detail__image" src="{{ $item->image ? asset('storage/item_images/' . $item->image) : asset('image/dummy.jpg') }}" alt="アイテム画像">
         </section>
 
         <section class="item-detail__right">
@@ -51,7 +51,8 @@
                 </div>
             </section>
 
-            <form action="{{ route('purchase', ['item_id' => $item->id]) }}" method="get" class="item-detail__purchase-form">
+            <form action="{{ route('purchase', ['item_id' => $item->id]) }}" method="get"
+                class="item-detail__purchase-form">
                 @csrf
                 @if ($item->is_sold)
                     <button class="item-detail__purchase-submit" type="button" disabled>Sold</button>
@@ -66,9 +67,13 @@
                 <h2 class="item-detail__section-title">商品情報</h2>
                 <dl>
                     <dt>カテゴリー</dt>
-                    <dd>{{ $item->category }}</dd>
-                    <dt>商品の状態</dt>
-                    <dd>{{ $item->condition }}</dd>
+                    <label class="category-item">
+                        <dd>{{ $item->category }}</dd>
+                    </label>
+                    <div>
+                        <dt>商品の状態</dt>
+                        <dd>{{ $item->condition }}</dd>
+                    </div>
                 </dl>
             </article>
 
@@ -78,8 +83,9 @@
                     <section class="item-detail__comment">
                         <div class="comment-header">
                             @if ($comment->user && $comment->user->profile && $comment->user->profile->image)
-                                <img src="{{ $comment->user->profile->image }}" alt="{{ $comment->user->name }}"
-                                    class="comment-user-image">
+                                <img class="comment-user-image"
+                                    src="{{ asset('storage/profile_images/' . $comment->user->profile->image) }}"
+                                    alt="{{ $comment->user->profile->name }}">
                             @else
                                 <div class="comment-user-image default-image"></div>
                             @endif
@@ -110,5 +116,5 @@
     @endsection
 
     @section('js')
-        <script src="{{ asset('js/item_like.js') }}"></script>
+        <script src="{{ asset('js/item_detail.js') }}"></script>
     @endsection
