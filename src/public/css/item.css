@@ -3,6 +3,11 @@
     margin-top: 80px;
 }
 
+.empty {
+    margin: 20px;
+    font-size: 20px;
+}
+
 .tabs a {
     margin-left: 50px;
     padding: 10px;
@@ -10,15 +15,11 @@
     font-weight: bold;
     font-size: 20px;
     text-decoration: none;
-}
-
-.tabs a:nth-child(1) {
-    margin-left: 100px;
     color: #000;
 }
 
-.tabs a:last-child {
-    color: #ff0000;
+.tabs a.active {
+    color: red;
 }
 
 .item-list {

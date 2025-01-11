@@ -13,24 +13,24 @@ use App\Http\Requests\AddressRequest;
 class PurchaseController extends Controller
 {
     public function showPurchasePage($item_id)
-{
-    $item = Item::findOrFail($item_id);
-
-    $profile = Auth::user()->profile;
-
-    // Ensure $profile->addresses is a collection (or empty collection if null)
-    $addresses = $profile ? $profile->addresses ?: collect() : collect();
-
-    // Get the default address, if available
-    $address = $addresses->where('is_default', 1)->first();
-    dd($address);
-    // If no default address, initialize a blank address object
-    if (!$address) {
-        $address = null;  // No address found
+    {
+        $item = Item::findOrFail($item_id);
+        $user = Auth::user();
+    
+        // ユーザーのプロフィールを取得
+        $profile = $user->profile;
+    
+        // デフォルトの住所を取得
+        $address = $user->addresses()->where('is_default', true)->first();
+    
+        // 住所がない場合、null を設定
+        if (!$address) {
+            $address = null;
+        }
+    
+        return view('item_purchase', compact('item', 'profile', 'address'));
     }
-
-    return view('item_purchase', compact('item', 'profile', 'address'));
-}
+    
 
 
     public function itemPurchase(Request $request, $item_id)
@@ -48,7 +48,7 @@ class PurchaseController extends Controller
         $item->save();
 
         // リダイレクト処理
-        return redirect()->route('item_purchase', ['item_id' => $item->id])->with('message', '購入が完了しました');
+        return redirect()->route('purchase.page', ['item_id' => $item->id])->with('message', '購入が完了しました');
     }
 
     public function changeAddressPage($item_id)
@@ -78,6 +78,6 @@ class PurchaseController extends Controller
         // 他の住所をデフォルトから外す
         $user->addresses()->where('id', '!=', $address->id)->update(['is_default' => false]);
 
-        return redirect()->route('change.address', ['item_id' => $item_id])->with('message', '配送先住所を変更しました');
+        return redirect()->route('purchase', ['item_id' => $item_id])->with('message', '配送先住所を変更しました');
     }
 }

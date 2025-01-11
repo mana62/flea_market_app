@@ -1,9 +1,9 @@
 .message {
-  text-align: center;
-  margin-top: 10px;
-  color: red;
-  font-size: 17px;
-}
+    margin-top: 30px;
+    text-align: center;
+    color: red;
+    font-size: 20px;
+  }
 
 .message-session {
   display: block;

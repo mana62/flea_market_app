@@ -14,81 +14,92 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        $categories = config('item.categories');
+        $conditions = config('item.conditions');
+
         $items = [
             [
                 'name' => '腕時計',
                 'price' => 15000,
                 'description' => 'スタイリッシュなデザインのメンズ腕時計',
-                'condition' => '良好',
-                'image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Armani+Mens+Clock.jpg',
+                'condition' => [0],
+                'image' => 'Clock.jpg',
             ],
             [
                 'name' => 'HDD',
                 'price' => 5000,
                 'description' => '高速で信頼性の高いハードディスク',
-                'condition' => '目立った傷や汚れなし',
-                'image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/HDD+Hard+Disk.jpg',
+                'condition' => [1],
+                'image' => 'HDD.jpg',
             ],
             [
                 'name' => '玉ねぎ3束',
                 'price' => 300,
                 'description' => '新鮮な玉ねぎ3束のセット',
-                'condition' => 'やや傷や汚れあり',
-                'image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/iLoveIMG+d.jpg',
+                'condition' => [2],
+                'image' => 'Onion.jpg',
             ],
             [
                 'name' => '革靴',
                 'price' => 4000,
                 'description' => 'クラシックなデザインの革靴',
-                'condition' => '状態が悪い',
-                'image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Leather+Shoes+Product+Photo.jpg',
+                'condition' => [3],
+                'image' => 'Shoes.jpg',
             ],
             [
                 'name' => 'ノートPC',
                 'price' => 45000,
                 'description' => '高性能なノートパソコン',
-                'condition' => '良好',
-                'image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Living+Room+Laptop.jpg',
+                'condition' => [0],
+                'image' => 'Laptop.jpg',
             ],
             [
                 'name' => 'マイク',
                 'price' => 8000,
                 'description' => '高音質のレコーディング用マイク',
-                'condition' => '目立った傷や汚れなし',
-                'image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Music+Mic+4632231.jpg',
+                'condition' => [1],
+                'image' => 'Mike.jpg',
             ],
             [
                 'name' => 'ショルダーバッグ',
                 'price' => 3500,
                 'description' => 'おしゃれなショルダーバッグ',
-                'condition' => 'やや傷や汚れあり',
-                'image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Purse+fashion+pocket.jpg',
+                'condition' => [2],
+                'image' => 'bag.jpg',
             ],
             [
                 'name' => 'タンブラー',
                 'price' => 500,
                 'description' => '使いやすいタンブラー',
-                'condition' => '状態が悪い',
-                'image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Tumbler+souvenir.jpg',
+                'condition' => [3],
+                'image' => 'Tumbler.jpg',
             ],
             [
                 'name' => 'コーヒーミル',
                 'price' => 4000,
                 'description' => '手動のコーヒーミル',
-                'condition' => '良好',
-                'image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/Waitress+with+Coffee+Grinder.jpg',
+                'condition' => [0],
+                'image' => 'Coffee.jpg',
             ],
             [
                 'name' => 'メイクセット',
                 'price' => 2500,
                 'description' => '便利なメイクアップセット',
-                'condition' => '目立った傷や汚れなし',
-                'image' => 'https://coachtech-matter.s3.ap-northeast-1.amazonaws.com/image/%E5%A4%96%E5%87%BA%E3%83%A1%E3%82%A4%E3%82%AF%E3%82%A2%E3%83%83%E3%83%95%E3%82%9A%E3%82%BB%E3%83%83%E3%83%88.jpg',
+                'condition' => [1],
+                'image' => 'MakeUp.jpg',
             ],
         ];
 
         foreach ($items as $item) {
-            Item::create($item);
+            Item::create([
+                'name' => $item['name'],
+                'price' => $item['price'],
+                'description' => $item['description'],
+                'category' => $categories[array_rand($categories)],
+                'condition' => $conditions[array_rand($conditions)],
+                'image' => basename($item['image']),
+            ]);
         }
     }
 }
+

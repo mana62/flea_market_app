@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
 
-    public function registerView()
+    public function registerPage()
     {
         return view('auth.register');
     }
@@ -56,7 +56,7 @@ public function verifyEmail(EmailVerificationRequest $request)
         return back()->with('message', '認証メールを再送信しました');
     }
 
-    public function loginView()
+    public function loginPage()
     {
         return view('auth.login');
     }

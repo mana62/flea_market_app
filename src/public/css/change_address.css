@@ -2,19 +2,6 @@
     padding: 30px 15px;
 }
 
-.message {
-    margin: 10px 0;
-    text-align: center;
-    color: red;
-    font-size: 20px;
-}
-
-.message-session {
-    display: block;
-    margin: 0 ;
-    padding: 0;
-}
-
 .change-address-form__heading {
     margin-bottom: 20px;
     text-align: center;

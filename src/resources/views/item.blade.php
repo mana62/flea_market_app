@@ -15,16 +15,16 @@
         <a href="{{ url('/?tab=mylist&search=' . $input) }}" class="{{ $tab === 'mylist' ? 'active' : '' }}">マイリスト</a>
     </div>
     @if ($items->isEmpty())
-        <p>{{ $tab === 'mylist' ? 'いいねした商品はありません' : 'おすすめ商品はありません' }}</p>
+        <p class="empty">{{ $tab === 'mylist' ? 'いいねした商品はありません' : 'おすすめ商品はありません' }}</p>
     @else
         <div class="item-list">
             @foreach ($items as $item)
                 <div class="item">
                     <div class="item-image">
-                        <a href="{{ url('/item/' . $item->id) }}">
-                            <img src="{{ $item->image }}" alt="{{ $item->name }}">
+                        <a href="{{ route('item.detail', ['item_id' => $item->id]) }}">
+                            <img src="{{ $item->image ? asset('storage/item_images/' . $item->image) : asset('image/dummy.jpg') }}" alt="{{ $item->name }}">
                         </a>
-                    </div>
+                        </div>
                     <div class="item-name">{{ $item->name }}</div>
                     @if ($item->is_sold)
                         <span class="item-status">Sold</span>
@@ -33,4 +33,8 @@
             @endforeach
         </div>
     @endif
+@endsection
+
+@section('js')
+<script src="{{ asset('js/item.js') }}"></script>
 @endsection

@@ -13,6 +13,14 @@
     <div class="profile__content">
         <header class="profile-form__heading">
             <h1>プロフィール設定</h1>
+
+            <div class="message">
+                @if (session('message'))
+                    <div class="message-session">
+                        {{ session('message') }}
+                    </div>
+                @endif
+                </div>
         </header>
 
         <form class="form" action="{{ route('mypage.profile.update') }}" method="post" enctype="multipart/form-data">
@@ -24,14 +32,14 @@
                         <!-- 既存の画像を表示 -->
                         <div class="user-image-preview" id="userImagePreview">
                             @if ($profile->image)
-                                <img src="{{ asset('storage/image/profile_images/' . $profile->image) }}" alt="プロフィール画像">
+                                <img src="{{ asset('storage/profile_images/' . $profile->image) }}" alt="プロフィール画像">
                             @endif
                         </div>
 
                         <!-- 画像選択 -->
                         <label for="img" class="image-upload__label">
                             画像を選択する
-                            <input type="file" name="image" id="img" accept="image/*"
+                            <input type="file" name="img" id="img" accept="image/*"
                                 onchange="previewImage(event)">
                         </label>
                     </div>
@@ -94,5 +102,5 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset('js/image.js') }}"></script>
+    <script src="{{ asset('js/profile.js') }}"></script>
 @endsection

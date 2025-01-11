@@ -15,15 +15,18 @@ Route::middleware('auth')->group(function () {
         ->middleware('throttle:6,1')->name('verification.send');
 });
 
-Route::get('/register', [AuthController::class, 'registerView'])->name('register.view');
+Route::get('/register', [AuthController::class, 'registerPage'])->name('register.view');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
-Route::get('/login', [AuthController::class, 'loginView'])->name('login.view');
+Route::get('/login', [AuthController::class, 'loginPage'])->name('login.view');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/search', [SearchController::class, 'searchItem'])->name('search');
 Route::get('/', [ItemController::class, 'index'])->name('item');
 Route::get('/item/{item_id}', [ItemController::class, 'itemDetail'])->name('item.detail');
+Route::get('/sell', [ItemController::class, 'sellItemPage'])->name('item.sell.page');
+Route::post('/sell', [ItemController::class, 'sellItem'])->name('item.sell');
+Route::post('/item/{item}/image', [ItemController::class, 'uploadImage'])->name('item.image.upload');
 Route::post('/item/{item}/like', [ItemController::class, 'toggleLike'])->name('item.like');
 Route::post('/item/{item_id}/comments', [ItemController::class, 'comment'])->name('item.comment');
 
