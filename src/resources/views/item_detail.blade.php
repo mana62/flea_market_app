@@ -19,7 +19,9 @@
     </div>
     <div class="item-detail__container">
         <section class="item-detail__left">
-            <img class="item-detail__image" src="{{ $item->image ? asset('storage/item_images/' . $item->image) : asset('image/dummy.jpg') }}" alt="アイテム画像">
+            <img class="item-detail__image"
+                src="{{ $item->image ? asset('storage/item_images/' . $item->image) : asset('image/dummy.jpg') }}"
+                alt="アイテム画像">
         </section>
 
         <section class="item-detail__right">
@@ -30,20 +32,15 @@
             </header>
 
             <section class="item-detail__actions">
-                @auth
-                    <div class="item-detail__likes-count">
-                        <button data-item-id="{{ $item->id }}"
-                            class="like-btn {{ Auth::user()->likedItems->contains($item->id) ? 'liked' : '' }}">
-                            <img src="{{ asset('image/星アイコン8.png') }}" alt="星アイコン">
-                        </button>
-                        <p id="like-count" data-item-id="{{ $item->id }}">{{ $item->likesCount() }}</p>
-                    </div>
-                @else
-                    <button class="like-btn__disabled" disabled>
-                        <img src="{{ asset('image/星アイコン8.png') }}" alt="星アイコン" class="disabled-image">
+                <div class="item-detail__likes-count">
+                    <button
+                        class="like-btn {{ Auth::check() && Auth::user()->likedItems->contains($item->id) ? 'liked' : '' }}"
+                        data-item-id="{{ $item->id }}" @if (!Auth::check()) disabled @endif>
+                        <img src="{{ asset('image/星アイコン8.png') }}" alt="星アイコン"
+                            class="@if (!Auth::check()) disabled-image @endif">
                     </button>
                     <p id="like-count" data-item-id="{{ $item->id }}">{{ $item->likesCount() }}</p>
-                @endauth
+                </div>
 
                 <div class="item-detail__comments-count">
                     <img src="{{ asset('image/ふきだしのアイコン.png') }}" alt="コメントアイコン">
@@ -68,7 +65,13 @@
                 <dl>
                     <dt>カテゴリー</dt>
                     <label class="category-item">
-                        <dd>{{ $item->category }}</dd>
+                        <dd class="category-label">
+                            @if (is_array($item->category))
+                                {{ implode(', ', $item->category) }}
+                            @else
+                                {{ $item->category }}
+                            @endif
+                        </dd>
                     </label>
                     <div>
                         <dt>商品の状態</dt>
@@ -76,16 +79,18 @@
                     </div>
                 </dl>
             </article>
-
-            <article class="item-detail__comments"> <!-- コメント -->
+            <!-- コメント -->
+            <article class="item-detail__comments">
                 <h2 class="item-detail__section-title">コメント ({{ $comments->count() }})</h2>
                 @foreach ($comments as $comment)
                     <section class="item-detail__comment">
                         <div class="comment-header">
                             @if ($comment->user && $comment->user->profile && $comment->user->profile->image)
-                                <img class="comment-user-image"
-                                    src="{{ asset('storage/profile_images/' . $comment->user->profile->image) }}"
-                                    alt="{{ $comment->user->profile->name }}">
+                                <div class="user-image-preview" id="userImagePreview">
+                                    <img class="comment-user-image"
+                                        src="{{ asset('storage/profile_images/' . $comment->user->profile->image) }}"
+                                        alt="{{ $comment->user->profile->name }}">
+                                </div>
                             @else
                                 <div class="comment-user-image default-image"></div>
                             @endif
@@ -109,7 +114,10 @@
                     </form>
                 </section>
             @else
-                <p>ログインしてください</p>
+                <p class="rule">コメントを入力する場合はログインしてください</p>
+                <div class="login-link">
+                    <a href="{{ route('login') }}">ログインする</a>
+                </div>
             @endauth
         </section>
         </article>

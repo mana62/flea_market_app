@@ -7,12 +7,26 @@
     padding-top: 50px;
 }
 
+.user-image-preview {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #ddd;
+    display: inline-block;
+    overflow: hidden;
+    background-size: cover;
+    margin: 0 40px 0 110px;
+}
+
+.user-detail {
+    display: flex;
+    align-items: center;
+}
+
 .mypage__content img {
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    margin: 0 50px 0 120px;
-    background: #ddd;
 }
 
 .mypage__content h1 {
@@ -106,3 +120,75 @@
     margin: 0;
     padding: 0;
 }
+
+@media (max-width: 768px) {
+    .tabs {
+        text-align: center;
+    }
+
+    .tabs a {
+        margin: 0 30px;
+    }
+
+    .item-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+        margin: 50px 10px;
+    }
+
+    .mypage__content h1 {
+        margin: 10px;
+    }
+
+    .user-image-preview {
+        margin: 0 20px 10px 0;
+    }
+
+
+    .item-image {
+        margin: 10px 0;
+    }
+
+    .item-name {
+        text-align: left;
+        font-size: 18px;
+        margin: 10px 0 0 40px;
+    }
+
+    .mypage__content {
+        flex-direction: column;
+        text-align: center;
+        margin: 0;
+        width: 100%;
+    }
+
+    .mypage__content img {
+        margin: 0 20px 0 0;
+    }
+
+    .profile-link  {
+        width: 30%;
+        margin-top: 20px;
+    }
+}
+
+    @media screen and (max-width: 480px) {
+        .item-list {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 30px;
+            margin: 40px 20px;
+        }
+
+        .item-name {
+            text-align: left;
+            font-size: 18px;
+            padding: 10px 0 0 10px;
+        }
+
+        .profile-link  {
+            width: 60%;
+            margin-top: 20px;
+        }
+    }
