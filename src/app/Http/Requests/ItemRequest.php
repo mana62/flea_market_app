@@ -28,9 +28,10 @@ class ItemRequest extends FormRequest
       'brand' => ['nullable', 'string', 'max:255'],
       'price' => ['required', 'numeric', 'min:0'],
       'description' => ['required', 'string', 'max:1000'],
-      'category' => ['required', 'string'],
+      'category' => ['required', 'array'],
+      'category.*' => ['string'],
       'condition' => ['required', 'string'],
-      'img' => ['required', 'image', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
+      'img' => ['required', 'image', 'mimes:jpeg,png,', 'max:2048'],
     ];
   }
 
@@ -54,7 +55,7 @@ class ItemRequest extends FormRequest
       'condition.string' => '商品の状態は文字列で入力してください',
       'img.required' => '画像をアップロードしてください',
       'img.image' => 'アップロードできるのは画像ファイルのみです',
-      'img.mimes' => '画像はjpeg、png、jpg、gif形式でアップロードしてください',
+      'img.mimes' => '画像はjpeg、png形式でアップロードしてください',
       'img.max' => '画像のサイズは2MB以内にしてください',
     ];
   }

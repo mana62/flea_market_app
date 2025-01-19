@@ -3,10 +3,10 @@
     text-align: center;
     color: red;
     font-size: 20px;
-  }
+}
 
 .message-session {
-  display: block;
+    display: block;
 }
 
 .item-purchase__container {
@@ -97,7 +97,7 @@
 }
 
 .shipping-address__row a:hover {
-  color: #7fb2e9;
+    color: #7fb2e9;
 }
 
 .shipping-address__detail {
@@ -124,7 +124,7 @@
 }
 
 .item-purchase__right form {
-  padding: 0 10px;
+    padding: 0 10px;
 }
 
 .purchase-container {
@@ -142,22 +142,27 @@
 }
 
 .purchase-container span {
-  font-size: 23px;
-  letter-spacing: 1px;
+    font-size: 23px;
+    letter-spacing: 1px;
+}
+
+.item-detail__payment_method span {
+    font-size: 20px;
+    letter-spacing: 1px;
 }
 
 .item-detail__price {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 0;
-  border-bottom: 1px solid #5d5c5c;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #5d5c5c;
 }
 
 /* 配送方法とその値の間に余白を作る */
 .item-detail__payment_method {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
 }
 
 /* 購入ボタン */
@@ -177,3 +182,149 @@
     background-color: #ee7f7f;
 }
 
+@media screen and (max-width: 768px) {
+    .item-purchase__container {
+        flex-direction: column;
+        margin: 30px 60px;
+        gap: 10px;
+    }
+
+    .item-purchase__left, .item-purchase__right {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .item-detail {
+        align-items: center;
+    }
+
+    .item-image img {
+        width: 100%;
+        max-width: 250px;
+        height: auto;
+        border-radius: 3px;
+        margin: 0 0 30px 10px;
+    }
+
+    .payment-method__container select {
+        max-width: 90%;
+    }
+
+    .purchase-container p {
+        padding: 16px;
+        font-size: 16px;
+    }
+
+    .purchase-container span {
+    font-size: 18px;
+}
+
+.item-detail__payment_method span {
+    font-size: 16px;
+}
+
+    .item-purchase__button-submit {
+        width: 90%;
+        padding: 10px 0;
+        font-size: 17px;
+        background-color: #ff5555;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 0 5px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .item-purchase__container {
+        flex-direction: column;
+        margin: 15px;
+        gap: 15px;
+    }
+
+    .item-purchase__left, .item-purchase__right {
+        width: 100%;
+        margin: 0;
+    }
+
+    .item-detail {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin: 0;
+        gap: 10px;
+    }
+
+    .item-image img {
+        width: 100%;
+        max-width: 250px; /* 最大幅を制限 */
+        height: auto;
+        border-radius: 3px;
+        margin: 10px 0;
+    }
+
+    .item-detail__name {
+        margin: 5px 0;
+    }
+
+    .items-detail__price {
+        font-size: 18px;
+        margin: 5px 0 20px 10px;
+    }
+
+    .payment-method__container {
+        margin: 10px; /* 余白を減らす */
+    }
+
+    .payment-method__container select {
+        width: 90%; /* フォーム幅を広げる */
+        max-width: 100%;
+        margin: 0 auto;
+        margin-bottom: 30px; /* 中央揃え */
+        display: block;
+    }
+
+    .shipping-address {
+        margin: 10px; /* 余白を調整 */
+    }
+
+    .shipping-address__detail p {
+        font-size: 14px;
+        margin-left: 0;
+        text-align: center;
+    }
+
+    .purchase-container {
+        width: 90%; /* 幅を縮小 */
+        margin: 0 auto 20px; /* 中央揃え */
+    }
+
+    .purchase-container p {
+        padding: 15px;
+        font-size: 16px;
+
+    }
+
+    .item-purchase__button-submit {
+        width: 100%; /* 幅を調整して中央揃え */
+        margin: 10px auto; /* 中央揃え */
+        font-size: 16px;
+        padding: 10px;
+    }
+
+    .back-link {
+        text-align: center; /* 戻るリンクを中央揃え */
+        margin: 10px 0;
+    }
+
+    .back-link a {
+        font-size: 14px;
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .back-link a:hover {
+        color: #0056b3;
+    }
+}

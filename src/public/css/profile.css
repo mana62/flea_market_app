@@ -126,6 +126,16 @@ input[type="file"] {
     color: #ee7f7f;
 }
 
+@media (max-width: 1020px) {
+    .form {
+        width: 80%;
+    }
+
+    .register-form__heading {
+        font-size: 14px;
+        margin-top: 20px;
+    }
+
 @media (max-width: 768px) {
     .form {
         width: 80%;
@@ -133,5 +143,11 @@ input[type="file"] {
 
     .register-form__heading {
         font-size: 14px;
+        margin-top: 20px;
     }
+
+    .form__group-content label {
+        font-size: 14px;
+    }
+}
 }

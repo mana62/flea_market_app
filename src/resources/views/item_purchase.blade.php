@@ -26,17 +26,17 @@
                     <img src="{{ $item->image ? asset('storage/item_images/' . $item->image) : asset('image/dummy.jpg') }}" alt="{{ $item->name }}">
                 </div>
                 <figcaption class="item-detail__info">
-                    <h1 class="item-detail__name">{{ $item->name }}</h1>
+                    <h1 class="item-detail__name" data-item-id="{{ $item->id }}">{{ $item->name }}</h1>
                     <p class="items-detail__price" data-price="{{ $item->price }}">¥{{ number_format($item->price) }}</p>
                 </figcaption>
             </figure>
 
             <div class="payment-method__container">
                 <h2>支払い方法</h2>
-                <select class="payment_method" name="payment_method">
+                <select id="payment-method" class="payment_method" name="payment_method">
                     <option value="" disabled selected>選択してください</option>
-                    <option value="コンビニ払い">コンビニ払い</option>
-                    <option value="カード払い">カード払い</option>
+                    <option value="convenience-store">コンビニ払い</option>
+                    <option value="card">カード払い</option>
                 </select>
             </div>
 
@@ -61,18 +61,19 @@
         </div>
 
         <!-- 右側カラム -->
-        <div class="item-purchase__right">
-            <form action="{{ route('purchase', ['item_id' => $item->id]) }}" method="post">
-                @csrf
-                <section class="purchase-container">
-                    <p class="item-detail__price">商品代金 <span>¥{{ number_format($item->price) }}</span></p>
-                    <p class="item-detail__payment_method">配送方法 <span>{{ $item->payment_method }}</span></p>
-                </section>
-                <section class="item-purchase__button">
-                    <button type="submit" class="item-purchase__button-submit">購入する</button>
-                </section>
-            </form>
-        </div>
+<div class="item-purchase__right">
+    <form id="purchase-form" method="post">
+        @csrf
+        <section class="purchase-container">
+            <p class="item-detail__price">商品代金 <span>¥{{ number_format($item->price) }}</span></p>
+            <p class="item-detail__payment_method">支払い方法 <span id="itemDetailPaymentMethod"></span></p>
+        </section>
+        <section class="item-purchase__button">
+            <button type="submit" class="item-purchase__button-submit">購入する</button>
+        </section>
+    </form>
+</div>
+
     </section>
 @endsection
 

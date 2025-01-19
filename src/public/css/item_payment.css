@@ -1,40 +1,13 @@
-.back-arrow {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 110px;
-  margin-left: 60px;
-  padding-bottom: 10px;
-  padding-right: 2px;
-  text-decoration: none;
-  color: #fff;
-  border: 1px solid #1758f0;
-  background: #1758f0;
-  border-radius: 5px;
-  width: 45px;
-  height: 45px;
-  font-size: 30px;
-  font-family: "Zen Kaku Gothic New", sans-serif;
-  font-weight: bold;
-}
-
-.back-arrow:hover {
-  background: #6565eb;
-}
-
-.ttl {
+.title {
   margin-top: 100px;
-  font-family: "Zen Kaku Gothic New", sans-serif;
   text-align: center;
 }
 
-.message {
-  margin: 0 auto;
+.payment-message {
+  margin-top: 10px;
   text-align: center;
   color: red;
-  padding: 30px;
   font-size: 18px;
-  font-family: "Zen Kaku Gothic New", sans-serif;
 }
 
 .payment-form-content {
@@ -80,37 +53,52 @@
 
 .payment-button {
   text-align: center;
+  margin: 80px 0 30px;
 }
 
-.payment-button-submit {
-  padding: 10px 20px;
-  font-size: 14px;
-  border: 1px solid #1758f0;
-  background: #1758f0;
+.payment-button__submit {
+  width: 100%;
+  max-width: 500px;
+  padding: 10px 0;
+  font-size: 17px;
+  background-color: #ff5555;
   color: #fff;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-family: "Zen Kaku Gothic New", sans-serif;
-  margin: 40px;
 }
 
-.payment-button-submit:hover {
-  background: #6565eb;
+.payment-button__submit:hover {
+  background-color: #ee7f7f;
+}
+
+.back-link {
+text-align: center;
+}
+
+.back-link a {
+  font-size: 18px;
+  color: #747070;
+}
+
+.back-link a:hover {
+  color: #868585;
 }
 
 @media (max-width: 768px) {
-  .back-arrow {
-      margin-left: 20px;
-      width: 40px;
-      height: 40px;
-  }
-
   .card-element-form {
       width: 90%;
   }
 
   .payment-input {
       width: 90%;
+  }
+
+  .payment-button__submit {
+    width: 90%;
+  }
+
+  .back-link a {
+    font-size: 16px;
   }
 }

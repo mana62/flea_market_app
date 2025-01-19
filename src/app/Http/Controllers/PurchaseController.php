@@ -5,68 +5,71 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Purchase;
 use App\Models\Item;
-use App\Models\Profile;
 use App\Models\Address;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\AddressRequest;
 
 class PurchaseController extends Controller
 {
+    //購入ページを表示
     public function showPurchasePage($item_id)
     {
         $item = Item::findOrFail($item_id);
         $user = Auth::user();
-    
-        // ユーザーのプロフィールを取得
-        $profile = $user->profile;
-    
-        // デフォルトの住所を取得
+        //デフォルト住所を取得
         $address = $user->addresses()->where('is_default', true)->first();
-    
-        // 住所がない場合、null を設定
-        if (!$address) {
-            $address = null;
-        }
-    
-        return view('item_purchase', compact('item', 'profile', 'address'));
+
+        return view('item_purchase', compact('item', 'address'));
     }
-    
 
-
+    //購入処理
     public function itemPurchase(Request $request, $item_id)
     {
         $item = Item::findOrFail($item_id);
-        $address = Address::findOrFail($request->input('address_id'));
 
-        $purchase = new Purchase();
-        $purchase->item_id = $item->id;
-        $purchase->user_id = Auth::id();
-        $purchase->address_id = $address->id;
-        $purchase->save();
+        //データベースに保存
+        $purchase = Purchase::create([
+            'item_id' => $item->id,
+            'profile_id' => Auth::id(),
+            'payment_method' => $request->input('payment_method'),
+        ]);
 
-        $item->is_sold = true;
-        $item->save();
+        //商品をsoldに更新
+        $item->update(['is_sold' => true]);
 
-        // リダイレクト処理
-        return redirect()->route('purchase.page', ['item_id' => $item->id])->with('message', '購入が完了しました');
+        //セッションにデータを保存
+        session([
+            'item_id' => $item->id,
+            'purchase_id' => $purchase->id,
+            'payment_method' => $request->input('payment_method'),
+        ]);
+
+        return redirect()->route('thanks.buy')->with('message', '購入が完了しました');
     }
 
+    //購入完了画面を表示
+    public function thanksBuy(Request $request)
+    {
+        $item_id = session('item_id');
+        $purchase_id = session('purchase_id');
+        $payment_method = session('payment_method');
+
+        return view('thanks_buy', compact('item_id', 'purchase_id', 'payment_method'));
+    }
+
+    //配送先変更ページを表示
     public function changeAddressPage($item_id)
     {
         $item = Item::findOrFail($item_id);
-
-        // ログインユーザーのプロフィールを取得、存在しない場合は新規作成
         $user = Auth::user();
-        $profile = $user->profile ?? new Profile(['user_id' => $user->id]);
-
-        return view('change_address', compact('item', 'profile'));
+        return view('change_address', ['item' => $item, 'defaultAddress' => $user->addresses()->where('is_default', true)->first()]);
     }
 
-    public function changeAddress(AddressRequest $request, $item_id)
+    //配送先を変更
+    public function changeAddress(Request $request, $item_id)
     {
         $user = Auth::user();
 
-        // 新しい住所を作成
+        //データベースに保存
         $address = new Address();
         $address->user_id = $user->id;
         $address->post_number = $request->input('post_number');
@@ -75,9 +78,8 @@ class PurchaseController extends Controller
         $address->is_default = true;
         $address->save();
 
-        // 他の住所をデフォルトから外す
         $user->addresses()->where('id', '!=', $address->id)->update(['is_default' => false]);
 
-        return redirect()->route('purchase', ['item_id' => $item_id])->with('message', '配送先住所を変更しました');
+        return redirect()->route('purchase', ['item_id' => $item_id])->with('message', '配送先を変更しました');
     }
 }

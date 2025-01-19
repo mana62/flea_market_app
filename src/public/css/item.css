@@ -52,3 +52,41 @@
     margin: 0;
     padding: 0;
 }
+
+@media (max-width: 768px) {
+    .tabs {
+        margin-top: 50px;
+        text-align: center;
+    }
+
+    .tabs a {
+        margin: 0;
+        padding: 0 30px;
+    }
+
+    .item-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+        margin: 50px 10px;
+    }
+
+    .item-image {
+        margin: 10px 0;
+    }
+
+    .item-name {
+        text-align: left;
+        font-size: 18px;
+        margin: 10px 0 0 30px;
+    }
+
+@media screen and (max-width: 480px) {
+    .item-list {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 30px;
+        margin: 40px 20px;
+    }
+}
+}

@@ -21,7 +21,7 @@ class CreateItemsTable extends Migration
             $table->string('brand', 100)->nullable();
             $table->decimal('price', 10, 2);
             $table->text('description');
-            $table->string('category');
+            $table->json('category');
             $table->string('condition');
             $table->string('image');
             $table->boolean('is_sold')->default(false);

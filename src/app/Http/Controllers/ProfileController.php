@@ -9,70 +9,63 @@ use App\Http\Requests\ProfileRequest;
 
 class ProfileController extends Controller
 {
-    // マイページ（プロフィール画面または購入・出品商品一覧）を表示
+    //マイページを表示
     public function index(Request $request)
     {
-        $items = Item::with('user.profile')->get();
+        //ログイン中のユーザーを取得
         $user = Auth::user();
-        $tab = $request->query('page'); // クエリパラメータ 'page' を取得
+        //クエリパラメータでタブを取得
+        $tab = $request->query('page');
+        //プロフィール情報を取得
         $profile = $user->profile;
 
-        if ($tab === 'buy') {
-            $items = $user->purchasedItems; // 購入商品のリスト
-        } elseif ($tab === 'sell') {
-            $items = $user->listedItems; // 出品商品のリスト
-        } else {
-            // クエリがない場合は空のコレクションを渡す
-            $items = collect([]);
-        }
+        //タブごとに表示するアイテムを切り替え
+        $items = match ($tab) {
+            'buy' => $user->purchasedItems,
+            'sell' => $user->listedItems,
+            //デフォルトは空のコレクション
+            default => collect([]),
+        };
 
         return view('mypage', compact('profile', 'items', 'tab'));
     }
 
-
-    // プロフィール編集画面を表示
+    //プロフィール編集ページを表示
     public function edit()
     {
+        //ログイン中のユーザー、プロフィール、デフォルトのアドレスを取得
         $user = Auth::user();
         $profile = $user->profile;
-
-        // デフォルトの住所を取得
         $defaultAddress = $user->addresses()->where('is_default', true)->first();
 
         return view('profile', compact('profile', 'defaultAddress'));
     }
 
-    // プロフィールを更新
+    //プロフィール更新処理
     public function update(ProfileRequest $request)
     {
         $user = Auth::user();
         $profile = $user->profile;
 
-        // プロフィール情報を更新
+        //プロフィール情報を更新
         $profile->fill($request->only(['name']));
-
         if ($request->hasFile('img')) {
-            $originalName = $request->file('img')->getClientOriginalName();
-            $fileName = now()->format('Ymd_His') . '_' . $originalName;
-            $path = $request->file('img')->storeAs('public/profile_images', $fileName);
+            $path = $request->file('img')->store('public/profile_images');
             $profile->image = basename($path);
         }
         $profile->save();
 
-        // デフォルト住所を取得、存在しない場合は新規作成
-        $address = $user->addresses()->where('is_default', true)->first() ?? new \App\Models\Address(['user_id' => $user->id]);
+        //デフォルト住所を更新
+        $address = $user->addresses()->updateOrCreate(
+            ['is_default' => true],
+            $request->only(['post_number', 'address', 'building'])
+        );
 
-        // 住所情報を更新
-        $address->fill($request->only(['post_number', 'address', 'building']));
-        $address->is_default = true;
-        $address->save();
-
-        // 初回のみ has_profile フラグを true にする
+        //初回更新時のフラグ設定
         if (!$user->has_profile) {
-            $user->has_profile = true;
-            $user->save();
+            $user->update(['has_profile' => true]);
         }
 
-        return redirect()->route('mypage.profile.update')->with('message', 'プロフィールを更新しました');
+        return redirect()->route('mypage.profile.edit')->with('message', 'プロフィールを更新しました');
     }
 }

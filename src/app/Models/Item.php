@@ -19,6 +19,11 @@ class Item extends Model
         'condition',
         'like_count',
         'image',
+        'is_sold',
+    ];
+
+    protected $casts = [
+        'category' => 'array',
     ];
 
     public function user()

@@ -22,9 +22,10 @@
                 <div class="item">
                     <div class="item-image">
                         <a href="{{ route('item.detail', ['item_id' => $item->id]) }}">
-                            <img src="{{ $item->image ? asset('storage/item_images/' . $item->image) : asset('image/dummy.jpg') }}" alt="{{ $item->name }}">
+                            <img src="{{ $item->image ? asset('storage/item_images/' . $item->image) : asset('image/dummy.jpg') }}"
+                                alt="{{ $item->name }}">
                         </a>
-                        </div>
+                    </div>
                     <div class="item-name">{{ $item->name }}</div>
                     @if ($item->is_sold)
                         <span class="item-status">Sold</span>
@@ -33,8 +34,4 @@
             @endforeach
         </div>
     @endif
-@endsection
-
-@section('js')
-<script src="{{ asset('js/item.js') }}"></script>
 @endsection
