@@ -4,7 +4,7 @@
 const stripe = Stripe(stripePublicKey); // Bladeテンプレートから取得
 const elements = stripe.elements();
 const cardElement = elements.create("card");
-cardElement.mount("#card-element");
+cardElement.mount("#card-element"); //#card-elementというIDを持つHTML要素にカード入力フィールドを設置する
 
 // カード入力エラーを表示
 cardElement.addEventListener("change", function (event) {
@@ -25,6 +25,7 @@ form.addEventListener("submit", async (event) => {
     submitButton.disabled = true;
     submitButton.textContent = "処理中...";
 
+
     try {
         // Stripeでカード決済を確認
         const result = await stripe.confirmCardPayment(clientSecret, {
@@ -39,7 +40,7 @@ form.addEventListener("submit", async (event) => {
             return;
         }
 
-        // サーバーへ支払い情報を送信
+     // サーバーへ支払い情報を送信
         const response = await axios.post(`/payment/${itemId}`, {
             purchase_id: purchaseId,
             payment_intent_id: result.paymentIntent.id,
@@ -54,7 +55,7 @@ form.addEventListener("submit", async (event) => {
 
         // サーバーのレスポンスを処理
         if (response.data.succeeded) {
-            window.location.href = "/payment_done";
+            window.location.href = "/thanks-buy";
         } else {
             alert("支払い情報の保存に失敗しました: " + response.data.message);
         }

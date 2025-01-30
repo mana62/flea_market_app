@@ -25,7 +25,6 @@ Route::get('/login', [AuthController::class, 'loginPage'])->name('login.view');
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-
 //商品関連のルート
 //商品検索
 Route::get('/search', [SearchController::class, 'searchItem'])->name('search');
@@ -33,6 +32,8 @@ Route::get('/search', [SearchController::class, 'searchItem'])->name('search');
 Route::get('/', [ItemController::class, 'index'])->name('item');
 //商品詳細
 Route::get('/item/{item_id}', [ItemController::class, 'itemDetail'])->name('item.detail');
+Route::middleware(['auth'])->group(function () {
+
 //出品ページ
 Route::get('/sell', [ItemController::class, 'sellItemPage'])->name('item.sell.page');
 //出品処理
@@ -43,10 +44,9 @@ Route::post('/item/{item}/image', [ItemController::class, 'uploadImage'])->name(
 Route::post('/item/{item}/like', [ItemController::class, 'toggleLike'])->name('item.like');
 //コメント投稿
 Route::post('/item/{item_id}/comments', [ItemController::class, 'comment'])->name('item.comment');
-
+});
 //プロフィール関連
 Route::middleware(['auth', 'has.profile'])->group(function () {
-    //マイページ
     Route::get('/mypage', [ProfileController::class, 'index'])->name('mypage');
 });
 
@@ -73,8 +73,3 @@ Route::middleware('auth')->group(function () {
     //購入完了
     Route::get('/thanks-buy', [PurchaseController::class, 'thanksBuy'])->name('thanks.buy');
 });
-
-//決済後
-Route::get('/payment_done', function () {
-    return view('payment_done');
-})->name('payment.done');

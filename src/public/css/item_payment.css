@@ -8,6 +8,7 @@
   text-align: center;
   color: red;
   font-size: 18px;
+  font-weight: bold;
 }
 
 .payment-form-content {
@@ -23,7 +24,6 @@
   padding: 10px 20px;
   border: 1px solid #ddd;
   border-radius: 5px;
-  font-family: "Zen Kaku Gothic New", sans-serif;
   font-size: 16px;
   margin: 0 auto;
   margin-top: 30px;
@@ -33,7 +33,6 @@
 }
 
 .card-element {
-  font-family: "Zen Kaku Gothic New", sans-serif;
   font-size: 18px;
 }
 
@@ -42,7 +41,6 @@
   padding: 15px 20px;
   border: 1px solid #ddd;
   border-radius: 5px;
-  font-family: "Zen Kaku Gothic New", sans-serif;
   font-size: 16px;
   margin: 0 auto;
   margin-top: 30px;
@@ -72,33 +70,17 @@
   background-color: #ee7f7f;
 }
 
-.back-link {
-text-align: center;
-}
-
-.back-link a {
-  font-size: 18px;
-  color: #747070;
-}
-
-.back-link a:hover {
-  color: #868585;
-}
-
 @media (max-width: 768px) {
   .card-element-form {
-      width: 90%;
+    width: 90%;
   }
 
   .payment-input {
-      width: 90%;
+    width: 90%;
   }
 
   .payment-button__submit {
     width: 90%;
   }
 
-  .back-link a {
-    font-size: 16px;
-  }
 }

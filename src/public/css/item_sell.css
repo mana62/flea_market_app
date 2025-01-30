@@ -15,26 +15,29 @@
 .message {
     margin-top: 10px;
     text-align: center;
-    color: red;
-    font-size: 18px;
 }
 
 .message-session {
     display: block;
     margin: 0;
     padding: 0;
+    color: red;
+    font-size: 18px;
+    font-weight: bold;
 }
 
+
 .form {
+    width: 100%;
+    max-width: 1200px;
     margin: 0 auto;
-    width: 80%;
-    max-width: 700px;
     text-align: center;
 }
 
 .form__group {
     text-align: left;
     color: #000;
+    margin: 0 60px;
 }
 
 .section-title {
@@ -48,7 +51,6 @@
     font-size: 22px;
 }
 
-/* 画像選択部分 */
 .image-upload {
     border: 1px dotted #000;
     border-radius: 5px;
@@ -95,7 +97,6 @@
     color: #ee7f7f;
 }
 
-/* カテゴリーを個別に枠で囲む */
 .category-group {
     display: flex;
     flex-wrap: wrap;
@@ -116,7 +117,6 @@
 }
 
 .category-item span {
-    pointer-events: none;
     padding: 5px 15px;
 }
 
@@ -167,7 +167,7 @@ textarea {
 
 .form__button {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .form__button-submit {
@@ -177,7 +177,7 @@ textarea {
     color: #fff;
     cursor: pointer;
     padding: 10px;
-    margin-top: 30px;
+    margin: 30px 0;
     width: 100%;
     box-sizing: border-box;
     font-size: 14px;
@@ -185,16 +185,16 @@ textarea {
 }
 
 .form__button-submit:hover {
-    color: #ee7f7f;
+    background: #ee7f7f;
 }
 
-@media (max-width: 768px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 1024px) {
     .sell__content {
         width: 90%;
     }
 
     .form {
-        width: 100%;
+        width: 90%;
     }
 
     .form__group-content label {
@@ -202,6 +202,7 @@ textarea {
     }
 
     .category-group {
-      gap: 5px;
+        gap: 5px;
+        margin: 0;
     }
 }

@@ -72,7 +72,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function purchasedItems()
     {
-        return $this->hasManyThrough(Item::class, Purchase::class, 'profile_id', 'id', 'id', 'item_id');
+        return $this->hasManyThrough(Item::class, Purchase::class, 'user_id', 'id', 'id', 'item_id');
     }
 
     public function listedItems()

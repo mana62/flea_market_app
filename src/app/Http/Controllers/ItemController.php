@@ -12,19 +12,33 @@ use App\Http\Requests\ItemRequest;
 class ItemController extends Controller
 {
     //商品一覧を表示
+
     public function index(Request $request)
     {
-        //おすすめ(商品一覧)を取得して$tabに格納
+        // おすすめ(商品一覧)を取得して$tabに格納
         $tab = $request->query('tab', 'recommend');
-        //検索部分のワードを取得して$inputに格納
+        // 検索部分のワードを取得して$inputに格納
         $input = $request->query('search', '');
+        // タブごとのデータ取得(お気に入り)
+        if ($tab === 'mylist') {
+            if (!Auth::check()) {
+                // ゲストユーザーには「いいねした商品はありません」とメッセージを返す
+                return view('item', [
+                    'items' => collect(), // 空のコレクション
+                    'tab' => $tab,
+                    'input' => $input,
+                    'message' => 'いいねした商品はありません',
+                ]);
+            }
 
-        //タブごとのデータ取得(お気に入り)
-        $items = ($tab === 'mylist' && Auth::check())
-            ? Auth::user()->likedItems()->where('name', 'like', "%$input%")->get()
-            : Item::where('name', 'like', "%$input%")->get();
+            // ログインユーザーの場合は「いいねした商品」を取得
+            $items = Auth::user()->likedItems()->where('name', 'like', "%$input%")->get();
+        } else {
+            // 通常のアイテム取得
+            $items = Item::where('name', 'like', "%$input%")->get();
+        }
 
-        //自分の商品を除外
+        // 自分の商品を除外
         if (Auth::check()) {
             $items = $items->where('user_id', '!=', Auth::id());
         }
@@ -99,12 +113,12 @@ class ItemController extends Controller
         //ユーザーがいいねしてるアイテムに対して、指定されたアイテムIDをトグル（追加/削除）する
         $user->likedItems()->toggle($item->id);
 
-        //json形式で返す
+        // 最新の状態を取得してレスポンスを返す
+        $isLiked = $user->likedItems()->where('item_id', $item->id)->exists();
+
         return response()->json([
-            //ユーザーが指定したアイテムをいいねしているかどうかを確認し、その結果をlikedキーに格納
-            'liked' => $user->likedItems->contains($item->id),
-            //いいねの数を数える
-            'likesCount' => $item->likesCount(),
+            'liked' => $isLiked,
+            'likesCount' => $item->likedBy()->count(),
         ]);
     }
 

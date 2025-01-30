@@ -11,7 +11,8 @@ class Purchase extends Model
 
     protected $fillable = [
         'item_id',
-        'profile_id',
+        'user_id',
+        'address_id',
         'payment_method',
     ];
 
@@ -20,9 +21,14 @@ class Purchase extends Model
         return $this->belongsTo(Item::class);
     }
 
-    public function profile()
+    public function user()
     {
-        return $this->belongsTo(Profile::class);
+        return $this->belongsTo(User::class);
+    }
+
+    public function address()
+    {
+        return $this->belongsTo(Address::class);
     }
 
     public function payment()

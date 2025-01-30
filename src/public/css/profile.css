@@ -15,16 +15,17 @@
 }
 
 .message {
-  margin-top: 10px;
-  text-align: center;
-  color: red;
-  font-size: 18px;
+    margin-top: 10px;
+    text-align: center;
 }
 
 .message-session {
-  display: block;
-  margin: 0 ;
-  padding: 0;
+    display: block;
+    margin: 0;
+    padding: 0;
+    color: red;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 .form {
@@ -38,6 +39,7 @@
     color: #000;
 }
 
+/* Image Upload Styles */
 .image-upload {
     display: flex;
     align-items: center;
@@ -123,31 +125,31 @@ input[type="file"] {
 }
 
 .form__button-submit:hover {
-    color: #ee7f7f;
+    background: #581818;
 }
 
-@media (max-width: 1020px) {
+@media screen and (min-width: 820px) and (max-width: 1200px) {
     .form {
-        width: 80%;
+        width: 50%;
     }
 
-    .register-form__heading {
+    .profile-form__heading {
         font-size: 14px;
-        margin-top: 20px;
     }
+}
 
 @media (max-width: 768px) {
     .form {
-        width: 80%;
+        width: 50%;
     }
 
-    .register-form__heading {
-        font-size: 14px;
-        margin-top: 20px;
-    }
-
-    .form__group-content label {
+    .profile-form__heading {
         font-size: 14px;
     }
 }
+
+@media screen and (max-width: 480px) {
+    .form {
+        width: 80%;
+    }
 }

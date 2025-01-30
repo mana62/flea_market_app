@@ -20,6 +20,7 @@ class CreateAddressesTable extends Migration
             $table->string('address', 255)->default('');
             $table->string('building', 255)->nullable();
             $table->boolean('is_default')->default(false);
+            $table->unique(['user_id', 'is_default'], 'user_default_address');
             $table->timestamps();
         });
     }

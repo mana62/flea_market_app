@@ -121,17 +121,54 @@
     padding: 0;
 }
 
+@media screen and (min-width: 820px) and (max-width: 1180px) {
+    .item-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .item-name {
+        margin: 0 0 0 30px;
+    }
+
+    .mypage__content {
+        margin: 0 0 0 50px;
+    }
+
+    .mypage__content h1 {
+        margin: 0;
+    }
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1200px) {
+    .item-list {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        margin: 50px 10px;
+    }
+
+    .item-name {
+        margin: 0;
+    }
+
+    .mypage__content {
+        margin: 0 0 0 50px;
+    }
+
+    .mypage__content h1 {
+        margin: 0;
+    }
+}
+
 @media (max-width: 768px) {
     .tabs {
         text-align: center;
     }
 
     .tabs a {
-        margin: 0 30px;
+        margin: 0 40px;
     }
 
     .item-list {
-        display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 30px;
         margin: 50px 10px;
@@ -145,50 +182,45 @@
         margin: 0 20px 10px 0;
     }
 
-
     .item-image {
         margin: 10px 0;
     }
 
     .item-name {
-        text-align: left;
         font-size: 18px;
-        margin: 10px 0 0 40px;
+        margin: 10px 0 0 30px;
     }
 
     .mypage__content {
-        flex-direction: column;
-        text-align: center;
-        margin: 0;
-        width: 100%;
+        margin: 0 0 0 80px;
     }
 
     .mypage__content img {
         margin: 0 20px 0 0;
     }
-
-    .profile-link  {
-        width: 30%;
-        margin-top: 20px;
-    }
 }
 
-    @media screen and (max-width: 480px) {
-        .item-list {
-            display: grid;
-            grid-template-columns: repeat(1, 1fr);
-            gap: 30px;
-            margin: 40px 20px;
-        }
-
-        .item-name {
-            text-align: left;
-            font-size: 18px;
-            padding: 10px 0 0 10px;
-        }
-
-        .profile-link  {
-            width: 60%;
-            margin-top: 20px;
-        }
+@media screen and (max-width: 480px) {
+    .tabs a {
+        margin: 0 15px;
     }
+
+    .item-list {
+        grid-template-columns: repeat(1, 1fr);
+        gap: 30px;
+        margin: 40px 20px;
+    }
+
+    .item-name {
+        margin: 0 5px;
+    }
+
+    .profile-link {
+        margin-top: 20px;
+    }
+
+    .mypage__content {
+        margin: 0 auto;
+        flex-direction: column;
+    }
+}

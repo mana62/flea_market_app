@@ -12,18 +12,19 @@
 @section('content')
     <div class="message">
         @if (session('message'))
-            <div class="message-session">
-                {{ session('message') }}
-            </div>
+            <div class="message-session">{{ session('message') }}</div>
         @endif
     </div>
 
+    <form class="purchase-form" id="purchase-form" method="post">
+        @csrf
     <section class="item-purchase__container">
-        <!-- 左側カラム -->
+        <!-- 左カラム：商品情報 -->
         <div class="item-purchase__left">
             <figure class="item-detail">
                 <div class="item-image">
-                    <img src="{{ $item->image ? asset('storage/item_images/' . $item->image) : asset('image/dummy.jpg') }}" alt="{{ $item->name }}">
+                    <img src="{{ $item->image ? asset('storage/item_images/' . $item->image) : asset('image/dummy.jpg') }}"
+                        alt="{{ $item->name }}">
                 </div>
                 <figcaption class="item-detail__info">
                     <h1 class="item-detail__name" data-item-id="{{ $item->id }}">{{ $item->name }}</h1>
@@ -31,6 +32,7 @@
                 </figcaption>
             </figure>
 
+            <!-- 支払い方法 -->
             <div class="payment-method__container">
                 <h2>支払い方法</h2>
                 <select id="payment-method" class="payment_method" name="payment_method">
@@ -38,8 +40,13 @@
                     <option value="convenience-store">コンビニ払い</option>
                     <option value="card">カード払い</option>
                 </select>
-            </div>
+            @error('payment_method')
+            <div class="form__error">{{ $message }}</div>
+        @enderror
+    </div>
 
+
+            <!-- 配送先 -->
             <div class="shipping-address">
                 <header class="shipping-address__row">
                     <h2>配送先</h2>
@@ -54,27 +61,27 @@
                         @endif
                     </div>
                 @else
+                    <div class="shipping-address__detail">
                         <p>住所を登録してください</p>
                     </div>
                 @endif
             </div>
         </div>
 
-        <!-- 右側カラム -->
-<div class="item-purchase__right">
-    <form id="purchase-form" method="post">
-        @csrf
-        <section class="purchase-container">
-            <p class="item-detail__price">商品代金 <span>¥{{ number_format($item->price) }}</span></p>
-            <p class="item-detail__payment_method">支払い方法 <span id="itemDetailPaymentMethod"></span></p>
-        </section>
-        <section class="item-purchase__button">
-            <button type="submit" class="item-purchase__button-submit">購入する</button>
-        </section>
-    </form>
-</div>
-
+        <!-- 右カラム：購入情報 -->
+        <div class="item-purchase__right">
+                
+                <section class="purchase-container">
+                    <p class="item-detail__price">商品代金 <span>¥{{ number_format($item->price) }}</span></p>
+                    <p class="item-detail__payment_method">支払い方法 <span id="itemDetailPaymentMethod"></span></p>
+                </section>
+                <section class="item-purchase__button">
+                    <button type="submit" class="item-purchase__button-submit">購入する</button>
+                </section>
+        
+        </div>
     </section>
+</form>
 @endsection
 
 @section('js')

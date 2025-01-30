@@ -9,14 +9,13 @@
         <header class="login-form__heading">
             <h1>ログイン</h1>
         </header>
-        <form class="form" action="{{ route('login') }}" method="post">
+        <form class="form" action="{{ route('login') }}" method="post" novalidate>
             @csrf
             <div class="form__group">
                 <div class="form__group-content">
-                    <label for="name-or-mail">ユーザー名 / メールアドレス</label>
-                    <input type="text" name="name-or-mail" id="name-or-mail" value="{{ old('name-or-mail') }}"
-                        autocomplete="username">
-                    @error('name-or-mail')
+                    <label for="email">ユーザー名 / メールアドレス</label>
+                    <input type="text" name="email" id="email" value="{{ old('email') }}" autocomplete="email">
+                    @error('email')
                         <div class="form__error">{{ $message }}</div>
                     @enderror
                 </div>

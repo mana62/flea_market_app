@@ -6,38 +6,41 @@
 .thanks_buy__message {
     font-size: 40px;
     font-weight: bold;
-    margin: 200px 0 50px;
+    margin-top: 200px;
+}
+
+.card-payment__message {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 50px;
 }
 
 .mypage__link a {
     font-size: 20px;
     color: #747070;
+    text-decoration: none;
 }
 
 .mypage__link a:hover {
     color: #dcd7d7;
 }
 
-.card-payment__link {
-    margin-bottom: 10px;
-}
-
-.card-payment__link a {
-    font-size: 20px;
-    color: #747070;
-}
-
-.card-payment__link a:hover {
-    color: #dcd7d7;
-}
-
 @media (max-width: 768px) {
     .thanks_buy__message {
-        font-size: 28px;
+        font-size: 35px;
     }
 
-    .mypage__link a,
-    .card-payment__link a {
+    .mypage__link a {
         font-size: 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .thanks_buy__message {
+        font-size: 25px;
+    }
+
+    .mypage__link a {
+        font-size: 14px;
     }
 }

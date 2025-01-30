@@ -12,38 +12,44 @@ use App\Http\Requests\PaymentRequest;
 
 class PaymentController extends Controller
 {
-    //支払いページを表示
+    // 支払いページを表示
     public function itemPaymentPage(Request $request, $item_id)
     {
-        //商品を取得
+        // 商品を取得
         $item = Item::findOrFail($item_id);
-
-        //購入IDを取得
-        $purchase_id = $request->query('purchase_id');
-
-        //Stripeの秘密鍵を設定
+    
+        // 購入IDをセッションから取得
+        $purchase_id = session('purchase_id'); // セッションから購入IDを取得
+    
+        // Stripeの秘密鍵を設定
         Stripe::setApiKey(env('STRIPE_SECRET'));
-
-        //Stripeの支払いIntentを作成
+    
+        // Stripeの支払いIntentを作成
         $paymentIntent = PaymentIntent::create([
-            'amount' => $item->price * 100, //金額を設定（円をセンに変換）
-            'currency' => 'jpy',           //日本円
+            'amount' => $item->price * 100, // 金額を設定（円をセンに変換）
+            'currency' => 'jpy',           // 日本円
             'metadata' => [
                 'item_id' => $item_id,
                 'user_id' => Auth::id(),
             ],
         ]);
-
+    
         return view('item_payment', [
             'item' => $item,
-            'purchase_id' => $purchase_id,
-            'client_secret' => $paymentIntent->client_secret, //クライアントシークレットをビューに渡す
+            'purchase_id' => $purchase_id, // セッションから取得した購入IDをビューに渡す
+            'client_secret' => $paymentIntent->client_secret,
         ]);
     }
+    
 
-    //支払い処理
+    // 支払い処理
     public function itemPayment(PaymentRequest $request, $item_id)
     {
+        // 支払い方法が「コンビニ払い」の場合
+        if ($request->input('payment_method') === 'convenience-store') {
+            return redirect()->route('thanks.buy');
+        }
+
         // バリデート済みのデータを取得
         $validated = $request->validated();
 
@@ -63,5 +69,6 @@ class PaymentController extends Controller
             //エラー時のレスポンス
             return response()->json(['succeeded' => false, 'message' => '支払いに失敗しました'], 500);
         }
+        
     }
 }
