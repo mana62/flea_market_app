@@ -29,7 +29,7 @@ class ItemRequest extends FormRequest
       'price' => ['required', 'numeric', 'min:0'],
       'description' => ['required', 'string', 'max:1000'],
       'category' => ['required', 'array'],
-      'category.*' => ['string'],
+      'category.*' => ['required', 'string'],
       'condition' => ['required', 'string'],
       'img' => ['required', 'image', 'mimes:jpeg,png,', 'max:2048'],
     ];
@@ -39,9 +39,9 @@ class ItemRequest extends FormRequest
   {
     return [
       'name.required' => '商品名を入力してください',
-      'name.string' => '商品名は文字列で入力してください',
+      'name.string' => '商品名は文字で入力してください',
       'name.max' => '商品名は255文字以内で入力してください',
-      'brand.string' => 'ブランド名は文字列で入力してください',
+      'brand.string' => 'ブランド名は文字で入力してください',
       'brand.max' => 'ブランド名は255文字以内で入力してください',
       'price.required' => '価格を入力してください',
       'price.numeric' => '価格は数値で入力してください',
@@ -50,9 +50,7 @@ class ItemRequest extends FormRequest
       'description.string' => '商品の説明は文字列で入力してください',
       'description.max' => '商品の説明は1000文字以内で入力してください',
       'category.required' => 'カテゴリーを選択してください',
-      'category.string' => 'カテゴリーは文字列で入力してください',
       'condition.required' => '商品の状態を選択してください',
-      'condition.string' => '商品の状態は文字列で入力してください',
       'img.required' => '画像をアップロードしてください',
       'img.image' => 'アップロードできるのは画像ファイルのみです',
       'img.mimes' => '画像はjpeg、png形式でアップロードしてください',

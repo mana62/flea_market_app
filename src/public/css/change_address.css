@@ -68,11 +68,27 @@
     background: #ee7f7f;
 }
 
-@media (max-width: 768px) {
+@media screen and (min-width: 820px) and (max-width: 1200px) {
+    .form {
+        width: 50%;
+    }
+
     .change-address-form__heading {
         font-size: 14px;
     }
+}
 
+@media (max-width: 768px) {
+    .form {
+        width: 50%;
+    }
+
+    .change-address-form__heading {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 480px) {
     .form {
         width: 80%;
     }

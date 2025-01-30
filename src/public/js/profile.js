@@ -1,15 +1,16 @@
-'use strict'
+"use strict";
 
-//画像プレビューを表示する関数
 function previewImage(event) {
-  //FileReaderオブジェクトを作成
-  const reader = new FileReader();
-  reader.onload = function () {
-      //プレビュー表示用の要素を取得
-      const preview = document.getElementById('userImagePreview');
-      //選択した画像を表示
-      preview.innerHTML = `<img src="${reader.result}" alt="選択した画像">`;
-  };
-  //選択したファイルを読み込む
-  reader.readAsDataURL(event.target.files[0]);
+    const reader = new FileReader();
+    reader.onload = function () {
+        const preview = document.getElementById("userImagePreview");
+        const imgBase64Input = document.getElementById("imgBase64");
+
+        // プレビューに画像を表示
+        preview.innerHTML = `<img src="${reader.result}" alt="選択した画像">`;
+
+        // Base64形式のデータをhidden inputに設定
+        imgBase64Input.value = reader.result;
+    };
+    reader.readAsDataURL(event.target.files[0]); // ファイルをBase64形式で読み込む
 }

@@ -72,6 +72,8 @@
 .register__link {
     margin-top: 10px;
     text-align: center;
+    margin: 10px 0;
+    display: block;
 }
 
 .register__link a {
@@ -85,12 +87,29 @@
     color: #4189bf;
 }
 
-@media (max-width: 768px) {
+
+@media screen and (min-width: 820px) and (max-width: 1200px) {
     .form {
-        width: 80%;
+        width: 50%;
     }
 
     .login-form__heading {
         font-size: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    .form {
+        width: 50%;
+    }
+
+    .login-form__heading {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .form {
+        width: 80%;
     }
 }

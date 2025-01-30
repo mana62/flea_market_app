@@ -58,11 +58,11 @@ https://github.com/mana62/flea_market_app<br>
 
 # テーブル設計
 
-<br>
+[flea_market_table.pdf](https://github.com/user-attachments/files/18487077/flea_market_table.pdf)
 
 # ER 図
 
-<img width="1030" alt="coachtechフリマ" src="https://github.com/user-attachments/assetsaeee877a-52dc-4c90-86c9-e1b34d7daf73" />
+<img width="1135" alt="Image" src="https://github.com/user-attachments/assets/14d8319b-5fe9-4201-9e3b-10fe8bb3a91d" />
 
 # 環境構築
 
@@ -126,3 +126,6 @@ STRIPE_SECRET=sk_test_51QL1HQP6vhR18R0Q48Wf9g24z9MwM107D1wPfFXi0J8uWlyF2xY4vZxMB
    (php artisan db:seed)<br>
 
 # 補足
+- メール認証していないとログインできない
+- ログインしていないとコメント入力欄は表示されない
+- 未承認の場合はいいねができないため、マイリストもいいねした商品はありませんと表示される

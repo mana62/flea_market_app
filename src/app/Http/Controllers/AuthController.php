@@ -26,6 +26,7 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'has_profile' => false,
         ]);
 
         //自動ログインとメール認証通知
@@ -70,8 +71,8 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         //ユーザー名またはメールアドレスでログイン
-        $loginField = filter_var($request->input('name-or-mail'), FILTER_VALIDATE_EMAIL) ? 'email' : 'name';
-        $credentials = [$loginField => $request->input('name-or-mail'), 'password' => $request->password];
+        $loginField = filter_var($request->input('email'), FILTER_VALIDATE_EMAIL) ? 'email' : 'name';
+        $credentials = [$loginField => $request->input('email'), 'password' => $request->password];
 
         //認証成功時、商品一覧へリダイレクト
         if (Auth::attempt($credentials)) {
@@ -79,7 +80,7 @@ class AuthController extends Controller
         }
 
         //認証失敗時
-        return back()->withErrors(['name-or-mail' => 'ログイン情報が登録されていません'])->withInput();
+        return back()->withErrors(['email' => 'ログイン情報が登録されていません'])->withInput();
     }
 
     //ログアウト処理

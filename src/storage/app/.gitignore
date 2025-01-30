@@ -1,3 +1,6 @@
 *
 !public/
+!public/profile_images/.gitkeep
+!public/item_images/.gitkeep
 !.gitignore
+

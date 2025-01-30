@@ -23,12 +23,10 @@
                 </form>
             </li>
             <li class="mypage">
-                <a href={{ route('mypage') }}>マイページ</a>
+                <a href="{{ route('mypage') }}">マイページ</a>
             </li>
             <li class="sell">
-                <div class="sell-link">
-                <a class="" href={{ route('item.sell.page') }}>出品</a>
-            </div>
+                <a href="{{ route('item.sell.page') }}">出品</a>
             </li>
         </ul>
     </div>

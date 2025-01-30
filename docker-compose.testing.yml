@@ -1,0 +1,22 @@
+services:
+  php:
+    env_file:
+      - src/.env.testing
+  mysql:
+    env_file:
+      - src/.env.testing
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test_db
+      MYSQL_USER: test_user
+      MYSQL_PASSWORD: test
+
+  phpmyadmin:
+    env_file:
+      - src/.env.testing
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysql
+      - PMA_USER=test_user
+      - PMA_PASSWORD=test
+

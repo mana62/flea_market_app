@@ -62,21 +62,30 @@
                 <h2 class="item-detail__section-title">商品説明</h2>
                 <p class="item-detail__description">{{ $item->description }}</p>
                 <h2 class="item-detail__section-title">商品情報</h2>
-                <dl>
+                <div class="category-list">
                     <dt>カテゴリー</dt>
-                    <label class="category-item">
-                        <dd class="category-label">
-                            @if (is_array($item->category))
-                                {{ implode(', ', $item->category) }}
-                            @else
-                                {{ $item->category }}
-                            @endif
-                        </dd>
-                    </label>
-                    <div>
-                        <dt>商品の状態</dt>
-                        <dd>{{ $item->condition }}</dd>
+                    <div class="category-container">
+                        @if (is_array($item->category))
+                            @foreach ($item->category as $category)
+                                <label class="category-item">
+                                    <dd class="category-label">
+                                        {{ $category }}
+                                    </dd>
+                                </label>
+                            @endforeach
+                        @else
+                            <label class="category-item">
+                                <dd class="category-label">
+                                    {{ $item->category }}
+                                </dd>
+                            </label>
+                        @endif
                     </div>
+                </div>
+                <div class="condition-list">
+                    <dt>商品の状態</dt>
+                    <dd>{{ $item->condition }}</dd>
+                </div>
                 </dl>
             </article>
             <!-- コメント -->
@@ -113,11 +122,6 @@
                         <button type="submit" class="item-detail__comment-submit">コメントを送信する</button>
                     </form>
                 </section>
-            @else
-                <p class="rule">コメントを入力する場合はログインしてください</p>
-                <div class="login-link">
-                    <a href="{{ route('login') }}">ログインする</a>
-                </div>
             @endauth
         </section>
         </article>
