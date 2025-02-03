@@ -50,8 +50,7 @@
                 <!-- ユーザー名 -->
                 <div class="form__group-content">
                     <label for="name">ユーザー名</label>
-                    <input type="text" name="name" id="name" value="{{ old('name', $profile->name ?? '') }}"
-                        autocomplete="name">
+                    <input type="text" name="name" id="name" value="{{ old('name', $profile->name) }}">
                     @error('name')
                         <div class="form__error">{{ $message }}</div>
                     @enderror

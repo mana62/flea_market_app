@@ -18,7 +18,7 @@ class PurchaseFactory extends Factory
     {
         return [
             'item_id' => Item::factory(),
-            'user_id' => User::factory(),
+            'user_id' => User::factory()->create(),
             'address_id' => Address::factory(),
             'payment_method' => $this->faker->randomElement(['card', 'convenience-store']),
         ];

@@ -15,8 +15,8 @@ class ProfileFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => User::factory(),
-            'name' => $this->faker->name,
+            'user_id' => User::factory()->create(),
+            'name' => $this->faker->name('ja_JP'),
             'image' => null,
         ];
     }

@@ -59,7 +59,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 150px;
+    height: 200px;
 }
 
 .file-name {
@@ -75,6 +75,25 @@
     position: relative;
     font-weight: bold;
 }
+
+.item-image-preview img {
+    max-width: 100%;  /* 親要素の幅を超えないようにする */
+    max-height: 190px; /* 画像の高さを制限 */
+    object-fit: contain; /* 画像が潰れないように調整 */
+    display: block; /* 不要な余白を削除 */
+    margin: auto; /* 中央揃え */
+}
+
+
+
+
+/* input[type="file"] を隠してラベルをクリックできるようにする */
+.image-upload__label input[type="file"] {
+    display: none;
+}
+
+
+
 
 .image-upload__label {
     cursor: pointer;

@@ -27,21 +27,25 @@
                 <div class="form__group-content">
                     <h3>商品画像</h3>
                     <div class="image-upload">
-                        <p id="file-name" class="file-name" style="display: none;"></p>
-                        <input type="file" name="img" id="img" accept="image/*" onchange="previewImage(event)"
-                            style="display: none;">
-                        <label for="img" class="image-upload__label" id="img-label">画像を選択する</label>
-                        @if (session('base64_image'))
-                            <img id="img-preview" src="{{ session('base64_image') }}" alt="アイテム画像" style="display: none;">
-                        @elseif (isset($item) && $item->image)
-                            <img id="img-preview" src="{{ asset('storage/item_images/' . $item->image) }}" alt="アイテム画像" style="display: none;">
-                        @endif
-                    </div>
-                    <div class="form__error">
-                        @error('img')
-                            {{ $message }}
+                        <div class="item-image-preview" id="itemImagePreview">
+                            @if(session('itemImage'))
+                                <img src="{{ session('itemImage') }}" alt="選択した画像" style="max-width: 200px; height: auto; margin-right: 10px;">
+                            @endif
+                        </div>
+                        <label for="img" class="image-upload__label">
+                            画像を選択する
+                            <input type="file" name="img" id="img" accept="image/*">
+                        </label>
+                    
+                        <!-- Hidden input にセッションから取得した画像データをセット -->
+                        <input type="hidden" name="img_base64" id="imgBase64" value="{{ session('itemImage') ?? old('img_base64') }}">
+                    
+                        @error('img_base64')
+                            <div class="form__error">{{ $message }}</div>
                         @enderror
                     </div>
+                    
+                    
                 </div>
 
                 <!-- 商品の詳細 -->
@@ -145,7 +149,7 @@
                     </div>
 
                     <!-- 出品ボタン -->
-                    <div class="form__button">
+                    <div class="form__button" id="formButton">
                         <button class="form__button-submit" type="submit">出品する</button>
                     </div>
                 </div>

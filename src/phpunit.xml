@@ -4,6 +4,7 @@
     bootstrap="vendor/autoload.php"
     colors="true"
 >
+
     <testsuites>
         <testsuite name="Unit">
             <directory suffix="Test.php">./tests/Unit</directory>
@@ -29,5 +30,6 @@
         <server name="QUEUE_CONNECTION" value="sync" />
         <server name="SESSION_DRIVER" value="array" />
         <server name="TELESCOPE_ENABLED" value="false" />
+        <env name="DB_SEED" value="false"/>
     </php>
 </phpunit>

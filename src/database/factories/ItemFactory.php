@@ -90,7 +90,8 @@ class ItemFactory extends Factory
             'condition' => $this->faker->randomElement($conditions),
             'image' => $item['image'],
             'is_sold' => $this->faker->boolean,
-            'user_id' => \App\Models\User::factory(),
+// すでに存在するユーザーのIDをランダムに選択する
+'user_id' => \App\Models\User::inRandomOrder()->first()->id ?? \App\Models\User::factory()->create()->id,
         ];
     }
 }

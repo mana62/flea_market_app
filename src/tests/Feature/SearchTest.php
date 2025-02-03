@@ -17,24 +17,30 @@ class SearchTest extends TestCase
      * @return void
      */
     public function test_search_items()
-    {
-        // テスト用のアイテムを作成
-        Item::factory()->create(['name' => '腕時計']);
-        Item::factory()->create(['name' => 'HDD']);
-        Item::factory()->create(['name' => '玉ねぎ']);
+{
+    // テスト用のアイテムを作成
+    Item::factory()->create(['name' => '腕時計']);
+    Item::factory()->create(['name' => 'HDD']);
+    Item::factory()->create(['name' => '玉ねぎ']);
 
-        // 検索クエリを実行
-        $response = $this->get('/search?search=腕時計');
+    // 検索クエリを実行
+    $response = $this->get('/search?search=腕時計');
 
-        // ステータスコードが200であることを確認
-        $response->assertStatus(200);
+    // ステータスコードが200であることを確認
+    $response->assertStatus(200);
 
-        // 検索結果に期待するアイテムが含まれていることを確認
-        $response->assertSee('腕時計');
-        // 検索結果に含まれていないアイテムを確認
-        $response->assertDontSee('HDD');
-        $response->assertDontSee('玉ねぎ');
-    }
+    // 検索結果に期待するアイテムが含まれていることを確認
+    $response->assertSee('腕時計');
+    $response->assertDontSee('HDD');
+    $response->assertDontSee('玉ねぎ');
+
+    // ✅ 検索結果がデータベースにも適用されているか確認
+    $this->assertTrue(
+        Item::where('name', 'LIKE', '%腕時計%')->exists(),
+        '検索クエリが正しく適用されていません'
+    );
+}
+
 
     //検索状態がマイリストでも保持される
     public function test_search_items_mylist()

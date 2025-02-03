@@ -17,18 +17,25 @@ class PurchaseController extends Controller
     {
         $item = Item::findOrFail($item_id);
         $user = Auth::user();
-        //デフォルト住所を取得
         $address = $user->addresses()->where('is_default', true)->first();
-
+    
+        // すでに支払い方法がセッションにあるなら変更しない
+    if (!session()->has('payment_method')) {
+        session(['payment_method' => '']); // デフォルトは null にする
+    }
+    
         return view('item_purchase', compact('item', 'address'));
     }
+    
 
     //購入処理
     public function itemPurchase(PurchaseRequest $request, $item_id)
     {
         $item = Item::findOrFail($item_id);
         $paymentMethod = $request->input('payment_method');
-        $address = Auth::user()->addresses()->where('is_default', true)->first();
+// 支払い方法をセッションに保存（これでリロード後も保持される）
+session(['payment_method' => $paymentMethod]);
+$address = Auth::user()->addresses()->where('is_default', true)->first();
 
         switch ($paymentMethod) {
             case 'card':
@@ -69,6 +76,10 @@ class PurchaseController extends Controller
         'address_id' => $address->id,
         'payment_method' => $paymentMethod,
     ]);
+
+    if(!$address) {
+        throw new \Exception('住所が見つかりません');
+    }
 
     $item->update(['is_sold' => true]);
 
@@ -119,7 +130,10 @@ class PurchaseController extends Controller
     $address->is_default = true;
     $address->save();
     $user->addresses()->where('id', '!=', $address->id)->update(['is_default' => false]);
-    return redirect()->route('purchase', ['item_id' => $item_id])->with('message', '配送先を変更しました');
-}
+    return redirect()->route('purchase', ['item_id' => $item_id])->with([
+        'message' => '配送先を変更しました',
+        'payment_method' => session('payment_method')
+    ]);
+    }
 
 }

@@ -118,7 +118,7 @@
                         @error('comment')
                             <div class="form__error">{{ $message }}</div>
                         @enderror
-                        <textarea class="item-detail__text" name="comment" rows="5" cols="60" maxlength="255" required></textarea>
+                        <textarea class="item-detail__text" name="content" rows="5" cols="60" maxlength="255" required></textarea>
                         <button type="submit" class="item-detail__comment-submit">コメントを送信する</button>
                     </form>
                 </section>

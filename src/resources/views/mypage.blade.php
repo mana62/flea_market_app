@@ -18,7 +18,8 @@
                     <img src="{{ asset('storage/profile_images/' . $profile->image) }}" alt="プロフィール画像">
                 @endif
             </div>
-            <h1>{{ $profile->name }}</h1>
+            <h1>{{ $profile->name ?? '' }}</h1>
+
         </div>
         <div class="profile-link">
             <a href="{{ route('mypage.profile.edit') }}">プロフィールを編集</a>
@@ -35,29 +36,31 @@
         </a>
     </div>
 
+
     <!-- 商品リスト -->
-    @if ($items->isEmpty())
-        <p class="empty">
-            {{ $tab === 'buy' ? '購入した商品はありません' : '出品した商品はありません' }}
-        </p>
-    @else
-        <div class="item-list">
-            @foreach ($items as $item)
-                <div class="item">
-                    <div class="item-image">
-                        <a href="{{ route('item.detail', ['item_id' => $item->id]) }}">
-                            <img src="{{ $item->image ? asset('storage/item_images/' . $item->image) : asset('image/dummy.jpg') }}"
-                                alt="{{ $item->name }}">
-                        </a>
-                    </div>
-                    <div class="item-name">{{ $item->name }}</div>
-                    @if ($tab === 'sell' && $item->is_sold)
-                        <span class="item-status sold-badge">Sold</span>
-                    @endif
-                </div>
-            @endforeach
+@if ($items->isEmpty())
+<p class="empty">
+    {{ $tab === 'buy' ? '購入した商品はありません' : '出品した商品はありません' }}
+</p>
+@else
+<div class="item-list">
+    @foreach ($items as $item)
+        <div class="item">
+            <div class="item-image">
+                <a href="{{ route('item.detail', ['item_id' => $item->id]) }}">
+                    <img src="{{ $item->image ? asset('storage/item_images/' . $item->image) : asset('image/dummy.jpg') }}"
+                         alt="{{ $item->name }}  }">
+                </a>
+            </div>
+            <div class="item-name">{{ $item->name }}</div>
+            @if ($tab === 'sell' && $item->is_sold)
+                <span class="item-status sold-badge">Sold</span>
+            @endif
         </div>
-    @endif
+
+    @endforeach
+</div>
+@endif
 @endsection
 
 @section('js')
