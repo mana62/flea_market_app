@@ -58,11 +58,11 @@ https://github.com/mana62/flea_market_app<br>
 
 # テーブル設計
 
-[flea_market_table.pdf](https://github.com/user-attachments/files/18487077/flea_market_table.pdf)
+[flea_market_table.pdf](https://github.com/user-attachments/files/18613185/flea_market_table.pdf)
 
 # ER 図
 
-<img width="1135" alt="Image" src="https://github.com/user-attachments/assets/14d8319b-5fe9-4201-9e3b-10fe8bb3a91d" />
+[ER図.pdf](https://github.com/user-attachments/files/18613717/ER.pdf)
 
 # 環境構築
 

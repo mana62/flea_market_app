@@ -63,32 +63,72 @@ class ItemController extends Controller
         //configからカテゴリーとコンディションを取得
         $categories = config('item.categories');
         $conditions = config('item.conditions');
-        $item = new Item();
-        //セッションから画像パスを取得
-        $imagePath = session('item', 'image_path', null);
-        return view('item_sell', compact('categories', 'conditions', 'imagePath'));
+        return view('item_sell', compact('categories', 'conditions'));
     }
 
     //商品の出品処理
     public function sellItem(ItemRequest $request)
     {
-        //画像を保存してパスを取得
-        $imagePath = $request->file('img')->store('item_images', 'public');
+        $item = new Item();
+ // ✅ カンマを削除した価格を取得
+ $price = str_replace(',', '', $request->input('price'));
 
-        //データベースに保存
-        Item::create([
+   // 画像のアップロード処理
+   if ($request->filled('img_base64')) {
+    $base64Image = $request->input('img_base64');
+    if (strpos($base64Image, ',') !== false) {
+        $imageData = explode(',', $base64Image)[1];
+
+        // Base64デコード
+        $imageDecoded = base64_decode($imageData);
+
+            // ファイル名をユニークにする
+            $timestamp = now()->format('Y-m-d_H-i-s');
+            $originalFileName = uniqid();
+            $extension = 'png';
+            $imageName = "{$timestamp}_{$originalFileName}.{$extension}";
+
+            // 画像を保存するディレクトリ
+            $directory = storage_path("app/public/item_images/");
+            if (!file_exists($directory)) {
+                mkdir($directory, 0777, true); // フォルダがなければ作成
+            }
+
+            // 保存先のパス
+            $imagePath = $directory . $imageName;
+
+            // 画像を保存
+            file_put_contents($imagePath, $imageDecoded);
+
+            // Item モデルに画像を設定
+            $item->image = $imageName;
+            // **セッションに画像を保存（バリデーションエラー時に使う）**
+            session(['itemImage' => $base64Image]);
+        }
+    } else {
+        return redirect()->back()->withErrors(['img_base64' => '画像をアップロードしてください']);
+    
+    }
+        // データベースに保存（画像のファイル名も含める）
+        $item->fill([
             'user_id' => Auth::id(),
             'name' => $request->input('name'),
             'brand' => $request->input('brandName'),
-            'price' => $request->input('price'),
+            'price' => $price,
             'description' => $request->input('description'),
             'category' => $request->input('category'),
             'condition' => $request->input('condition'),
-            'image' => basename($imagePath),
         ]);
+    
+        $item->save();
+
+       // **出品成功時にセッションを削除**
+    session()->forget('itemImage');
 
         return redirect()->route('item.sell.page')->with('message', '商品を出品しました');
     }
+    
+
 
     //画像アップロード
     public function uploadImage(Request $request, Item $item)
@@ -129,7 +169,7 @@ class ItemController extends Controller
         Comment::create([
             'user_id' => Auth::id(),
             'item_id' => $itemId,
-            'content' => $request->input('comment'),
+            'content' => $request->input('content'),
         ]);
 
         return redirect()->route('item.detail', $itemId)->with('message', 'コメントを投稿しました');

@@ -16,6 +16,8 @@ class SellTest extends TestCase
     /**
      * 商品出品機能のテスト
      */
+
+    // 商品出品画面にて必要な情報が保存できること（カテゴリ、商品の状態、商品名、商品の説明、販売価格）
     public function test_item_listing()
     {
         // ✅ ストレージの仮設定
@@ -56,11 +58,16 @@ class SellTest extends TestCase
             'description' => '商品の説明',
             'price' => 1000,
             'condition' => '商品の状態',
-            'category' => json_encode(['カテゴリ名']), // 配列は JSON で保存される可能性あり
         ]);
+
+        // ✅ JSONカラムのデータを適切にチェック
+        $this->assertTrue(
+            Item::whereJsonContains('category', ['カテゴリ名'])->exists(),
+            'カテゴリーが正しく保存されていません'
+        );
 
         // ✅ 画像が正しく保存されたか確認
         $savedItem = Item::first();
-        Storage::disk('public')->assertExists('item_images/' . $savedItem->image);
+        Storage::disk('public')->assertExists('item_images/' . $savedItem->img); // 'image' から 'img' に修正
     }
 }

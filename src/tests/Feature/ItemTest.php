@@ -49,15 +49,14 @@ class ItemTest extends TestCase
         $user = User::factory()->create();
 
         // 自分が出品したアイテムの作成
-        $item = Item::factory()->create();
+        $item = Item::factory()->create(['user_id' => $user->id]);
 
         // トップページを取得
         $response = $this->actingAs($user)->get('/'); // actingAs=特定のユーザーとして動作することをシミュレート(認証済みユーザーとしてのテストが可能)
 
         // ステータスコードが200であることを確認
         $response->assertStatus(200); // assertStatus=HTTPレスポンスのステータスコードを確認
-        $response->dump(); // デバッグ: レスポンス内容を表示
-        // 出品した商品が一覧に表示されないことを確認
-        $response->assertDontSee($item); // assertDontSee=HTMLレスポンスの中に特定の文字列が含まれていないことを確認
+        $response->assertDontSee($item->name); 
+
     }
 }

@@ -20,7 +20,7 @@ class LoginTest extends TestCase
             'password' => 'password',
         ]);
 
-        $response->assertSessionHasErrors('email');
+        $response->assertSessionHasErrors(['email' => 'ユーザー名またはメールアドレスを入力してください']);
     }
 
     /**
@@ -34,7 +34,7 @@ class LoginTest extends TestCase
             'email' => 'test@example.com',
         ]);
 
-        $response->assertSessionHasErrors('password');
+        $response->assertSessionHasErrors(['password' => 'パスワードを入力してください']);
     }
 
     /**
@@ -49,7 +49,11 @@ class LoginTest extends TestCase
             'password' => 'password'
         ]);
 
+        // セッションにエラーが含まれているか確認
         $response->assertSessionHasErrors('email');
+        
+        // エラーメッセージが表示されているか確認
+        $this->assertStringContainsString('ログイン情報が登録されていません', session('errors')->first('email'));
     }
 
     /**

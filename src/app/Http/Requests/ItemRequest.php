@@ -26,14 +26,14 @@ class ItemRequest extends FormRequest
     return [
       'name' => ['required', 'string', 'max:255'],
       'brand' => ['nullable', 'string', 'max:255'],
-      'price' => ['required', 'numeric', 'min:0'],
+      'price' => ['required', 'string', 'max:20'],
       'description' => ['required', 'string', 'max:1000'],
       'category' => ['required', 'array'],
       'category.*' => ['required', 'string'],
       'condition' => ['required', 'string'],
-      'img' => ['required', 'image', 'mimes:jpeg,png,', 'max:2048'],
-    ];
-  }
+      'img_base64' => ['required', 'regex:/^data:image\/(jpeg|png);base64,/'], // ✅ 画像のバリデーション追加
+  ];
+}
 
   public function messages()
   {
@@ -51,10 +51,8 @@ class ItemRequest extends FormRequest
       'description.max' => '商品の説明は1000文字以内で入力してください',
       'category.required' => 'カテゴリーを選択してください',
       'condition.required' => '商品の状態を選択してください',
-      'img.required' => '画像をアップロードしてください',
-      'img.image' => 'アップロードできるのは画像ファイルのみです',
-      'img.mimes' => '画像はjpeg、png形式でアップロードしてください',
-      'img.max' => '画像のサイズは2MB以内にしてください',
+      'img_base64.required' => '画像をアップロードしてください',
+      'img_base64.regex' => '画像はjpeg、png形式でアップロードしてください',
     ];
   }
 }

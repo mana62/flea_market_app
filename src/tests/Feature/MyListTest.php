@@ -67,8 +67,8 @@ class MyListTest extends TestCase
         $response->assertStatus(200);
 
         // 出品した商品が一覧に表示されないことを確認
-        $response->assertDontSee($sell->name);
-    }
+        $response->assertDontSee($sell->name); 
+        }
 
     //未認証の場合何も表示されない
     public function test_not_show_my_list_guest()

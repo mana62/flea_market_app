@@ -16,15 +16,14 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name('ja_JP'),
+            'name' => $this->faker->lastName . $this->faker->firstName,
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => Hash::make('password'),
             'has_profile' => true,
-            'remember_token' => \Str::random(10),
+            'remember_token' => Str::random(10),
         ];
     }
-
     /**
      * Indicate that the model's email address should be unverified.
      *

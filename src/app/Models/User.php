@@ -43,6 +43,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+
     public function profile()
     {
         return $this->hasOne(Profile::class);
@@ -50,10 +51,15 @@ class User extends Authenticatable implements MustVerifyEmail
 
     protected static function booted()
     {
+        if (app()->runningInConsole()) {
+            return;
+        }
+
         static::created(function ($user) {
             $user->profile()->create();
         });
     }
+
 
     public function items()
     {
@@ -77,8 +83,8 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function listedItems()
     {
-        return $this->hasMany(Item::class);
-    }
+        return $this->hasMany(Item::class, 'user_id', 'id');   
+     }
 
     public function addresses()
     {

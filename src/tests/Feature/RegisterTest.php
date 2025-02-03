@@ -3,20 +3,13 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class RegisterTest extends TestCase
 {
     use RefreshDatabase;
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     *
-     */
 
-    //名前バリデーション
+    /** @test */
     public function test_it_shows_validation_message_if_name_is_not_provided()
     {
         $response = $this->post('/register', [
@@ -24,10 +17,11 @@ class RegisterTest extends TestCase
             'password' => 'password',
             'password_confirmation' => 'password',
         ]);
-        $response->assertSessionHasErrors('name');
+
+        $response->assertSessionHasErrors(['name' => 'ユーザー名を入力してください']);
     }
 
-    //メールアドレス
+    /** @test */
     public function test_it_shows_validation_message_if_email_is_not_provided()
     {
         $response = $this->post('/register', [
@@ -35,32 +29,35 @@ class RegisterTest extends TestCase
             'password' => 'password',
             'password_confirmation' => 'password',
         ]);
-        $response->assertSessionHasErrors('email');
+
+        $response->assertSessionHasErrors(['email' => 'メールアドレスを入力してください']);
     }
 
-    //パスワード
+    /** @test */
     public function test_it_shows_validation_message_if_password_is_not_provided()
     {
         $response = $this->post('/register', [
             'name' => 'test',
             'email' => 'test@example.com',
         ]);
-        $response->assertSessionHasErrors('password');
+
+        $response->assertSessionHasErrors(['password' => 'パスワードを入力してください']);
     }
 
-    //パスワード7文字以下
+    /** @test */
     public function test_it_shows_validation_message_if_password_is_not_eight()
     {
         $response = $this->post('/register', [
             'name' => 'test',
             'email' => 'test@example.com',
-            'password' => 'pass',
-            'password_confirmation' => 'password',
+            'password' => 'pass123',
+            'password_confirmation' => 'pass123',
         ]);
-        $response->assertSessionHasErrors('password');
+
+        $response->assertSessionHasErrors(['password' => 'パスワードは8文字以上で入力してください']);
     }
 
-    //パスワードと確認パスワードが一致しない
+    /** @test */
     public function test_it_shows_validation_message_if_password_is_not_much_to_password_confirmation()
     {
         $response = $this->post('/register', [
@@ -69,6 +66,25 @@ class RegisterTest extends TestCase
             'password' => 'password',
             'password_confirmation' => 'passwords',
         ]);
-        $response->assertSessionHasErrors('password');
+
+        $response->assertSessionHasErrors(['password' => '確認用パスワードと一致しません']);
+    }
+
+    /** @test */
+    public function test_it_registers_user_and_redirects_to_login_when_all_fields_are_provided()
+    {
+        $response = $this->post('/register', [
+            'name' => 'test user',
+            'email' => 'test@example.com',
+            'password' => 'password',
+            'password_confirmation' => 'password',
+        ]);
+
+        $response->assertRedirect('/email/verify');
+
+        $this->assertDatabaseHas('users', [
+            'name' => 'test user',
+            'email' => 'test@example.com',
+        ]);
     }
 }
