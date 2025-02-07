@@ -10,20 +10,19 @@ class Item extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
         'user_id',
-        'brand',
+        'name',
         'price',
         'description',
         'category',
         'condition',
-        'like_count',
         'image',
         'is_sold',
     ];
 
     protected $casts = [
         'category' => 'array',
+        'is_sold' => 'boolean',
     ];
 
     public function user()
@@ -38,7 +37,7 @@ class Item extends Model
 
     public function likedBy()
     {
-        return $this->belongsToMany(User::class, 'likes')->withTimestamps();
+        return $this->belongsToMany(User::class, 'likes', 'item_id', 'user_id')->withTimestamps();
     }
 
     public function likesCount()

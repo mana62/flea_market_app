@@ -15,47 +15,36 @@ class PaymentController extends Controller
     // 支払いページを表示
     public function itemPaymentPage(Request $request, $item_id)
     {
-        // 商品を取得
         $item = Item::findOrFail($item_id);
-    
-        // 購入IDをセッションから取得
-        $purchase_id = session('purchase_id'); // セッションから購入IDを取得
-    
-        // Stripeの秘密鍵を設定
+        $purchaseId = session('purchase_id');
+
         Stripe::setApiKey(env('STRIPE_SECRET'));
-    
-        // Stripeの支払いIntentを作成
         $paymentIntent = PaymentIntent::create([
-            'amount' => $item->price * 100, // 金額を設定（円をセンに変換）
-            'currency' => 'jpy',           // 日本円
+            'amount' => $item->price * 100,
+            'currency' => 'jpy',
             'metadata' => [
                 'item_id' => $item_id,
                 'user_id' => Auth::id(),
             ],
         ]);
-    
+
         return view('item_payment', [
             'item' => $item,
-            'purchase_id' => $purchase_id, // セッションから取得した購入IDをビューに渡す
+            'purchase_id' => $purchaseId,
             'client_secret' => $paymentIntent->client_secret,
         ]);
     }
-    
 
     // 支払い処理
     public function itemPayment(PaymentRequest $request, $item_id)
     {
-        // 支払い方法が「コンビニ払い」の場合
         if ($request->input('payment_method') === 'convenience-store') {
             return redirect()->route('thanks.buy');
         }
-
-        // バリデート済みのデータを取得
         $validated = $request->validated();
 
         try {
-            //支払い情報を保存
-            $payment = Payment::create([
+            Payment::create([
                 'purchase_id' => $validated['purchase_id'],
                 'payment_intent_id' => $validated['payment_intent_id'],
                 'amount' => $validated['amount'],
@@ -63,12 +52,9 @@ class PaymentController extends Controller
                 'status' => 'succeeded',
             ]);
 
-            //正常終了時のレスポンス
             return response()->json(['succeeded' => true, 'message' => '支払いが完了しました'], 200);
         } catch (\Exception $e) {
-            //エラー時のレスポンス
             return response()->json(['succeeded' => false, 'message' => '支払いに失敗しました'], 500);
         }
-        
     }
 }

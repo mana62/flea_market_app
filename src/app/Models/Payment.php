@@ -17,6 +17,10 @@ class Payment extends Model
         'currency'
     ];
 
+    protected $casts = [
+        'status' => 'string',
+    ];
+
     public function purchase()
     {
         return $this->belongsTo(Purchase::class);

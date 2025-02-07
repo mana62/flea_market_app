@@ -11,7 +11,6 @@ class ItemFactory extends Factory
 
     public function definition()
     {
-        // 固定データのリスト
         $fixedItems = [
             [
                 'name' => '腕時計',
@@ -75,10 +74,7 @@ class ItemFactory extends Factory
             ],
         ];
 
-        // 固定データからランダムにアイテムを選択
         $item = $this->faker->randomElement($fixedItems);
-
-        // カテゴリーと状態をconfigから取得
         $categories = config('item.categories');
         $conditions = config('item.conditions');
 
@@ -90,8 +86,13 @@ class ItemFactory extends Factory
             'condition' => $this->faker->randomElement($conditions),
             'image' => $item['image'],
             'is_sold' => $this->faker->boolean,
-// すでに存在するユーザーのIDをランダムに選択する
-'user_id' => \App\Models\User::inRandomOrder()->first()->id ?? \App\Models\User::factory()->create()->id,
+            'user_id' => \App\Models\User::inRandomOrder()->first()->id ?? \App\Models\User::factory()->create()->id,
         ];
+    }
+    public function sold()
+    {
+        return $this->state([
+            'is_sold' => true,
+        ]);
     }
 }

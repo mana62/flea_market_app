@@ -16,8 +16,7 @@ class LikeFactory extends Factory
     public function definition()
     {
         return [
-            // すでに存在するユーザーのIDをランダムに選択する
-            'user_id' => User::inRandomOrder()->first()->id ?? \App\Models\User::factory()->create()->id,
+            'user_id' => User::inRandomOrder()->first()->id ?? User::factory()->create()->id,
             'item_id' => Item::inRandomOrder()->first()->id,
         ];
     }

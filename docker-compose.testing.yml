@@ -3,6 +3,9 @@ services:
     env_file:
       - src/.env.testing
   mysql:
+    volumes:
+      - type: tmpfs
+        target: /var/lib/mysql
     env_file:
       - src/.env.testing
     environment:

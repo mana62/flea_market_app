@@ -1,11 +1,11 @@
 services:
   php:
     env_file:
-      - src/.env.local
+      - src/.env
 
   mysql:
     env_file:
-      - src/.env.local
+      - src/.env
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: flea_market_db
@@ -14,7 +14,7 @@ services:
 
   phpmyadmin:
     env_file:
-      - src/.env.local
+      - src/.env
     environment:
       - PMA_ARBITRARY=1
       - PMA_HOST=mysql

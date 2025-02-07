@@ -26,7 +26,6 @@
     font-weight: bold;
 }
 
-
 .form {
     width: 100%;
     max-width: 1200px;
@@ -49,6 +48,15 @@
 .form__group-content h3 {
     margin-bottom: 20px;
     font-size: 22px;
+}
+
+.form__group-content li {
+    list-style: none;
+}
+
+.form__group-content {
+    padding: 0;
+    margin: 0;
 }
 
 .image-upload {
@@ -77,23 +85,17 @@
 }
 
 .item-image-preview img {
-    max-width: 100%;  /* 親要素の幅を超えないようにする */
-    max-height: 190px; /* 画像の高さを制限 */
+    max-width: 200px; /* 親要素の幅を超えないようにする */
+    max-height: auto; /* 画像の高さを制限 */
     object-fit: contain; /* 画像が潰れないように調整 */
     display: block; /* 不要な余白を削除 */
-    margin: auto; /* 中央揃え */
+    padding: 15px; /* 中央揃え */
 }
-
-
-
 
 /* input[type="file"] を隠してラベルをクリックできるようにする */
 .image-upload__label input[type="file"] {
     display: none;
 }
-
-
-
 
 .image-upload__label {
     cursor: pointer;
@@ -180,8 +182,9 @@ textarea {
 .form__error {
     color: #ff0000;
     text-align: center;
-    padding: 10px;
+    padding-bottom: 10px;
     font-weight: 400;
+    display: block;
 }
 
 .form__button {
@@ -223,5 +226,37 @@ textarea {
     .category-group {
         gap: 5px;
         margin: 0;
+    }
+}
+
+@media (max-width: 468px) {
+    .sell__content {
+        padding: 0;
+    }
+
+    .form__group {
+        text-align: center;
+    }
+    .image-upload {
+        flex-direction: column;
+        box-sizing: content-box;
+        padding: 0;
+        height: auto;
+    }
+    .item-image-preview img {
+        margin: 10px 0;
+    }
+
+    .image-upload__label {
+        font-size: 15px;
+        margin: 10px 0;
+    }
+
+    .form__group-content label {
+        text-align: center;
+    }
+
+    .category-group {
+        gap: 2px;
     }
 }

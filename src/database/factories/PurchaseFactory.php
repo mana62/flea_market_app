@@ -17,7 +17,7 @@ class PurchaseFactory extends Factory
     public function definition()
     {
         return [
-            'item_id' => Item::factory(),
+            'item_id' => Item::inRandomOrder()->first()->id,
             'user_id' => User::factory()->create(),
             'address_id' => Address::factory(),
             'payment_method' => $this->faker->randomElement(['card', 'convenience-store']),

@@ -26,14 +26,14 @@ class ItemRequest extends FormRequest
     return [
       'name' => ['required', 'string', 'max:255'],
       'brand' => ['nullable', 'string', 'max:255'],
-      'price' => ['required', 'string', 'max:20'],
+      'price' => ['required', 'numeric', 'min:0'],
       'description' => ['required', 'string', 'max:1000'],
       'category' => ['required', 'array'],
       'category.*' => ['required', 'string'],
       'condition' => ['required', 'string'],
-      'img_base64' => ['required', 'regex:/^data:image\/(jpeg|png);base64,/'], // ✅ 画像のバリデーション追加
-  ];
-}
+      'img_base64' => ['required', 'regex:/^data:image\/(jpeg|png);base64,/'],
+    ];
+  }
 
   public function messages()
   {
@@ -44,7 +44,7 @@ class ItemRequest extends FormRequest
       'brand.string' => 'ブランド名は文字で入力してください',
       'brand.max' => 'ブランド名は255文字以内で入力してください',
       'price.required' => '価格を入力してください',
-      'price.numeric' => '価格は数値で入力してください',
+      'price.numeric' => '価格は数値のみで入力してください',
       'price.min' => '価格は0円以上にしてください',
       'description.required' => '商品の説明を入力してください',
       'description.string' => '商品の説明は文字列で入力してください',
@@ -54,5 +54,11 @@ class ItemRequest extends FormRequest
       'img_base64.required' => '画像をアップロードしてください',
       'img_base64.regex' => '画像はjpeg、png形式でアップロードしてください',
     ];
+  }
+  protected function prepareForValidation()
+  {
+    $this->merge([
+      'price' => str_replace(',', '', $this->price),
+    ]);
   }
 }
