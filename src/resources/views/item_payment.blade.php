@@ -10,17 +10,18 @@
 @endsection
 
 @section('content')
-    <h1 class="title">カード情報</h1>
-    <div id="paymentMessage"></div>
-    <div id="card-errors"></div>
-    <form class="payment-form__content" id="payment-form">
+<h1 class="title">カード情報</h1>
+<div id="paymentMessage"></div>
+<div id="card-errors" class="payment-error"></div>
+    <form class="payment-form__content" id="payment-form" action="{{ route('item.payment', ['item_id' => $item->id]) }}"
+        method="POST">
         @csrf
         <input type="hidden" name="purchase_id" value="{{ $purchase_id }}">
         <p id="amount" class="payment-input">{{ number_format($item->price, 0) }}円</p>
 
         <div class="card-element-form" id="card-element"></div>
         <div class="payment-button">
-            <button class="payment-button__submit" type="submit">支払う</button>
+            <button class="payment__button-submit" type="submit">支払う</button>
         </div>
     </form>
 @endsection

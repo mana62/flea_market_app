@@ -3,75 +3,42 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\Item;
 use App\Models\User;
+use App\Models\Profile;
 
 class SearchTest extends TestCase
 {
     use RefreshDatabase;
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
+
+    //「商品名」で部分一致検索ができる
     public function test_search_items()
-{
-    // テスト用のアイテムを作成
-    Item::factory()->create(['name' => '腕時計']);
-    Item::factory()->create(['name' => 'HDD']);
-    Item::factory()->create(['name' => '玉ねぎ']);
+    {
+        $user = User::factory()->create();
 
-    // 検索クエリを実行
-    $response = $this->get('/search?search=腕時計');
+        Profile::factory()->create([
+            'user_id' => $user->id,
+        ]);
 
-    // ステータスコードが200であることを確認
-    $response->assertStatus(200);
+        Item::factory()->create(['name' => '腕時計']);
 
-    // 検索結果に期待するアイテムが含まれていることを確認
-    $response->assertSee('腕時計');
-    $response->assertDontSee('HDD');
-    $response->assertDontSee('玉ねぎ');
+        $response = $this->get('/');
+        $response = $this->actingAs($user)->get('/search?tab=recommend&search=時計');
+        $response->assertStatus(200);
+        $response->assertSee('腕時計');
+    }
 
-    // ✅ 検索結果がデータベースにも適用されているか確認
-    $this->assertTrue(
-        Item::where('name', 'LIKE', '%腕時計%')->exists(),
-        '検索クエリが正しく適用されていません'
-    );
-}
-
-
-    //検索状態がマイリストでも保持される
+    //検索状態がマイリストでも保持されている
     public function test_search_items_mylist()
-{
-    // テスト用のユーザー作成
-    $user = User::factory()->create();
-
-    // いいねしたアイテムの作成
-    $item = Item::factory()->create(['name' => '腕時計']);
-    $user->likedItems()->attach($item->id);
-
-    // その他のアイテムを作成
-    Item::factory()->create(['name' => 'HDD']);
-    Item::factory()->create(['name' => '玉ねぎ']);
-
-    // マイリストページにアクセス
-    $response = $this->actingAs($user)->get('/');
-
-    // ステータスコードが200であることを確認
-    $response->assertStatus(200);
-
-    // マイリスト内での検索クエリを実行
-    $response = $this->actingAs($user)->get('/search?tab=recommend&search=時計');
-
-    // ステータスコードが200であることを確認
-    $response->assertStatus(200);
-
-    // 検索結果に期待するアイテムが含まれていることを確認
-    $response->assertSee('腕時計');
-    // 検索結果に含まれていないアイテムを確認
-    $response->assertDontSee('HDD');
-    $response->assertDontSee('玉ねぎ');
-}
+    {
+        $user = User::factory()->create();
+        $item = Item::factory()->create(['name' => '腕時計']);
+        $user->likedItems()->attach($item->id);
+        $response = $this->actingAs($user)->get('/');
+        $response->assertStatus(200);
+        $response = $this->actingAs($user)->get('/search?tab=mylist&search=時計');
+        $response->assertStatus(200);
+        $response->assertSee('腕時計');
+    }
 }

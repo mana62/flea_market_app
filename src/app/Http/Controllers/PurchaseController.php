@@ -18,24 +18,24 @@ class PurchaseController extends Controller
         $item = Item::findOrFail($item_id);
         $user = Auth::user();
         $address = $user->addresses()->where('is_default', true)->first();
-    
-        // すでに支払い方法がセッションにあるなら変更しない
-    if (!session()->has('payment_method')) {
-        session(['payment_method' => '']); // デフォルトは null にする
-    }
-    
+
+        if (!session()->has('payment_method')) {
+            session(['payment_method' => '']);
+        }
+
         return view('item_purchase', compact('item', 'address'));
     }
-    
+
 
     //購入処理
     public function itemPurchase(PurchaseRequest $request, $item_id)
     {
         $item = Item::findOrFail($item_id);
         $paymentMethod = $request->input('payment_method');
-// 支払い方法をセッションに保存（これでリロード後も保持される）
-session(['payment_method' => $paymentMethod]);
-$address = Auth::user()->addresses()->where('is_default', true)->first();
+
+        session(['payment_method' => $paymentMethod]);
+
+        $address = Auth::user()->addresses()->where('is_default', true)->first();
 
         switch ($paymentMethod) {
             case 'card':
@@ -67,42 +67,42 @@ $address = Auth::user()->addresses()->where('is_default', true)->first();
         }
     }
 
-    // 購入データを作成する共通処理
+    // 購入データを作成
     private function createPurchase(Item $item, string $paymentMethod, Address $address)
-{
-    $purchase = Purchase::create([
-        'item_id' => $item->id,
-        'user_id' => Auth::id(),
-        'address_id' => $address->id,
-        'payment_method' => $paymentMethod,
-    ]);
+    {
+        $purchase = Purchase::create([
+            'item_id' => $item->id,
+            'user_id' => Auth::id(),
+            'address_id' => $address->id,
+            'payment_method' => $paymentMethod,
+        ]);
 
-    if(!$address) {
-        throw new \Exception('住所が見つかりません');
+        if (!$address) {
+            throw new \Exception('住所が見つかりません');
+        }
+
+        $item->update(['is_sold' => true]);
+
+        session([
+            'item_id' => $item->id,
+            'user_id' => Auth::id(),
+            'address_id' => $address->id,
+            'purchase_id' => $purchase->id,
+            'payment_method' => $paymentMethod,
+        ]);
+
+        return $purchase;
     }
-
-    $item->update(['is_sold' => true]);
-
-    session([
-        'item_id' => $item->id,
-        'user_id' => Auth::id(),
-        'address_id' => $address->id,
-        'purchase_id' => $purchase->id,
-        'payment_method' => $paymentMethod,
-    ]);
-
-    return $purchase;
-}
 
 
     //購入完了画面を表示
     public function thanksBuy(Request $request)
     {
         $item_id = session('item_id');
-        $purchase_id = session('purchase_id');
+        $purchaseId = session('purchase_id');
         $payment_method = session('payment_method');
 
-        return view('thanks_buy', compact('item_id', 'purchase_id', 'payment_method'));
+        return view('thanks_buy', compact('item_id', 'purchaseId', 'payment_method'));
     }
 
     //配送先変更ページを表示
@@ -115,25 +115,22 @@ $address = Auth::user()->addresses()->where('is_default', true)->first();
 
     //配送先を変更
     public function changeAddress(AddressRequest $request, $item_id)
-{
-    $user = Auth::user();
+    {
+        $user = Auth::user();
+        $user->addresses()->where('is_default', true)->update(['is_default' => false]);
 
-    // ① まず、現在のデフォルト住所を `false` に更新
-    $user->addresses()->where('is_default', true)->update(['is_default' => false]);
-
-    // ② その後、新しい住所を `is_default = true` で登録
-    $address = new Address();
-    $address->user_id = $user->id;
-    $address->post_number = $request->input('post_number');
-    $address->address = $request->input('address');
-    $address->building = $request->input('building');
-    $address->is_default = true;
-    $address->save();
-    $user->addresses()->where('id', '!=', $address->id)->update(['is_default' => false]);
-    return redirect()->route('purchase', ['item_id' => $item_id])->with([
-        'message' => '配送先を変更しました',
-        'payment_method' => session('payment_method')
-    ]);
+        $address = new Address();
+        $address->user_id = $user->id;
+        $address->post_number = $request->input('post_number');
+        $address->address = $request->input('address');
+        $address->building = $request->input('building');
+        $address->is_default = true;
+        $address->save();
+        $user->addresses()->where('id', '!=', $address->id)->update(['is_default' => false]);
+        return redirect()->route('purchase', ['item_id' => $item_id])->with([
+            'message' => '配送先を変更しました',
+            'payment_method' => session('payment_method')
+        ]);
     }
 
 }

@@ -9,10 +9,12 @@
     margin-top: 30px;
 }
 
-.verify-email p {
+.verify-email p,
+.label-button {
     font-size: 18px;
     line-height: 2;
     text-align: center;
+    display: block;
 }
 
 .message {
@@ -26,7 +28,7 @@
     text-align: center;
 }
 
-.verify-email-button__submit {
+.verify-email__button-submit {
     border: none;
     border-radius: 3px;
     background: #ff5555;
@@ -40,7 +42,7 @@
     font-weight: bold;
 }
 
-.verify-email-button__submit:hover {
+.verify-email__button-submit:hover {
     background: #ee7f7f;
 }
 
@@ -49,11 +51,18 @@
         font-size: 20px;
     }
 
-    .verify-email p {
+    .verify-email p,
+    .label-button {
         font-size: 14px;
     }
 
-    .verify-email-button__submit {
+    .verify-email__button-submit {
         width: 40%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .verify-email {
+        margin: 30px;
     }
 }

@@ -39,18 +39,18 @@
 
 .item-detail__right {
     width: 50%;
-    margin-left: 50px;
+    margin-left: 60px;
 }
 
 .item-detail__name {
     font-size: 40px;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 0;
 }
 
 .item-detail__brand {
     font-size: 14px;
-    margin-bottom: 20px;
+    margin: 0;
 }
 
 .item-detail__price {
@@ -118,12 +118,13 @@
     margin-top: 20px;
 }
 
-.item-detail__section-title:last-child {
+.item-detail__comments h2 {
     color: #838383;
 }
 
 .item-detail__description {
     font-size: 18px;
+    width: 75%;
 }
 
 .item-detail__info {
@@ -144,21 +145,24 @@
     align-items: center;
     gap: 5px;
     margin-bottom: 10px;
+    padding-left: 0;
 
 }
 
 .category-container {
     display: flex;
-    flex-wrap: wrap; /* カテゴリーが多い場合に折り返しをする */
-    gap: 5px; /* カテゴリー間のスペース */
+    flex-wrap: wrap; 
+    gap: 5px; 
     margin-left: 35px;
 }
 
 .category-label {
     border-radius: 20px;
     background: #f0f0f0;
-    margin: 0;
+    margin: 2px;
     padding: 5px;
+    list-style: none;
+    font-size: 14px;
 }
 
 
@@ -203,7 +207,6 @@
 }
 
 .item-detail__text {
-    margin: 10px 0;
     width: 100%;
     display: block;
 }
@@ -259,6 +262,11 @@
     background: #ee7f7f;
 }
 
+.item-detail__purchase-submit[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
 @media screen and (min-width: 820px) and (max-width: 1180px) {
     .item-list {
         grid-template-columns: repeat(2, 1fr);
@@ -285,6 +293,10 @@
         margin: 50px 10px;
     }
 
+    .item-detail__right {
+        margin: 0 0 0 80px;
+        }
+
     .item-name {
         text-align: left;
         font-size: 18px;
@@ -301,11 +313,6 @@
 }
 
 @media (max-width: 768px) {
-    .item-detail__container {
-        margin: 20px 10px;
-        overflow: visible;
-        box-sizing: border-box;
-    }
 
     .item-detail__left,
     .item-detail__right {
@@ -319,10 +326,18 @@
 
     .comment-content {
         width: 100%;
-        min-height: 50px;
+        height: auto;
         padding: 10px;
         margin: 10px auto;
         box-sizing: border-box;
+    }
+
+    .item-detail__description {
+        width: 100%;
+    }
+
+    .item-detail__purchase-submit {
+        width: 100%;
     }
 
     .item-detail__comment-form {
@@ -343,6 +358,10 @@
         text-align: center;
         margin: 0;
         padding: 0 20px;
+    }
+
+    .item-detail__description {
+        width: 100%;
     }
 
     .category-container {
@@ -369,7 +388,8 @@
         gap: 1px;
     }
 
-    .item-detail__info dd {
+    .item-detail__info dd,
+    .category-label {
         margin: 5px auto;
         display: block;
     }

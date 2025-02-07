@@ -1,4 +1,4 @@
-.mypage__content {
+.mypage-content {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -23,13 +23,13 @@
     align-items: center;
 }
 
-.mypage__content img {
+.user-image-preview img {
     width: 80px;
     height: 80px;
     border-radius: 50%;
 }
 
-.mypage__content h1 {
+.mypage-content h1 {
     display: inline-block;
     font-size: 40px;
     margin-left: 50px;
@@ -48,7 +48,8 @@
     font-weight: bold;
 }
 
-.mypage__content a {
+.mypage-content a,
+.profile-link a {
     border: none;
     border-radius: 3px;
     color: #ff5555;
@@ -62,13 +63,19 @@
     text-decoration: none;
 }
 
-.mypage__content a:hover {
+.mypage-content a:hover {
     color: #ee7f7f;
 }
 
 .tabs {
     border-bottom: 1px solid #858484;
     margin-top: 50px;
+    padding: 0;
+}
+
+.tabs li {
+    list-style: none;
+    display: inline-block;
 }
 
 .tabs a {
@@ -93,8 +100,7 @@
 .item-list {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 30px;
-    margin: 60px 30px;
+    margin: 60px 0;
 }
 
 .item {
@@ -110,7 +116,7 @@
 .item-name {
     text-align: left;
     font-size: 18px;
-    padding: 10px 0 0 10px;
+    padding: 10px 0 0 30px;
 }
 
 .item-status {
@@ -127,14 +133,14 @@
     }
 
     .item-name {
-        margin: 0 0 0 30px;
+        margin: 0 0 40px 30px;
     }
 
-    .mypage__content {
+    .mypage-content {
         margin: 0 0 0 50px;
     }
 
-    .mypage__content h1 {
+    .mypage-content h1 {
         margin: 0;
     }
 }
@@ -150,11 +156,11 @@
         margin: 0;
     }
 
-    .mypage__content {
+    .mypage-content {
         margin: 0 0 0 50px;
     }
 
-    .mypage__content h1 {
+    .mypage-content h1 {
         margin: 0;
     }
 }
@@ -174,7 +180,7 @@
         margin: 50px 10px;
     }
 
-    .mypage__content h1 {
+    .mypage-content h1 {
         margin: 10px;
     }
 
@@ -188,14 +194,13 @@
 
     .item-name {
         font-size: 18px;
-        margin: 10px 0 0 30px;
     }
 
-    .mypage__content {
+    .mypage-content {
         margin: 0 0 0 80px;
     }
 
-    .mypage__content img {
+    .mypage-content img {
         margin: 0 20px 0 0;
     }
 }
@@ -210,16 +215,12 @@
         gap: 30px;
         margin: 40px 20px;
     }
-
-    .item-name {
-        margin: 0 5px;
-    }
-
+    
     .profile-link {
         margin-top: 20px;
     }
 
-    .mypage__content {
+    .mypage-content {
         margin: 0 auto;
         flex-direction: column;
     }

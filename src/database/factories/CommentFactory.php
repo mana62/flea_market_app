@@ -15,13 +15,9 @@ class CommentFactory extends Factory
      */
     public function definition()
     {
-        // Fakerのロケールを日本語に設定
         $faker = \Faker\Factory::create('ja_JP');
+        Item::inRandomOrder()->first() ?? Item::factory()->create();
 
-        // 既存のアイテムをランダムに取得
-        $item = Item::inRandomOrder()->first() ?? Item::factory()->create();
-
-        // アイテムに関係したコメントのテンプレート
         $comment = [
             "買うか迷っています",
             "購入しましたが、とても満足です",

@@ -4,30 +4,23 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use App\Models\User;
 
 class LoginTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
-     * メールアドレスが入力されていない場合のバリデーションメッセージ
-     *
-     * @test
-     */
+    //メールアドレスが入力されていない場合、バリデーションメッセージが表示される
     public function test_it_shows_validation_message_if_email_is_not_provided()
     {
         $response = $this->post('/login', [
             'password' => 'password',
         ]);
 
-        $response->assertSessionHasErrors(['email' => 'ユーザー名またはメールアドレスを入力してください']);
+        $response->assertSessionHasErrors(['email' => 'メールアドレスを入力してください']);
     }
 
-    /**
-     * パスワードが入力されていない場合のバリデーションメッセージ
-     *
-     * @test
-     */
+    //パスワードが入力されていない場合、バリデーションメッセージが表示される
     public function test_it_shows_validation_message_if_password_is_not_provided()
     {
         $response = $this->post('/login', [
@@ -37,11 +30,7 @@ class LoginTest extends TestCase
         $response->assertSessionHasErrors(['password' => 'パスワードを入力してください']);
     }
 
-    /**
-     * 入力情報が間違っている場合のバリデーションメッセージ
-     *
-     * @test
-     */
+    //入力情報が間違っている場合、バリデーションメッセージが表示される
     public function test_it_shows_validation_message_if_input_is_wrong()
     {
         $response = $this->post('/login', [
@@ -49,24 +38,16 @@ class LoginTest extends TestCase
             'password' => 'password'
         ]);
 
-        // セッションにエラーが含まれているか確認
         $response->assertSessionHasErrors('email');
-        
-        // エラーメッセージが表示されているか確認
         $this->assertStringContainsString('ログイン情報が登録されていません', session('errors')->first('email'));
     }
 
-    /**
-     * 全て正しい場合のログイン成功
-     *
-     * @test
-     */
+    //正しい情報が入力された場合、ログイン処理が実行される
     public function test_login()
     {
-        // 事前にユーザーを作成
-        $user = \App\Models\User::factory()->create([
+        User::factory()->create([
             'email' => 'test@example.com',
-            'password' => bcrypt('password'), // bcryptを使用してパスワードをハッシュ化
+            'password' => bcrypt('password'),
         ]);
 
         $response = $this->post('/login', [
@@ -75,6 +56,6 @@ class LoginTest extends TestCase
         ]);
 
         $response->assertSessionHasNoErrors();
-        $response->assertRedirect('/'); // ログイン後にリダイレクトされるURLを指定
+        $response->assertRedirect('/');
     }
 }

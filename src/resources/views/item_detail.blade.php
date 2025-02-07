@@ -12,11 +12,12 @@
 @section('content')
     <div class="message">
         @if (session('message'))
-            <div class="message-session">
+            <span class="message-session">
                 {{ session('message') }}
-            </div>
+            </span>
         @endif
     </div>
+
     <div class="item-detail__container">
         <section class="item-detail__left">
             <img class="item-detail__image"
@@ -27,7 +28,7 @@
         <section class="item-detail__right">
             <header>
                 <h1 class="item-detail__name">{{ $item->name }}</h1>
-                <p class="item-detail__brand">{{ $item->brand }}</p>
+                <p class="item-detail__brand">ブランド名</p>
                 <p class="item-detail__price">¥{{ number_format($item->price) }} (税込)</p>
             </header>
 
@@ -39,7 +40,7 @@
                         <img src="{{ asset('image/星アイコン8.png') }}" alt="星アイコン"
                             class="@if (!Auth::check()) disabled-image @endif">
                     </button>
-                    <p id="like-count" data-item-id="{{ $item->id }}">{{ $item->likesCount() }}</p>
+                    <p class="like-count" data-item-id="{{ $item->id }}">{{ $item->likesCount() }}</p>
                 </div>
 
                 <div class="item-detail__comments-count">
@@ -50,9 +51,8 @@
 
             <form action="{{ route('purchase', ['item_id' => $item->id]) }}" method="get"
                 class="item-detail__purchase-form">
-                @csrf
                 @if ($item->is_sold)
-                    <button class="item-detail__purchase-submit" type="button" disabled>Sold</button>
+                    <button class="item-detail__purchase-submit" type="button" disabled>SOLD</button>
                 @else
                     <button class="item-detail__purchase-submit" type="submit">購入手続きへ</button>
                 @endif
@@ -62,32 +62,29 @@
                 <h2 class="item-detail__section-title">商品説明</h2>
                 <p class="item-detail__description">{{ $item->description }}</p>
                 <h2 class="item-detail__section-title">商品情報</h2>
-                <div class="category-list">
+                <ul class="category-list">
                     <dt>カテゴリー</dt>
                     <div class="category-container">
                         @if (is_array($item->category))
                             @foreach ($item->category as $category)
                                 <label class="category-item">
-                                    <dd class="category-label">
-                                        {{ $category }}
-                                    </dd>
+                                    <li class="category-label">{{ $category }}</li>
                                 </label>
                             @endforeach
                         @else
                             <label class="category-item">
-                                <dd class="category-label">
-                                    {{ $item->category }}
-                                </dd>
+                                <li class="category-label">{{ $item->category }}</li>
                             </label>
                         @endif
                     </div>
-                </div>
+                </ul>
                 <div class="condition-list">
                     <dt>商品の状態</dt>
                     <dd>{{ $item->condition }}</dd>
+                    </dl>
                 </div>
-                </dl>
             </article>
+
             <!-- コメント -->
             <article class="item-detail__comments">
                 <h2 class="item-detail__section-title">コメント ({{ $comments->count() }})</h2>
@@ -116,9 +113,12 @@
                     <form action="{{ route('item.comment', $item->id) }}" method="post" class="item-detail__comment-form">
                         @csrf
                         @error('comment')
-                            <div class="form__error">{{ $message }}</div>
+                            <span class="form__error">{{ $message }}</span>
                         @enderror
-                        <textarea class="item-detail__text" name="content" rows="5" cols="60" maxlength="255" required></textarea>
+                        <textarea class="item-detail__text" name="content" rows="5" cols="60" maxlength="255"></textarea>
+                        @error('content')
+                        <span class="form__error">{{ $message }}</span>
+                    @enderror
                         <button type="submit" class="item-detail__comment-submit">コメントを送信する</button>
                     </form>
                 </section>

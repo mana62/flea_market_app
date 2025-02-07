@@ -1,6 +1,5 @@
 *
 !.gitignore
 
-!profile_images/.gitkeep
-!item_images/.gitkeep
-
+!/storage/app/public/item_images
+!/storage/app/public/profile_images

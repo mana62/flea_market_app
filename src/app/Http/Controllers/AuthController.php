@@ -21,19 +21,15 @@ class AuthController extends Controller
     //会員登録処理
     public function register(RegisterRequest $request)
     {
-        //データベースに保存
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'has_profile' => false,
         ]);
-
-        //自動ログインとメール認証通知
         Auth::login($user);
         $user->sendEmailVerificationNotification();
 
-        //メール認証ページへリダイレクト
         return redirect()->route('verification.notice');
     }
 
@@ -48,7 +44,6 @@ class AuthController extends Controller
     {
         $request->fulfill();
 
-        //初回はプロフィール編集ページへ、それ以外は商品一覧へ
         return $request->user()->has_profile
             ? redirect()->route('item')
             : redirect()->route('mypage.profile.edit');
@@ -57,6 +52,10 @@ class AuthController extends Controller
     //認証メールを再送信
     public function resendVerificationEmail(Request $request)
     {
+        if ($request->user()->hasVerifiedEmail()) {
+            return redirect()->route('item');
+        }
+
         $request->user()->sendEmailVerificationNotification();
         return back()->with('message', '認証メールを再送信しました');
     }
@@ -70,16 +69,12 @@ class AuthController extends Controller
     //ログイン処理
     public function login(LoginRequest $request)
     {
-        //ユーザー名またはメールアドレスでログイン
-        $loginField = filter_var($request->input('email'), FILTER_VALIDATE_EMAIL) ? 'email' : 'name';
-        $credentials = [$loginField => $request->input('email'), 'password' => $request->password];
+        $credentials = $request->validated();
 
-        //認証成功時、商品一覧へリダイレクト
         if (Auth::attempt($credentials)) {
             return redirect()->route('item');
         }
 
-        //認証失敗時
         return back()->withErrors(['email' => 'ログイン情報が登録されていません'])->withInput();
     }
 

@@ -34,5 +34,5 @@ class CommentRequest extends FormRequest
             'content.required' => 'コメントを入力してください',
             'content.max' => '255以内で入力してください',
         ];
-}
+    }
 }
