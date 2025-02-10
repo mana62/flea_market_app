@@ -2,6 +2,8 @@ services:
   php:
     env_file:
       - src/.env
+    volumes:
+      - ./src/.env:/var/www/.env
 
   mysql:
     env_file:

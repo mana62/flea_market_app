@@ -120,6 +120,8 @@ docker compose -f docker-compose.yml -f docker-compose.testing.yml up -d
 cp src/.env src/.env.testing
 <br>
 .env.testing の設定例:<br>
+APP_ENV=testing<br>
+
 DB_CONNECTION=mysql<br>
 DB_HOST=mysql<br>
 DB_PORT=3306<br>
@@ -139,9 +141,9 @@ php artisan test
 1. Git リポジトリのクローン:<br>
  git clone git@github.com:mana62/flea_market_app.git<br>
 cd flea_market_app
-2. .env ファイルの作成 & 設定:<br>
+2. .env ファイルの作成 & 設定(上記参照):<br>
 cp src/.env.example src/.env
-4. テスト環境の .env.testing を作成 & 設定:<br>
+4. テスト環境の .env.testing を作成 & 設定(上記参照):<br>
 cp src/.env src/.env.testing
 5. Docker コンテナの起動:<br>
 docker compose -f docker-compose.yml -f docker-compose.local.yml up -d
@@ -151,6 +153,11 @@ docker exec -it flea_market_php bash
 composer install
 8. アプリケーションキーの生成:<br>
 php artisan key:generate
+9. .env.testingにも生成されたアプリケーションキーをコピー
+10. キャッシュクリア:<br>
+php artisan config:clear
+11. シンボリックリンクを設定:<br>
+php artisan storage:link
 9. マイグレーション:<br>
 php artisan migrate
 10. シーディング:<br>
@@ -159,10 +166,10 @@ php artisan db:seed
 <br>
 ＜テスト環境＞
 
-1. テスト環境の起動 & 設定:
+1. テスト環境の起動 & 設定:<br>
 docker compose down<br>
 docker compose -f docker-compose.yml -f docker-compose.testing.yml up -d
-2. PHP コンテナに入る:
+2. PHP コンテナに入る:<br>
 docker exec -it flea_market_php bash
 3. テスト実行:<br>
 php artisan test
