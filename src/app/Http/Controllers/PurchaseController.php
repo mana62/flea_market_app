@@ -12,7 +12,6 @@ use App\Http\Requests\AddressRequest;
 
 class PurchaseController extends Controller
 {
-    //購入ページを表示
     public function showPurchasePage($item_id)
     {
         $item = Item::findOrFail($item_id);
@@ -26,8 +25,6 @@ class PurchaseController extends Controller
         return view('item_purchase', compact('item', 'address'));
     }
 
-
-    //購入処理
     public function itemPurchase(PurchaseRequest $request, $item_id)
     {
         $item = Item::findOrFail($item_id);
@@ -67,7 +64,6 @@ class PurchaseController extends Controller
         }
     }
 
-    // 購入データを作成
     private function createPurchase(Item $item, string $paymentMethod, Address $address)
     {
         $purchase = Purchase::create([
@@ -94,8 +90,6 @@ class PurchaseController extends Controller
         return $purchase;
     }
 
-
-    //購入完了画面を表示
     public function thanksBuy(Request $request)
     {
         $item_id = session('item_id');
@@ -105,7 +99,6 @@ class PurchaseController extends Controller
         return view('thanks_buy', compact('item_id', 'purchaseId', 'payment_method'));
     }
 
-    //配送先変更ページを表示
     public function changeAddressPage($item_id)
     {
         $item = Item::findOrFail($item_id);
@@ -113,7 +106,6 @@ class PurchaseController extends Controller
         return view('change_address', ['item' => $item, 'defaultAddress' => $user->addresses()->where('is_default', true)->first()]);
     }
 
-    //配送先を変更
     public function changeAddress(AddressRequest $request, $item_id)
     {
         $user = Auth::user();

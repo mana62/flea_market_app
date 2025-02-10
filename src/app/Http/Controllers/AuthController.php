@@ -12,13 +12,11 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    //会員登録ページを表示
     public function registerPage()
     {
         return view('auth.register');
     }
 
-    //会員登録処理
     public function register(RegisterRequest $request)
     {
         $user = User::create([
@@ -33,13 +31,11 @@ class AuthController extends Controller
         return redirect()->route('verification.notice');
     }
 
-    //メール認証ページ表示
     public function showVerifyEmail()
     {
         return view('auth.verify');
     }
 
-    //メール認証処理
     public function verifyEmail(EmailVerificationRequest $request)
     {
         $request->fulfill();
@@ -49,7 +45,6 @@ class AuthController extends Controller
             : redirect()->route('mypage.profile.edit');
     }
 
-    //認証メールを再送信
     public function resendVerificationEmail(Request $request)
     {
         if ($request->user()->hasVerifiedEmail()) {
@@ -60,13 +55,11 @@ class AuthController extends Controller
         return back()->with('message', '認証メールを再送信しました');
     }
 
-    //ログインページ表示
     public function loginPage()
     {
         return view('auth.login');
     }
 
-    //ログイン処理
     public function login(LoginRequest $request)
     {
         $credentials = $request->validated();
@@ -78,7 +71,6 @@ class AuthController extends Controller
         return back()->withErrors(['email' => 'ログイン情報が登録されていません'])->withInput();
     }
 
-    //ログアウト処理
     public function logout()
     {
         Auth::logout();

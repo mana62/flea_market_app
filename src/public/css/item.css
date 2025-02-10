@@ -20,7 +20,6 @@
     text-decoration: none;
     color: #000;
     display: inline-block;
-
 }
 
 .tabs a.active {
@@ -41,7 +40,7 @@
 .item-image {
     position: relative;
     display: inline-block;
-    width: 300px; /* 必要に応じて設定 */
+    width: 300px;
     height: 300px;
 }
 
@@ -73,7 +72,30 @@
     white-space: nowrap;
 }
 
+@media screen and (min-width: 1024px) and (max-width: 1200px) {
+    .tabs {
+        margin-top: 50px;
+    }
 
+    .tabs a {
+        margin: 0;
+        padding: 0 30px;
+    }
+
+    .item-list {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        margin: 50px 10px;
+    }
+
+    .item-image {
+        margin: 10px 0;
+    }
+
+    .item-name {
+        margin: 0;
+    }
+}
 
 @media screen and (min-width: 800px) and (max-width: 1280px) {
     .tabs {
@@ -122,31 +144,6 @@
     }
 }
 
-@media screen and (min-width: 1024px) and (max-width: 1200px) {
-    .tabs {
-        margin-top: 50px;
-    }
-
-    .tabs a {
-        margin: 0;
-        padding: 0 30px;
-    }
-
-    .item-list {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 30px;
-        margin: 50px 10px;
-    }
-
-    .item-image {
-        margin: 10px 0;
-    }
-
-    .item-name {
-        margin: 0;
-    }
-}
-
 @media (max-width: 768px) {
     .tabs {
         margin-top: 50px;
@@ -183,7 +180,7 @@
 
     .tabs {
         display: flex;
-            justify-content: center;
+        justify-content: center;
     }
 
     .tabs a {

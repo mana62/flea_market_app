@@ -11,7 +11,6 @@ use App\Http\Requests\ItemRequest;
 
 class ItemController extends Controller
 {
-    // 商品一覧を表示
     public function index(Request $request)
     {
         $tab = $request->query('tab', 'recommend');
@@ -37,7 +36,6 @@ class ItemController extends Controller
         return view('item', compact('items', 'tab', 'input'));
     }
 
-    //商品詳細ページ
     public function itemDetail($item_id)
     {
         $item = Item::findOrFail($item_id);
@@ -47,7 +45,6 @@ class ItemController extends Controller
         return view('item_detail', compact('item', 'comments'));
     }
 
-    //出品ページ
     public function sellItemPage()
     {
         $categories = config('item.categories');
@@ -56,7 +53,6 @@ class ItemController extends Controller
         return view('item_sell', compact('categories', 'conditions'));
     }
 
-    //商品の出品処理
     public function sellItem(ItemRequest $request)
     {
         $item = new Item();
@@ -103,7 +99,6 @@ class ItemController extends Controller
         return redirect()->route('item.sell.page')->with('message', '商品を出品しました');
     }
 
-    //画像アップロード
     public function uploadImage(Request $request, Item $item)
     {
         if ($request->hasFile('img')) {
@@ -115,7 +110,6 @@ class ItemController extends Controller
         return redirect()->route('item.sell.page')->with('message', '画像をアップロードしました');
     }
 
-    //いいね機能
     public function toggleLike(Request $request, Item $item)
     {
         $user = Auth::user();
@@ -128,7 +122,6 @@ class ItemController extends Controller
         ]);
     }
 
-    //コメント投稿
     public function comment(CommentRequest $request, $itemId)
     {
         Comment::create([

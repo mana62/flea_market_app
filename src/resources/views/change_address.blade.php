@@ -18,7 +18,6 @@
             enctype="multipart/form-data">
             @csrf
             <div class="form__group">
-                <!-- 郵便番号 -->
                 <div class="form__group-content">
                     <label for="post_number">郵便番号</label>
                     <input type="text" name="post_number" id="post_number"
@@ -27,8 +26,6 @@
                         <div class="form__error">{{ $message }}</div>
                     @enderror
                 </div>
-
-                <!-- 住所 -->
                 <div class="form__group-content">
                     <label for="address">住所</label>
                     <input type="text" name="address" id="address"
@@ -37,8 +34,6 @@
                         <div class="form__error">{{ $message }}</div>
                     @enderror
                 </div>
-
-                <!-- 建物名 -->
                 <div class="form__group-content">
                     <label for="building">建物名</label>
                     <input type="text" name="building" id="building"
@@ -48,8 +43,6 @@
                     @enderror
                 </div>
             </div>
-
-            <!-- 更新ボタン -->
             <div class="form__button">
                 <button class="form__button-submit" type="submit">更新する</button>
             </div>

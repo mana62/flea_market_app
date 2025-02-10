@@ -12,7 +12,6 @@ use App\Http\Requests\PaymentRequest;
 
 class PaymentController extends Controller
 {
-    // 支払いページを表示
     public function itemPaymentPage(Request $request, $item_id)
     {
         $item = Item::findOrFail($item_id);
@@ -35,7 +34,6 @@ class PaymentController extends Controller
         ]);
     }
 
-    // 支払い処理
     public function itemPayment(PaymentRequest $request, $item_id)
     {
         if ($request->input('payment_method') === 'convenience-store') {

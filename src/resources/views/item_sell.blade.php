@@ -10,7 +10,7 @@
 @endsection
 
 @section('content')
-    <div class="sell__content">
+    <div class="sell-content">
         <header class="sell-form__heading">
             <h1>商品の出品</h1>
             <div class="message">
@@ -19,11 +19,9 @@
                 @endif
             </div>
         </header>
-
         <form class="form" action="{{ route('item.sell') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="form__group">
-                <!-- 商品画像 -->
                 <div class="form__group-content">
                     <h2>商品画像</h2>
                     <div class="image-upload">
@@ -39,18 +37,13 @@
                         <input type="hidden" name="img_base64" id="imgBase64"
                             value="{{ session('itemImage') ?? old('img_base64') }}">
                     </div>
-
                     <div class="form__error">
                         @error('img_base64')
                             <span class="form__error">{{ $message }}</span>
                         @enderror
                     </div>
-
-                    <!-- 商品の詳細 -->
                     <div class="form__group-detail">
                         <h2 class="section-title">商品の詳細</h2>
-
-                        <!-- カテゴリー -->
                         <h3>カテゴリー</h3>
                         <ul class="form__group-content category-group">
                             @foreach ($categories as $category)
@@ -63,14 +56,11 @@
                                 </li>
                             @endforeach
                         </ul>
-
                         <span class="form__error">
                             @error('category')
                                 {{ $message }}
                             @enderror
                         </span>
-
-                        <!-- 商品の状態 -->
                         <h3>商品の状態</h3>
                         <div class="form__group-content">
                             <select name="condition" id="condition">
@@ -85,60 +75,46 @@
                                     </option>
                                 @endforeach
                             </select>
-
                             <span class="form__error">
                                 @error('condition')
                                     {{ $message }}
                                 @enderror
                             </span>
                         </div>
-
-                        <!-- 商品名と説明 -->
                         <h2 class="section-title">商品名と説明</h2>
-
-                        <!-- 商品名 -->
                         <div class="form__group-content">
                             <label for="name">商品名
                                 <input type="text" name="name" id="name"
                                     value="{{ old('name', $item->name ?? '') }}">
                             </label>
-
                             <span class="form__error">
                                 @error('name')
                                     {{ $message }}
                                 @enderror
                             </span>
                         </div>
-
-                        <!-- 商品の説明 -->
                         <div class="form__group-content">
                             <label for="description">商品の説明
                                 <textarea name="description" id="description">{{ old('description', $item->description ?? '') }}</textarea>
                             </label>
-
                             <span class="form__error">
                                 @error('description')
                                     {{ $message }}
                                 @enderror
                             </span>
                         </div>
-
-                        <!-- 販売価格 -->
                         <div class="form__group-content">
                             <label for="price">販売価格
                                 <input type="text" name="price" id="price" placeholder="¥"
                                     value="{{ old('price', isset($item->price) ? '¥' . $item->price : '') }}"
                                     oninput="formatPrice(this)">
                             </label>
-
                             <span class="form__error">
                                 @error('price')
                                     {{ $message }}
                                 @enderror
                             </span>
                         </div>
-
-                        <!-- 出品ボタン -->
                         <div class="form__button" id="formButton">
                             <button class="form__button-submit" type="submit">出品する</button>
                         </div>

@@ -12,7 +12,6 @@
                 <input type="text" name="search" placeholder="なにをお探しですか？">
             </form>
         </div>
-
         <ul class="nav">
             <li class="logout">
                 <a href="{{ route('logout') }}"

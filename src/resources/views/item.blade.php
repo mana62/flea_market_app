@@ -11,10 +11,11 @@
 
 @section('content')
     <ul class="tabs">
-        <li><a href="{{ url('/?tab=recommend&search=' . $input) }}" class="{{ $tab === 'recommend' ? 'active' : '' }}">おすすめ</a></li>
-        <li><a href="{{ url('/?tab=mylist&search=' . $input) }}" class="{{ $tab === 'mylist' ? 'active' : '' }}">マイリスト</a></li>
+        <li><a href="{{ url('/?tab=recommend&search=' . $input) }}"
+                class="{{ $tab === 'recommend' ? 'active' : '' }}">おすすめ</a></li>
+        <li><a href="{{ url('/?tab=mylist&search=' . $input) }}" class="{{ $tab === 'mylist' ? 'active' : '' }}">マイリスト</a>
+        </li>
     </ul>
-
     @if ($tab === 'mylist' && !Auth::check())
         <p class="empty">いいねした商品はありません</p>
     @elseif ($items->isEmpty())
@@ -22,7 +23,6 @@
             {{ $tab === 'mylist' ? 'いいねした商品はありません' : 'おすすめ商品はありません' }}
         </p>
     @else
-
         <div class="item-list">
             @foreach ($items as $item)
                 <div class="item">

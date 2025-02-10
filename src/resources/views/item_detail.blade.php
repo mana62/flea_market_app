@@ -24,14 +24,12 @@
                 src="{{ $item->image ? asset('storage/item_images/' . $item->image) : asset('image/dummy.jpg') }}"
                 alt="アイテム画像">
         </section>
-
         <section class="item-detail__right">
             <header>
                 <h1 class="item-detail__name">{{ $item->name }}</h1>
                 <p class="item-detail__brand">ブランド名</p>
                 <p class="item-detail__price">¥{{ number_format($item->price) }} (税込)</p>
             </header>
-
             <section class="item-detail__actions">
                 <div class="item-detail__likes-count">
                     <button
@@ -42,13 +40,11 @@
                     </button>
                     <p class="like-count" data-item-id="{{ $item->id }}">{{ $item->likesCount() }}</p>
                 </div>
-
                 <div class="item-detail__comments-count">
                     <img src="{{ asset('image/ふきだしのアイコン.png') }}" alt="コメントアイコン">
                     <p>{{ $comments->count() }}</p>
                 </div>
             </section>
-
             <form action="{{ route('purchase', ['item_id' => $item->id]) }}" method="get"
                 class="item-detail__purchase-form">
                 @if ($item->is_sold)
@@ -57,7 +53,6 @@
                     <button class="item-detail__purchase-submit" type="submit">購入手続きへ</button>
                 @endif
             </form>
-
             <article class="item-detail__info">
                 <h2 class="item-detail__section-title">商品説明</h2>
                 <p class="item-detail__description">{{ $item->description }}</p>
@@ -84,8 +79,6 @@
                     </dl>
                 </div>
             </article>
-
-            <!-- コメント -->
             <article class="item-detail__comments">
                 <h2 class="item-detail__section-title">コメント ({{ $comments->count() }})</h2>
                 @foreach ($comments as $comment)
@@ -106,7 +99,6 @@
                     </section>
                 @endforeach
             </article>
-
             @auth
                 <section class="comment-section">
                     <h3>商品へのコメント</h3>
