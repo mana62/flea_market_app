@@ -18,7 +18,6 @@
         @csrf
         <input type="hidden" name="purchase_id" value="{{ $purchase_id }}">
         <p id="amount" class="payment-input">{{ number_format($item->price, 0) }}円</p>
-
         <div class="card-element-form" id="card-element"></div>
         <div class="payment-button">
             <button class="payment__button-submit" type="submit">支払う</button>

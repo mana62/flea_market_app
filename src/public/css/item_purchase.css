@@ -263,7 +263,6 @@
     }
 }
 
-
 @media screen and (max-width: 768px) {
     .item-purchase__container {
         flex-direction: column;
@@ -388,20 +387,5 @@
         margin: 10px auto;
         font-size: 16px;
         padding: 10px;
-    }
-
-    .back-link {
-        text-align: center;
-        margin: 10px 0;
-    }
-
-    .back-link a {
-        font-size: 14px;
-        color: #007bff;
-        text-decoration: none;
-    }
-
-    .back-link a:hover {
-        color: #0056b3;
     }
 }

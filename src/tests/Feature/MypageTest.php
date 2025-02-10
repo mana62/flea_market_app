@@ -10,12 +10,12 @@ use App\Models\Item;
 use App\Models\Purchase;
 use App\Models\Address;
 
-class MypageTest extends TestCase
+class MyPageTest extends TestCase
 {
     use RefreshDatabase;
 
     //必要な情報が取得できる（プロフィール画像、ユーザー名、出品した商品一覧、購入した商品一覧）
-    public function test_mypage_displays_user_info()
+    public function test_my_page_displays_user_info()
     {
         $this->withoutMiddleware('has.profile');
 

@@ -11,34 +11,27 @@
 
 @section('content')
     <div class="mypage-content">
-        <!-- プロフィール情報 -->
         <div class="user-detail">
             <div class="user-image-preview">
                 @if ($profile->image)
-                <img src="{{ Storage::url('profile_images/' . $profile->image) }}" alt="プロフィール画像">
+                    <img src="{{ Storage::url('profile_images/' . $profile->image) }}" alt="プロフィール画像">
                 @endif
             </div>
             <h1>{{ $profile->name ?? '' }}</h1>
         </div>
-
         <div class="profile-link">
             <a href="{{ route('mypage.profile.edit') }}">プロフィールを編集</a>
         </div>
     </div>
-
-    <!-- タブ切り替え -->
     <ul class="tabs">
         <li><a href="{{ url('/mypage?page=buy') }}" class="{{ $tab === 'buy' ? 'active' : '' }}">購入した商品</a></li>
         <li><a href="{{ url('/mypage?page=sell') }}" class="{{ $tab === 'sell' ? 'active' : '' }}">出品した商品</a></li>
     </ul>
-    
-    <!-- 商品リスト -->
     @if ($items->isEmpty())
         <p class="empty">
             {{ $tab === 'buy' ? '購入した商品はありません' : '出品した商品はありません' }}
         </p>
     @endif
-
     <div class="item-list">
         @foreach ($items as $item)
             <div class="item">

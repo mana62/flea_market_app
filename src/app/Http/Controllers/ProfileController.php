@@ -25,8 +25,6 @@ class ProfileController extends Controller
         return view('mypage', compact('tab', 'items', 'profile'));
     }
 
-
-    //プロフィール編集ページを表示
     public function edit()
     {
         $user = Auth::user();
@@ -36,7 +34,6 @@ class ProfileController extends Controller
         return view('profile', compact('profile', 'defaultAddress'));
     }
 
-    //プロフィール更新処理
     public function update(ProfileRequest $request)
     {
         $user = Auth::user();

@@ -3,7 +3,6 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class HasProfile
@@ -18,11 +17,9 @@ class HasProfile
     public function handle($request, Closure $next)
     {
         $user = Auth::user();
-
         if (!$user->has_profile) {
             return redirect()->route('mypage.profile.edit');
         }
-
         return $next($request);
     }
 }

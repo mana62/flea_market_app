@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Item;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ItemFactory extends Factory
@@ -86,7 +87,7 @@ class ItemFactory extends Factory
             'condition' => $this->faker->randomElement($conditions),
             'image' => $item['image'],
             'is_sold' => $this->faker->boolean,
-            'user_id' => \App\Models\User::inRandomOrder()->first()->id ?? \App\Models\User::factory()->create()->id,
+            'user_id' => User::inRandomOrder()->first()->id ?? User::factory()->create()->id,
         ];
     }
     public function sold()

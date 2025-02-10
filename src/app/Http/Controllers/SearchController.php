@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class SearchController extends Controller
 {
-    //商品検索
     public function searchItem(Request $request)
     {
         $input = $request->input('search', '');

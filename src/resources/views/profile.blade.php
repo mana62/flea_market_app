@@ -13,12 +13,10 @@
     <div class="profile-content">
         <header class="profile-form__heading">
             <h1>プロフィール設定</h1>
-
             @if (session('message'))
                 <span class="message-session">{{ session('message') }}</span>
             @endif
         </header>
-
         <form class="form" action="{{ route('mypage.profile.update') }}" method="post" enctype="multipart/form-data">
             @csrf
             @method('PUT')
@@ -38,14 +36,12 @@
                                 onchange="previewImage(event)">
                         </label>
                         <input type="hidden" name="img_base64" id="imgBase64" value="{{ old('img_base64') }}">
+
                         @error('img_base64')
-                            <span class="form__error">{{ $message }}</span>
+                            <div class="form__error">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
-
-
-                <!-- ユーザー名 -->
                 <div class="form__group-content">
                     <label for="name">ユーザー名</label>
                     <input type="text" name="name" id="name" value="{{ old('name', $profile->name) }}">
@@ -54,8 +50,6 @@
                         <span class="form__error">{{ $message }}</span>
                     @enderror
                 </div>
-
-                <!-- 郵便番号 -->
                 <div class="form__group-content">
                     <label for="post_number">郵便番号</label>
                     <input type="text" name="post_number" id="post_number"
@@ -65,8 +59,6 @@
                         <span class="form__error">{{ $message }}</span>
                     @enderror
                 </div>
-
-                <!-- 住所 -->
                 <div class="form__group-content">
                     <label for="address">住所</label>
                     <input type="text" name="address" id="address"
@@ -76,20 +68,15 @@
                         <span class="form__error">{{ $message }}</span>
                     @enderror
                 </div>
-
-                <!-- 建物名 -->
                 <div class="form__group-content">
                     <label for="building">建物名</label>
                     <input type="text" name="building" id="building"
                         value="{{ old('building', $defaultAddress->building ?? '') }}">
-
                     @error('building')
                         <span class="form__error">{{ $message }}</span>
                     @enderror
                 </div>
             </div>
-
-            <!-- 更新ボタン -->
             <div class="form__button">
                 <button class="form__button-submit" type="submit">更新する</button>
             </div>

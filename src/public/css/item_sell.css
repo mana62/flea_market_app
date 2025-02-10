@@ -1,4 +1,4 @@
-.sell__content {
+.sell-content {
     margin: 0 auto;
     text-align: center;
     padding: 20px;
@@ -85,14 +85,13 @@
 }
 
 .item-image-preview img {
-    max-width: 200px; /* 親要素の幅を超えないようにする */
-    max-height: auto; /* 画像の高さを制限 */
-    object-fit: contain; /* 画像が潰れないように調整 */
-    display: block; /* 不要な余白を削除 */
-    padding: 15px; /* 中央揃え */
+    max-width: 200px;
+    max-height: auto;
+    object-fit: contain;
+    display: block;
+    padding: 15px;
 }
 
-/* input[type="file"] を隠してラベルをクリックできるようにする */
 .image-upload__label input[type="file"] {
     display: none;
 }
@@ -211,7 +210,7 @@ textarea {
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
-    .sell__content {
+    .sell-content {
         width: 90%;
     }
 
@@ -230,7 +229,7 @@ textarea {
 }
 
 @media (max-width: 468px) {
-    .sell__content {
+    .sell-content {
         padding: 0;
     }
 
