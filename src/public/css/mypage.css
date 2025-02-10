@@ -147,7 +147,7 @@
     }
 }
 
-@media screen and (min-width: 820px) and (max-width: 1180px) {
+@media screen and (min-width: 800px) and (max-width: 920px) {
     .item-list {
         grid-template-columns: repeat(2, 1fr);
     }

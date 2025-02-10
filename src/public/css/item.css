@@ -97,31 +97,7 @@
     }
 }
 
-@media screen and (min-width: 800px) and (max-width: 1280px) {
-    .tabs {
-        margin-top: 50px;
-    }
-
-    .tabs a {
-        margin: 0;
-        padding: 0 40px;
-    }
-
-    .item-list {
-        grid-template-columns: repeat(4, 1fr);
-        margin: 30px 10px;
-    }
-
-    .item-image {
-        margin: 10px 0;
-    }
-
-    .item-name {
-        margin: 0 0 0 30px;
-    }
-}
-
-@media screen and (min-width: 820px) and (max-width: 1180px) {
+@media screen and (min-width: 820px) and (max-width: 920px) {
     .tabs {
         margin-top: 50px;
     }
