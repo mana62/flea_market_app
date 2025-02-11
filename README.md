@@ -142,29 +142,29 @@ php artisan test
  git clone git@github.com:mana62/flea_market_app.git<br>
 cd flea_market_app
 2. .env ファイルの作成 & 設定(上記参照):<br>
-cp src/.env.example src/.env
-4. テスト環境の .env.testing を作成 & 設定(上記参照):<br>
+cp src/.env.example src/.env<br>
 cp src/.env src/.env.testing
-5. Docker コンテナの起動:<br>
-docker compose -f docker-compose.yml -f docker-compose.local.yml up -d --build
-6. PHP コンテナに入る:<br>
-docker exec -it flea_market_php bash
-7. Laravel パッケージのインストール:<br>
+3. Docker コンテナのbuild:<br>
+docker compose -f docker-compose.yml -f docker-compose.local.yml build
+4. PHP コンテナに入る:<br>
+docker compose -f docker-compose.yml -f docker-compose.local.yml run --rm php bash
+5. Laravel パッケージのインストール:<br>
 composer install
-8. アプリケーションキーの生成:<br>
-php artisan key:generate
-9. .env.testingにも生成されたアプリケーションキーをコピー
-10. キャッシュクリア:<br>
+6. アプリケーションキーの生成:<br>
+php artisan key:generate<br>
+.env.testingにも生成されたアプリケーションキーをコピー
+7. キャッシュクリア:<br>
 php artisan config:clear
-11. マイグレーション:<br>
-php artisan migrate
-12. シーディング:<br>
-php artisan db:seed
-13. シンボリックリンクを設定:<br>
+8. マイグレーションとシーディング:<br>
+php artisan migrate --seed
+9. シンボリックリンクを設定:<br>
 php artisan storage:link
-14. パーミッションの確認:<br>
+10. パーミッションの確認:<br>
 chmod -R 775 storage<br>
 chmod -R 775 public/storage<br>
+11. コンテナを起動:<br>
+docker compose -f docker-compose.yml -f docker-compose.local.yml up -d
+
 <br>
 ＜テスト環境＞
 
