@@ -9,10 +9,18 @@
 # アプリケーション URL
 
 <開発環境><br>
-- phpmyadmin: <br>
+- phpMyAdmin: <br>
 http://localhost:8080
 - アプリ URL:<br>
-http://localhost/register
+http://localhost/register<br>
+<br>
+
+<テスト環境><br>
+- phpMyAdmin: <br>
+http://localhost:8081
+- アプリ URL:<br>
+http://localhost:8082<br>
+
 
 # 他のリポジトリ
 
@@ -115,23 +123,22 @@ php artisan db:seed
 # test環境構築
 
 1. テスト用のコンテナを起動:<br>
-docker compose -f docker-compose.yml -f docker-compose.testing.yml up -d
+docker compose -f docker-compose.testing.yml up -d
 2. .env.testing の作成 & 設定:<br>
-cp src/.env src/.env.testing
+cp src/.env.example src/.env.testing
 <br>
 .env.testing の設定例:<br>
 APP_ENV=testing<br>
 <br>
 DB_CONNECTION=mysql<br>
-DB_HOST=mysql<br>
+DB_HOST=flea_market_mysql_test<br>
 DB_PORT=3306<br>
 DB_DATABASE=test_db<br>
 DB_USERNAME=test_user<br>
 DB_PASSWORD=test<br>
 <br>
-
 3. PHP コンテナに入る:<br>
-docker exec -it flea_market_php bash
+docker exec -it flea_market_php_test bash
 4. テスト実行:<br>
 php artisan test
 
@@ -143,9 +150,9 @@ php artisan test
 cd flea_market_app
 2. .env ファイルの作成 & 設定(上記参照):<br>
 cp src/.env.example src/.env<br>
-cp src/.env src/.env.testing
-3. Docker コンテナのbuild:<br>
-docker compose -f docker-compose.yml -f docker-compose.local.yml up -d --build
+cp src/.env.example src/.env.testing
+3. Docker コンテナの起動:<br>
+docker compose up -d --build
 4. PHP コンテナに入る:<br>
 docker exec -it flea_market_php bash
 5. Laravel パッケージのインストール:<br>
@@ -159,20 +166,17 @@ php artisan config:clear
 php artisan migrate --seed
 9. シンボリックリンクを設定:<br>
 php artisan storage:link
-10. パーミッションの確認:<br>
+10. パーミッションの確認(Laravel のストレージとキャッシュディレクトリに書き込み権限を設定):<br>
 chmod -R 775 storage<br>
 chmod -R 775 public/storage<br>
-11. 全てを読み込むために再度起動:<br>
-docker compose -f docker-compose.yml -f docker-compose.local.yml up -d
-
 <br>
 ＜テスト環境＞
 
 1. テスト環境の起動 & 設定:<br>
 docker compose down<br>
-docker compose -f docker-compose.yml -f docker-compose.testing.yml up -d
+docker compose -f docker-compose.testing.yml up -d
 2. PHP コンテナに入る:<br>
-docker exec -it flea_market_php bash
+docker exec -it flea_market_php_test bash
 3. テスト実行:<br>
 php artisan test
 
