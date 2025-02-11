@@ -18,11 +18,10 @@ services:
     container_name: flea_market_php
     volumes:
       - ./src:/var/www/
-      - ./src/.env:/var/www/.env
-      - ./src/.env.testing:/var/www/.env.testing
     networks:
       - flea_market_network
     restart: always
+    working_dir: /var/www
 
   mysql:
     image: mysql:8.0.26

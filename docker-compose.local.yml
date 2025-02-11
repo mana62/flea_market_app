@@ -1,20 +1,20 @@
 services:
   php:
+    working_dir: /var/www
     env_file:
       - src/.env
     volumes:
-      - ./src/.env:/var/www/.env
+      - ./src:/var/www/
+    depends_on:
+      - mysql
 
   mysql:
     env_file:
       - src/.env
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: flea_market_db
-      MYSQL_USER: user
-      MYSQL_PASSWORD: pass
 
   phpmyadmin:
+    depends_on:
+      - mysql
     env_file:
       - src/.env
     environment:
