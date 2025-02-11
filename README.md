@@ -121,7 +121,7 @@ cp src/.env src/.env.testing
 <br>
 .env.testing の設定例:<br>
 APP_ENV=testing<br>
-
+<br>
 DB_CONNECTION=mysql<br>
 DB_HOST=mysql<br>
 DB_PORT=3306<br>
@@ -146,7 +146,7 @@ cp src/.env.example src/.env
 4. テスト環境の .env.testing を作成 & 設定(上記参照):<br>
 cp src/.env src/.env.testing
 5. Docker コンテナの起動:<br>
-docker compose -f docker-compose.yml -f docker-compose.local.yml up -d
+docker compose -f docker-compose.yml -f docker-compose.local.yml up -d --build
 6. PHP コンテナに入る:<br>
 docker exec -it flea_market_php bash
 7. Laravel パッケージのインストール:<br>
@@ -156,13 +156,15 @@ php artisan key:generate
 9. .env.testingにも生成されたアプリケーションキーをコピー
 10. キャッシュクリア:<br>
 php artisan config:clear
-11. シンボリックリンクを設定:<br>
-php artisan storage:link
-9. マイグレーション:<br>
+11. マイグレーション:<br>
 php artisan migrate
-10. シーディング:<br>
+12. シーディング:<br>
 php artisan db:seed
-
+13. シンボリックリンクを設定:<br>
+php artisan storage:link
+14. パーミッションの確認:<br>
+chmod -R 775 storage<br>
+chmod -R 775 public/storage<br>
 <br>
 ＜テスト環境＞
 
@@ -178,3 +180,4 @@ php artisan test
 - メール認証が完了していないとログインできない
 - 未承認の場合はコメント入力欄が非表示
 - 未承認の場合はいいねができず、マイリストには「いいねした商品はありません」と表示される
+- メール認証はMailHogを使用
