@@ -145,9 +145,9 @@ cd flea_market_app
 cp src/.env.example src/.env<br>
 cp src/.env src/.env.testing
 3. Docker コンテナのbuild:<br>
-docker compose -f docker-compose.yml -f docker-compose.local.yml build
+docker compose -f docker-compose.yml -f docker-compose.local.yml up -d --build
 4. PHP コンテナに入る:<br>
-docker compose -f docker-compose.yml -f docker-compose.local.yml run --rm php bash
+docker exec -it flea_market_php bash
 5. Laravel パッケージのインストール:<br>
 composer install
 6. アプリケーションキーの生成:<br>
@@ -162,7 +162,7 @@ php artisan storage:link
 10. パーミッションの確認:<br>
 chmod -R 775 storage<br>
 chmod -R 775 public/storage<br>
-11. コンテナを起動:<br>
+11. 全てを読み込むために再度起動:<br>
 docker compose -f docker-compose.yml -f docker-compose.local.yml up -d
 
 <br>
