@@ -170,7 +170,8 @@ php artisan key:generate --env=testing
 php artisan migrate --seed
 10. シンボリックリンクを設定:<br>
 php artisan storage:link
-9. 環境変数を反映するために再起動:<br>
+11. exit
+12. 環境変数を反映するために再起動:<br>
 docker compose down<br>
 docker compose up -d --build
 <br>

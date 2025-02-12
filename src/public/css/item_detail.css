@@ -282,14 +282,6 @@
         font-size: 18px;
         margin: 10px 0 0 40px;
     }
-
-    .mypage__content {
-        margin: 0 0 0 50px;
-    }
-
-    .mypage__content h1 {
-        margin: 0;
-    }
 }
 
 @media screen and (min-width: 820px) and (max-width: 1180px) {
@@ -299,14 +291,6 @@
 
     .item-name {
         margin: 0 0 0 30px;
-    }
-
-    .mypage__content {
-        margin: 0 0 0 50px;
-    }
-
-    .mypage__content h1 {
-        margin: 0;
     }
 }
 
@@ -340,6 +324,11 @@
     .item-detail__comment-form {
         width: 100%;
         margin: 0 auto;
+    }
+
+    .item-detail__text {
+        margin-top: 20px;
+        border-top: 1px solid #000;
     }
 }
 
@@ -402,9 +391,5 @@
 
     .item-detail__image {
         margin: 0;
-    }
-
-    .rule {
-        font-size: 16px;
     }
 }
