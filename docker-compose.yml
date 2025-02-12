@@ -70,6 +70,10 @@ services:
       - flea_market_network
     restart: always
 
+volumes:
+  mysql_data:
+    driver: local
+
 networks:
   flea_market_network:
     driver: bridge

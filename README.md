@@ -91,7 +91,33 @@ composer create-project "laravel/laravel=8.*" . --prefer-dist
 'timezone' => 'Asia/Tokyo'
 10. .env の作成 & 設定:<br>
 cp .env.example .env
-<br>
+11. アプリケーションキーの生成:<br>
+php artisan key:generate
+12. マイグレーション:<br>
+php artisan migrate
+13. シーディング:<br>
+php artisan db:seed
+
+# test環境構築
+
+1. テスト用のコンテナを起動:<br>
+docker compose -f docker-compose.testing.yml up -d
+2. .env.testing の作成 & 設定:<br>
+cp src/.env.example src/.env.testing
+3. PHP コンテナに入る:<br>
+docker exec -it flea_market_php_test bash
+4. テスト実行:<br>
+php artisan test
+
+
+# クローンして環境構築する手順
+
+1. Git リポジトリのクローン:<br>
+ git clone git@github.com:mana62/flea_market_app.git<br>
+cd flea_market_app
+2. .env ファイルの作成 & 設定:<br>
+cp src/.env.example src/.env<br>
+
 .env の設定例:<br>
    DB_CONNECTION=mysql<br>
    DB_HOST=mysql<br>
@@ -113,44 +139,6 @@ cp .env.example .env
 STRIPE_KEY=pk_test_51QL1HQP6vhR18R0Qov3GuXbuoeGRm0Zd0IYuwgCjjWg44xtgaw797DG6oOubHaDEHvmMMmFa6qRQcMeSHqvgOBL900AcnURSH7<br>
 STRIPE_SECRET=sk_test_51QL1HQP6vhR18R0Q48Wf9g24z9MwM107D1wPfFXi0J8uWlyF2xY4vZxMBLyq6lgE7VPQzMdj46oiV8vmRRvUkS3X00OVvjw1zF<br>
 
-11. アプリケーションキーの生成:<br>
-php artisan key:generate
-12. マイグレーション:<br>
-php artisan migrate
-13. シーディング:<br>
-php artisan db:seed
-
-# test環境構築
-
-1. テスト用のコンテナを起動:<br>
-docker compose -f docker-compose.testing.yml up -d
-2. .env.testing の作成 & 設定:<br>
-cp src/.env.example src/.env.testing
-<br>
-.env.testing の設定例:<br>
-APP_ENV=testing<br>
-<br>
-DB_CONNECTION=mysql<br>
-DB_HOST=flea_market_mysql_test<br>
-DB_PORT=3306<br>
-DB_DATABASE=test_db<br>
-DB_USERNAME=test_user<br>
-DB_PASSWORD=test<br>
-<br>
-3. PHP コンテナに入る:<br>
-docker exec -it flea_market_php_test bash
-4. テスト実行:<br>
-php artisan test
-
-
-# クローンして環境構築する手順
-
-1. Git リポジトリのクローン:<br>
- git clone git@github.com:mana62/flea_market_app.git<br>
-cd flea_market_app
-2. .env ファイルの作成 & 設定(上記参照):<br>
-cp src/.env.example src/.env<br>
-cp src/.env.example src/.env.testing
 3. Docker コンテナの起動:<br>
 docker compose up -d --build
 4. PHP コンテナに入る:<br>
@@ -158,26 +146,45 @@ docker exec -it flea_market_php bash
 5. Laravel パッケージのインストール:<br>
 composer install
 6. アプリケーションキーの生成:<br>
-php artisan key:generate<br>
-.env.testingにも生成されたアプリケーションキーをコピー
-7. キャッシュクリア:<br>
 php artisan config:clear
-8. マイグレーションとシーディング:<br>
+php artisan key:generate
+php artisan config:cache<br>
+7. マイグレーションとシーディング:<br>
 php artisan migrate --seed
-9. シンボリックリンクを設定:<br>
+8. シンボリックリンクを設定:<br>
 php artisan storage:link
-10. パーミッションの確認(Laravel のストレージとキャッシュディレクトリに書き込み権限を設定):<br>
-chmod -R 775 storage<br>
-chmod -R 775 public/storage<br>
+9. 環境変数を反映するために再起動:<br>
+docker compose up -d<br>
 <br>
 ＜テスト環境＞
 
-1. テスト環境の起動 & 設定:<br>
+1. .env.testing ファイルの作成 & 設定:<br>
+cp src/.env.example src/.env.testing<br>
+
+.env.testing の設定例:<br>
+APP_ENV=testing<br>
+<br>
+DB_CONNECTION=mysql<br>
+DB_HOST=mysql<br>
+DB_PORT=3306<br>
+DB_DATABASE=test_db<br>
+DB_USERNAME=test_user<br>
+DB_PASSWORD=test<br>
+
+STRIPE_KEY=pk_test_51QL1HQP6vhR18R0Qov3GuXbuoeGRm0Zd0IYuwgCjjWg44xtgaw797DG6oOubHaDEHvmMMmFa6qRQcMeSHqvgOBL900AcnURSH7<br>
+STRIPE_SECRET=sk_test_51QL1HQP6vhR18R0Q48Wf9g24z9MwM107D1wPfFXi0J8uWlyF2xY4vZxMBLyq6lgE7VPQzMdj46oiV8vmRRvUkS3X00OVvjw1zF<br>
+<br>
+
+2. テスト環境の起動:<br>
 docker compose down<br>
 docker compose -f docker-compose.testing.yml up -d
-2. PHP コンテナに入る:<br>
+3. PHP コンテナに入る:<br>
 docker exec -it flea_market_php_test bash
-3. テスト実行:<br>
+4. アプリケーションキーの生成:<br>
+php artisan key:generate --env=testing<br>
+5. マイグレーション:<br>
+php artisan migrate --env=testing
+6. テスト実行:<br>
 php artisan test
 
 # 補足

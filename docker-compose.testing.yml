@@ -11,7 +11,6 @@ services:
       - php
     networks:
       - flea_market_network
-    restart: always
 
   php:
     build: ./docker/php
@@ -22,7 +21,7 @@ services:
     env_file:
       - src/.env.testing
     depends_on:
-      - flea_market_mysql_test
+      - mysql
     networks:
       - flea_market_network
 
@@ -47,12 +46,12 @@ services:
     image: phpmyadmin/phpmyadmin:latest
     container_name: flea_market_phpmyadmin_test
     depends_on:
-      - flea_market_mysql_test
+      - mysql
     ports:
       - "8081:80"
     environment:
       - PMA_ARBITRARY=1
-      - PMA_HOST=flea_market_mysql_test
+      - PMA_HOST=mysql
       - PMA_USER=test_user
       - PMA_PASSWORD=test
     networks:
