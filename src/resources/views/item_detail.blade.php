@@ -104,9 +104,6 @@
                     <h3>商品へのコメント</h3>
                     <form action="{{ route('item.comment', $item->id) }}" method="post" class="item-detail__comment-form">
                         @csrf
-                        @error('comment')
-                            <span class="form__error">{{ $message }}</span>
-                        @enderror
                         <textarea class="item-detail__text" name="content" rows="5" cols="60" maxlength="255"></textarea>
                         @error('content')
                         <span class="form__error">{{ $message }}</span>
