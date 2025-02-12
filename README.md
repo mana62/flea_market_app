@@ -139,26 +139,7 @@ cp src/.env.example src/.env<br>
 STRIPE_KEY=pk_test_51QL1HQP6vhR18R0Qov3GuXbuoeGRm0Zd0IYuwgCjjWg44xtgaw797DG6oOubHaDEHvmMMmFa6qRQcMeSHqvgOBL900AcnURSH7<br>
 STRIPE_SECRET=sk_test_51QL1HQP6vhR18R0Q48Wf9g24z9MwM107D1wPfFXi0J8uWlyF2xY4vZxMBLyq6lgE7VPQzMdj46oiV8vmRRvUkS3X00OVvjw1zF<br>
 
-3. Docker コンテナの起動:<br>
-docker compose up -d --build
-4. PHP コンテナに入る:<br>
-docker exec -it flea_market_php bash
-5. Laravel パッケージのインストール:<br>
-composer install
-6. アプリケーションキーの生成:<br>
-php artisan config:clear
-php artisan key:generate
-php artisan config:cache<br>
-7. マイグレーションとシーディング:<br>
-php artisan migrate --seed
-8. シンボリックリンクを設定:<br>
-php artisan storage:link
-9. 環境変数を反映するために再起動:<br>
-docker compose up -d<br>
-<br>
-＜テスト環境＞
-
-1. .env.testing ファイルの作成 & 設定:<br>
+3. .env.testing ファイルの作成 & 設定:<br>
 cp src/.env.example src/.env.testing<br>
 
 .env.testing の設定例:<br>
@@ -175,16 +156,34 @@ STRIPE_KEY=pk_test_51QL1HQP6vhR18R0Qov3GuXbuoeGRm0Zd0IYuwgCjjWg44xtgaw797DG6oOub
 STRIPE_SECRET=sk_test_51QL1HQP6vhR18R0Q48Wf9g24z9MwM107D1wPfFXi0J8uWlyF2xY4vZxMBLyq6lgE7VPQzMdj46oiV8vmRRvUkS3X00OVvjw1zF<br>
 <br>
 
-2. テスト環境の起動:<br>
+4. Docker コンテナの起動:<br>
+docker compose up -d --build
+5. PHP コンテナに入る:<br>
+docker exec -it flea_market_php bash
+6. Laravel パッケージのインストール:<br>
+composer install
+7. .envアプリケーションキーの生成:<br>
+php artisan key:generate
+8. .env.testingアプリケーションキーの生成:<br>
+php artisan key:generate --env=testing
+9. マイグレーションとシーディング:<br>
+php artisan migrate --seed
+10. シンボリックリンクを設定:<br>
+php artisan storage:link
+9. 環境変数を反映するために再起動:<br>
+docker compose down<br>
+docker compose up -d --build
+<br>
+＜テスト環境＞
+
+1. テスト環境の起動:<br>
 docker compose down<br>
 docker compose -f docker-compose.testing.yml up -d
-3. PHP コンテナに入る:<br>
+2. PHP コンテナに入る:<br>
 docker exec -it flea_market_php_test bash
-4. アプリケーションキーの生成:<br>
-php artisan key:generate --env=testing<br>
-5. マイグレーション:<br>
+3. マイグレーション:<br>
 php artisan migrate --env=testing
-6. テスト実行:<br>
+4. テスト実行:<br>
 php artisan test
 
 # 補足
