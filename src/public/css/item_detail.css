@@ -282,6 +282,11 @@
         font-size: 18px;
         margin: 10px 0 0 40px;
     }
+
+    .item-detail__text {
+        margin-top: 20px;
+        border-top: 1px solid #000;
+    }
 }
 
 @media screen and (min-width: 820px) and (max-width: 1180px) {
