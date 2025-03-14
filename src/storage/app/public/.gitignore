@@ -1,3 +1,4 @@
 !.gitignore
 !/storage/app/public/item_images/*
 !/storage/app/public/profile_images/.gitkeep
+!/storage/app/public/chat_images/*

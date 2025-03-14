@@ -49,4 +49,19 @@ class Item extends Model
     {
         return $this->hasMany(Purchase::class);
     }
+
+    public function chatRoom()
+    {
+        return $this->hasOne(ChatRoom::class);
+    }
+
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
 }

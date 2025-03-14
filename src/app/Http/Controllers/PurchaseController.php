@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Purchase;
 use App\Models\Item;
+use App\Models\ChatRoom;
 use App\Models\Address;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\PurchaseRequest;
 use App\Http\Requests\AddressRequest;
@@ -72,6 +74,24 @@ class PurchaseController extends Controller
             'address_id' => $address->id,
             'payment_method' => $paymentMethod,
         ]);
+
+        ChatRoom::create([
+            'item_id' => $item->id,
+            'seller_id' => $item->user_id, //出品者
+            'buyer_id' => Auth::id(), //ログインユーザー
+            'transaction_status' => 'active',
+        ]);
+
+        // 出品者に売れたことを通知
+        Notification::create([
+            'user_id' => Auth::id(), // 購入者のID
+            'item_id' => $item->id, // 購入した商品ID
+            'chat_id' => null, // 通知の種類（購入）
+            'type' => 'sold',
+            'notification_status' => 'unread', // 未読状態
+        ]);
+
+        Notification::where('user_id', Auth::id())->where('notification_status', 'unread')->count();
 
         if (!$address) {
             throw new \Exception('住所が見つかりません');
