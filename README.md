@@ -136,8 +136,9 @@ cp src/.env.example src/.env<br>
    MAIL_FROM_NAME="flea_market_app"<br>
    <br>
 
-STRIPE_KEY=pk_test_51QL1HQP6vhR18R0Qov3GuXbuoeGRm0Zd0IYuwgCjjWg44xtgaw797DG6oOubHaDEHvmMMmFa6qRQcMeSHqvgOBL900AcnURSH7<br>
-STRIPE_SECRET=sk_test_51QL1HQP6vhR18R0Q48Wf9g24z9MwM107D1wPfFXi0J8uWlyF2xY4vZxMBLyq6lgE7VPQzMdj46oiV8vmRRvUkS3X00OVvjw1zF<br>
+※ https://stripe.com/jpから下記2つのキーを取得して記載する ※
+STRIPE_KEY=<br>
+STRIPE_SECRET=<br>
 
 3. .env.testing ファイルの作成 & 設定:<br>
 cp src/.env.example src/.env.testing<br>
@@ -151,9 +152,11 @@ DB_PORT=3306<br>
 DB_DATABASE=test_db<br>
 DB_USERNAME=test_user<br>
 DB_PASSWORD=test<br>
+<br>
 
-STRIPE_KEY=pk_test_51QL1HQP6vhR18R0Qov3GuXbuoeGRm0Zd0IYuwgCjjWg44xtgaw797DG6oOubHaDEHvmMMmFa6qRQcMeSHqvgOBL900AcnURSH7<br>
-STRIPE_SECRET=sk_test_51QL1HQP6vhR18R0Q48Wf9g24z9MwM107D1wPfFXi0J8uWlyF2xY4vZxMBLyq6lgE7VPQzMdj46oiV8vmRRvUkS3X00OVvjw1zF<br>
+※ https://stripe.com/jpから下記2つのキーを取得して記載する ※
+STRIPE_KEY=<br>
+STRIPE_SECRET=<br>
 <br>
 
 4. Docker コンテナの起動:<br>

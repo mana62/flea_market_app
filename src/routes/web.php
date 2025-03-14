@@ -7,6 +7,9 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\RatingController;
+use App\Http\Controllers\NotificationController;
 
 //認証
 Route::middleware('auth')->group(function () {
@@ -59,3 +62,18 @@ Route::middleware('auth')->group(function () {
     Route::post('/payment/{item_id}', [PaymentController::class, 'itemPayment'])->name('item.payment');
     Route::get('/thanks-buy', [PurchaseController::class, 'thanksBuy'])->name('thanks.buy');
 });
+
+// チャット
+Route::get('/chat/{item_id}', [ChatController::class, 'index'])->name('chat');
+Route::post('/chat/store', [ChatController::class, 'store'])->name('chat.store');
+Route::patch('/chat/update/{id}', [ChatController::class, 'update'])->name('chat.update');
+Route::delete('/chat/delete/{id}', [ChatController::class, 'destroy'])->name('chat.delete');
+Route::post('/chat/store-content', [ChatController::class, 'storeContent'])->name('chat.storeContent');
+
+// 評価
+Route::post('/rating/store', [RatingController::class, 'store'])->name('rating.store');
+// 取引
+Route::post('/chat_rooms/{id}/close', [RatingController::class, 'doneTransaction'])->name('chat.close');
+
+// 通知
+Route::post('/chat/{chatRoomId}/read', [NotificationController::class, 'readNotice'])->name('chat.read');

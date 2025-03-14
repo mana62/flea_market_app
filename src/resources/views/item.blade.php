@@ -10,6 +10,14 @@
 @endsection
 
 @section('content')
+<div class="message">
+    @if (session('message'))
+        <span class="message-session">
+            {{ session('message') }}
+        </span>
+    @endif
+</div>
+
     <ul class="tabs">
         <li><a href="{{ url('/?tab=recommend&search=' . $input) }}"
                 class="{{ $tab === 'recommend' ? 'active' : '' }}">おすすめ</a></li>
