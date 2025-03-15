@@ -72,8 +72,6 @@ Route::post('/chat/store-content', [ChatController::class, 'storeContent'])->nam
 
 // 評価
 Route::post('/rating/store', [RatingController::class, 'store'])->name('rating.store');
-// 取引
-Route::post('/chat_rooms/{id}/close', [RatingController::class, 'doneTransaction'])->name('chat.close');
 
 // 通知
 Route::post('/chat/{chatRoomId}/read', [NotificationController::class, 'readNotice'])->name('chat.read');

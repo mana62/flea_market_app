@@ -32,13 +32,13 @@
 
 .item-detail {
     display: flex;
-    gap: 50px;
+    gap: 40px;
     border-bottom: 1px solid #5d5c5c;
 }
 
 .item-image img {
     width: 100%;
-    max-width: 300px;
+    max-width: 250px;
     height: auto;
     border-radius: 3px;
     margin: 0 0 30px 10px;

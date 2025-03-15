@@ -405,6 +405,11 @@
     .first-content__ttl {
         font-size: 22px;
     }
+
+    .message-container {
+        height: auto;
+        min-height: 940px;
+    }
 }
 
 /* Responsive styles for screens between 800px and 920px */
@@ -431,6 +436,11 @@
     
     .first-content__ttl {
         font-size: 21px;
+    }
+
+    .message-container {
+        height: auto;
+        min-height: 750px;
     }
 }
 @media (max-width: 768px) {
@@ -464,6 +474,7 @@
 
     .message-container {
         height: auto;
+        min-height: 600px;
     }
 }
 
@@ -514,7 +525,7 @@
 
     .message-container {
         height: auto; /* 高さ自動調整 */
-        max-height: 300px; /* 最大高さ設定 */
+        min-height: 300px;
     }
 
     .message__input-container {

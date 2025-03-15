@@ -76,3 +76,5 @@ document.addEventListener("DOMContentLoaded", () => {
     // 初回ページロード時に通知を更新
     updateNotificationCount();
 });
+
+

@@ -37,7 +37,7 @@ class NotificationController extends Controller
             Notification::where('item_id', $chatRoom->item_id)
                 ->where('user_id', '!=', $user->id)
                 ->where('notification_status', 'read')
-                ->where('type', '!=', 'rating') // 評価通知は削除しない
+                ->whereNotIn('type', ['rating', 'transaction'])
                 ->delete();
 
             // ④ 未読メッセージ数と未読通知数を取得

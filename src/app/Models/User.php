@@ -85,28 +85,17 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function progressPurchasedItems()
-{
-    return $this->hasManyThrough(
-        Item::class,     // 取得するモデル（アイテム）
-        ChatRoom::class, // 経由する中間モデル（チャットルーム）
-        'buyer_id',      // ChatRoom の自分のカラム（購入者側）
-        'id',            // Item の関連カラム
-        'id',            // User のカラム
-        'item_id'        // ChatRoom のアイテム関連カラム
-        )->where('chat_rooms.transaction_status', 'active');
-}
+    {
+        return $this->hasManyThrough(Item::class, ChatRoom::class, 'buyer_id', 'id', 'id', 'item_id')
+            ->whereIn('chat_rooms.transaction_status', ['active', 'buyer_rated']);
+    }
 
-public function progressListedItems()
-{
-    return $this->hasManyThrough(
-        Item::class,     // 取得するモデル（アイテム）
-        ChatRoom::class, // 経由する中間モデル（チャットルーム）
-        'seller_id',     // ChatRoom の自分のカラム（出品者側）
-        'id',            // Item の関連カラム
-        'id',            // User のカラム
-        'item_id'        // ChatRoom のアイテム関連カラム
-        )->where('chat_rooms.transaction_status', 'active');
-}
+    public function progressListedItems()
+    {
+        return $this->hasManyThrough(Item::class, ChatRoom::class, 'seller_id', 'id', 'id', 'item_id')
+            ->whereIn('chat_rooms.transaction_status', ['active', 'buyer_rated']);
+    }
+
 
     public function addresses()
     {

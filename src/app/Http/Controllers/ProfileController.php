@@ -18,25 +18,25 @@ class ProfileController extends Controller
         $profile = $user->profile;
 
         // **タグ横の通知（取引中の商品数）**
-    $activeTransactionCount = ChatRoom::where(function ($query) use ($user) {
-        $query->where('seller_id', $user->id)
-            ->orWhere('buyer_id', $user->id);
-    })
-    ->where('transaction_status', 'active') // 取引中の商品数
-    ->count();
+        $activeTransactionCount = ChatRoom::where(function ($query) use ($user) {
+            $query->where('seller_id', $user->id)
+                ->orWhere('buyer_id', $user->id);
+        })
+            ->whereIn('transaction_status', ['active', 'buyer_rated'])
+            ->count();
 
-    // **画像の通知（各商品の未読メッセージ数）**
-    $unreadMessageCounts = Chat::whereHas('chatRoom', function ($query) use ($user) {
-        $query->where('seller_id', $user->id)
-            ->orWhere('buyer_id', $user->id);
-    })
-    ->where('user_id', '!=', $user->id)
-    ->where('read_status', 'unread')
-    ->selectRaw('chat_room_id, COUNT(*) as unread_count')
-    ->groupBy('chat_room_id')
-    ->pluck('unread_count', 'chat_room_id');
+        // **画像の通知（各商品の未読メッセージ数）**
+        $unreadMessageCounts = Chat::whereHas('chatRoom', function ($query) use ($user) {
+            $query->where('seller_id', $user->id)
+                ->orWhere('buyer_id', $user->id);
+        })
+            ->where('user_id', '!=', $user->id)
+            ->where('read_status', 'unread')
+            ->selectRaw('chat_room_id, COUNT(*) as unread_count')
+            ->groupBy('chat_room_id')
+            ->pluck('unread_count', 'chat_room_id');
 
-// 評価の平均を取得
+        // 評価の平均を取得
         $averageScore = round(Rating::where('rated_id', $user->id)->avg('rating'), 0);
 
         $tab = $request->query('page', 'buy');
@@ -47,10 +47,10 @@ class ProfileController extends Controller
             'progress' => $user->progressPurchasedItems()->get()
                 ->merge($user->progressListedItems()->get())
                 ->load('chatRoom')
-                ->filter(fn($item) => $item->chatRoom->status !== 'rated'),
+                ->filter(fn($item) => in_array(optional($item->chatRoom)->transaction_status, ['active', 'buyer_rated'])),
             default => collect([]),
         };
-    
+
         return view('mypage', compact('tab', 'items', 'profile', 'unreadMessageCounts', 'activeTransactionCount', 'averageScore'));
     }
 
