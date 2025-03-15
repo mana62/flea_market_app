@@ -14,7 +14,6 @@
         <div class="left-side">
             <aside>
                 <div class="left-side__content">
-                    {{-- その他の取引（メッセージが来た順） --}}
                     <h2 class="left-side__ttl">その他の取引</h2>
                 </div>
                 <ul>
@@ -34,12 +33,9 @@
         <div class="right-content">
             <div class="content__row">
                 <div class="content__flex">
-
-                    {{-- 購入者には出品者の画像 出品者には購入者の画像 --}}
                     <div class="user__image-preview">
                         @if (isset($chatRoom) && $chatRoom)
                             @php
-                                // 取引相手のプロフィール
                                 $partner = Auth::id() === $chatRoom->seller_id ? $chatRoom->buyer : $chatRoom->seller;
                             @endphp
 
@@ -50,8 +46,6 @@
                         @endif
                     </div>
 
-
-                    {{-- 購入者には出品者の名前 出品者には購入者の名前 --}}
                     @if (isset($chatRoom) && $chatRoom)
                         <h1 class="first-content__ttl">
                             {{ Auth::id() === $chatRoom->seller_id ? $chatRoom->buyer->name ?? '購入者不明' : $chatRoom->seller->name ?? '出品者不明' }}さんとの取引画面
@@ -59,20 +53,17 @@
                     @endif
                 </div>
 
-                {{-- 購入者のみ取引ボタン表示 --}}
                 @if ($chatRoom->buyer_id == Auth::id() && $chatRoom->isActive())
                     <button class="first-content__button" onclick="openRatingModal()">取引を完了する</button>
                     <input type="hidden" name="chatRoomId" value="{{ $chatRoom->id }}">
                 @endif
 
-                {{-- 出品者のみ取引ボタン表示 --}}
                 @if ($chatRoom->transaction_status === 'buyer_rated' && Auth::id() === $chatRoom->seller_id)
-                <button class="first-content__button" onclick="openRatingModal()">取引を完了する</button>
+                    <button class="first-content__button" onclick="openRatingModal()">取引を完了する</button>
                     <input type="hidden" name="chatRoomId" value="{{ $chatRoom->id }}">
                 @endif
             </div>
 
-            {{-- 出品者への評価モーダル --}}
             @if ($chatRoom->buyer_id == Auth::id() && $chatRoom->transaction_status === 'active' && !$hasRated)
                 <div id="ratingModal" class="modal">
                     <div class="modal-content">
@@ -98,32 +89,30 @@
                 </div>
             @endif
 
-            {{-- 購入者への評価モーダル --}}
             @if ($chatRoom->transaction_status === 'buyer_rated' && Auth::id() === $chatRoom->seller_id)
-    <div id="ratingModal" class="modal">
-        <div class="modal-content">
-            <h2>購入者の評価を完了しました</h2>
-            <form action="{{ route('rating.store') }}" method="POST">
-                @csrf
-                <input type="hidden" name="chat_room_id" value="{{ $chatRoom->id }}">
-                <input type="hidden" name="rater_id" value="{{ Auth::id() }}">
-                <input type="hidden" name="rated_id" value="{{ $chatRoom->buyer_id }}">
-                <input type="hidden" id="rating-value" name="rating" value="0">
-                <p>取引相手の評価をお願いします。</p>
-                <div class="review__stars">
-                    @for ($i = 1; $i <= 5; $i++)
-                        <span class="star" data-value="{{ $i }}">★</span>
-                    @endfor
+                <div id="ratingModal" class="modal">
+                    <div class="modal-content">
+                        <h2>取引が完了しました。</h2>
+                        <form action="{{ route('rating.store') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="chat_room_id" value="{{ $chatRoom->id }}">
+                            <input type="hidden" name="rater_id" value="{{ Auth::id() }}">
+                            <input type="hidden" name="rated_id" value="{{ $chatRoom->buyer_id }}">
+                            <input type="hidden" id="rating-value" name="rating" value="0">
+                            <p>取引相手の評価をお願いします。</p>
+                            <div class="review__stars">
+                                @for ($i = 1; $i <= 5; $i++)
+                                    <span class="star" data-value="{{ $i }}">★</span>
+                                @endfor
+                            </div>
+                            <div class="review__button">
+                                <button type="submit" class="review__button-submit">送信する</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div class="review__button">
-                    <button type="submit" class="review__button-submit">送信する</button>
-                </div>
-            </form>
-        </div>
-    </div>
-@endif
+            @endif
 
-            {{-- 商品の画像と名前と金額 --}}
             <div class="second-content__row">
                 <div class="item-image">
                     @if ($chatRoom && $chatRoom->item)
@@ -139,7 +128,6 @@
                 </div>
             </div>
 
-            {{-- チャット部分 --}}
             <div class="message-container">
                 <div class="message">
                     @if (session('message'))
@@ -179,7 +167,6 @@
                             </div>
                         @endif
 
-                        {{-- チャットの編集部分 --}}
                         @if ($chat->user_id == Auth::id())
                             <div id="editForm{{ $chat->id }}" style="display: none;" class="edit-form">
                                 <form action="{{ route('chat.update', ['id' => $chat->id]) }}" method="POST"
@@ -197,7 +184,6 @@
             @endforeach
         </div>
 
-        {{-- エラーメッセージ --}}
         @if ($errors->any())
             <div class="form__error">
                 <ul>
@@ -208,12 +194,12 @@
             </div>
         @endif
 
-        {{-- チャット投稿フォーム --}}
         <form action="{{ route('chat.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="item_id" value="{{ $chatRoom->item_id }}">
             <div class="message__input-container">
-                <textarea class="message__textarea" name="content" id="chat-input" placeholder="取引メッセージを記入してください">{{ session('stored_content', '') }}</textarea>
+                <textarea class="message__textarea" name="content" id="chat-input" placeholder="取引メッセージを記入してください"
+                    data-chat-room-id="{{ $chatRoom->id }}" data-route="{{ route('chat.storeContent') }}">{{ session("stored_content_chatroom_{$chatRoom->id}", '') }}</textarea>
                 <label for="file-upload" class="file__upload" id="preview">画像を追加</label>
                 <input type="file" id="file-upload" name="image" style="display: none;">
                 <button type="submit" class="message-send__button">

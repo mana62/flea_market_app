@@ -41,7 +41,7 @@
 }
 
 .review-stars .selected {
-    color: #FFD700;
+    color: #ffd700;
 }
 
 .profile-link {
@@ -129,14 +129,14 @@
 
 .notification-count__small {
     position: absolute;
-    top: 5px; 
-    left: 28px; 
+    top: 5px;
+    left: 28px;
     background-color: red;
     color: #fff;
     font-size: 15px;
     padding: 2px 6px;
     border-radius: 50%;
-    z-index: 10; 
+    z-index: 10;
 }
 
 .tabs a.active {
@@ -264,7 +264,7 @@
 
     .notification-count {
         font-size: 12px;
-        padding: 1px 3px;
+        padding: 1px 4px;
     }
 
     .item-list {

@@ -25,11 +25,13 @@ class DatabaseSeeder extends Seeder
             'email' => 'taro@example.com',
             'password' => Hash::make('password123'),
         ]);
+
         $user2 = User::factory()->create([
             'name' => '山田二郎',
             'email' => 'jiro@example.com',
             'password' => Hash::make('password456'),
         ]);
+
         $user3 = User::factory()->create([
             'name' => '山田三郎',
             'email' => 'saburo@example.com',
@@ -41,11 +43,13 @@ class DatabaseSeeder extends Seeder
             'name' => '山田太郎',
             'image' => null,
         ]);
+
         Profile::create([
             'user_id' => $user2->id,
             'name' => '山田二郎',
             'image' => null,
         ]);
+
         Profile::create([
             'user_id' => $user3->id,
             'name' => '山田三郎',
@@ -59,6 +63,7 @@ class DatabaseSeeder extends Seeder
             'building' => 'マンション101',
             'is_default' => true,
         ]);
+
         Address::create([
             'user_id' => $user2->id,
             'post_number' => '222-2222',
@@ -66,6 +71,7 @@ class DatabaseSeeder extends Seeder
             'building' => 'マンション202',
             'is_default' => true,
         ]);
+
         Address::create([
             'user_id' => $user3->id,
             'post_number' => '333-3333',
@@ -112,7 +118,7 @@ class DatabaseSeeder extends Seeder
             ]);
         }
 
-        Comment::factory(5)->create();
+        Comment::factory(10)->create();
         Like::factory(5)->create();
     }
 }

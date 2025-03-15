@@ -9,7 +9,6 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\RatingController;
-use App\Http\Controllers\NotificationController;
 
 //認証
 Route::middleware('auth')->group(function () {
@@ -33,11 +32,11 @@ Route::get('/', [ItemController::class, 'index'])->name('item');
 Route::get('/item/{item_id}', [ItemController::class, 'itemDetail'])->name('item.detail');
 
 Route::middleware(['auth'])->group(function () {
-Route::get('/sell', [ItemController::class, 'sellItemPage'])->name('item.sell.page');
-Route::post('/sell', [ItemController::class, 'sellItem'])->name('item.sell');
-Route::post('/item/{item}/image', [ItemController::class, 'uploadImage'])->name('item.image.upload');
-Route::post('/item/{item}/like', [ItemController::class, 'toggleLike'])->name('item.like');
-Route::post('/item/{item_id}/comments', [ItemController::class, 'comment'])->name('item.comment');
+    Route::get('/sell', [ItemController::class, 'sellItemPage'])->name('item.sell.page');
+    Route::post('/sell', [ItemController::class, 'sellItem'])->name('item.sell');
+    Route::post('/item/{item}/image', [ItemController::class, 'uploadImage'])->name('item.image.upload');
+    Route::post('/item/{item}/like', [ItemController::class, 'toggleLike'])->name('item.like');
+    Route::post('/item/{item_id}/comments', [ItemController::class, 'comment'])->name('item.comment');
 });
 
 //プロフィール関連
@@ -72,6 +71,3 @@ Route::post('/chat/store-content', [ChatController::class, 'storeContent'])->nam
 
 // 評価
 Route::post('/rating/store', [RatingController::class, 'store'])->name('rating.store');
-
-// 通知
-Route::post('/chat/{chatRoomId}/read', [NotificationController::class, 'readNotice'])->name('chat.read');

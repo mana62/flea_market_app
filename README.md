@@ -70,11 +70,11 @@
 
 # テーブル設計
 
-<img width="493" alt="Image" src="https://github.com/user-attachments/assets/1843d04b-3932-405c-81e2-d4b786a74fe8" />
+<img width="220" alt="Image" src="https://github.com/user-attachments/assets/90ab5c60-5bfb-47f0-a1df-0e3b6d12efff" />
 
 # ER 図
 
-<img width="832" alt="Image" src="https://github.com/user-attachments/assets/223e950b-7830-4ae1-a3aa-2a6aebd55bfd" />
+<img width="857" alt="Image" src="https://github.com/user-attachments/assets/acc38789-5218-4d80-b075-84465cedb846" />
 
 # 環境構築
 
@@ -197,21 +197,23 @@ STRIPE_SECRET=<br>
 - 未承認の場合はコメント入力欄が非表示
 - 未承認の場合はいいねができず、マイリストには「いいねした商品はありません」と表示される
 - メール認証は MailHog を使用
+- タグ部分の通知 -> 取引されているアイテムの数を表示
+- 画像部分の通知 -> メッセージの未読件数を表示
   <br>
 
 # ユーザーのダミーデータ<br>
 
-- $user1 [item1~5を出品]
+- $user1 [item1~5を出品]<br>
   名前 : 山田太郎<br>
   メールアドレス : taro@example.com<br>
   パスワード : password123<br>
 
-- user2 [item6~10を出品]
+- user2 [item6~10を出品]<br>
   名前 : 山田二郎<br>
   メールアドレス : jiro@example.com<br>
   パスワード : password456<br>
 
-- user3 [何も出品しない]
+- user3 [何も出品しない]<br>
   名前 : 山田三郎<br>
   メールアドレス : saburo@example.com<br>
   パスワード : password789<br>

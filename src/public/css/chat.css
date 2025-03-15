@@ -39,7 +39,7 @@
     border-radius: 5px;
     list-style: none;
     font-size: 20px;
-    margin:  10px 0 30px;
+    margin: 10px 0 30px;
 }
 
 .left-side li a {
@@ -125,11 +125,10 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #FDFCE6;
+    background-color: #fdfce6;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     z-index: 2000;
     border-radius: 10px;
-
 }
 
 .modal-content {
@@ -373,14 +372,13 @@
 }
 
 .form__error {
-  color: #ff0000;
-  text-align: left;
-  font-weight: 400;
-  display: block;
-  font-size: 18px;
+    color: #ff0000;
+    text-align: left;
+    font-weight: 400;
+    display: block;
+    font-size: 18px;
 }
 
-/* Responsive styles for screens between 1024px and 1200px */
 @media screen and (min-width: 1024px) and (max-width: 1200px) {
     .left-side {
         width: 25%;
@@ -401,49 +399,13 @@
         width: 60px;
         height: 60px;
     }
-    
+
     .first-content__ttl {
         font-size: 22px;
     }
-
-    .message-container {
-        height: auto;
-        min-height: 940px;
-    }
 }
 
-/* Responsive styles for screens between 800px and 920px */
-@media screen and (min-width: 800px) and (max-width: 920px) {
-    .left-side {
-        width: 30%;
-        padding: 15px;
-    }
-
-    .right-content {
-        width: 70%;
-        padding: 15px;
-    }
-
-    .user__image-preview {
-        width: 55px;
-        height: 55px;
-    }
-
-    .user__image-preview img {
-        width: 55px;
-        height: 55px;
-    }
-    
-    .first-content__ttl {
-        font-size: 21px;
-    }
-
-    .message-container {
-        height: auto;
-        min-height: 750px;
-    }
-}
-@media (max-width: 768px) {
+@media screen and (min-width: 768px) and (max-width: 850px) {
     .left-side {
         width: 30%;
         max-width: none;
@@ -456,10 +418,16 @@
         padding: 10px;
     }
 
+    .content__row,
+    .second-content__row {
+        padding: 10px;
+    }
+
     .user__image-preview,
     .user__image-preview__small {
         width: 50px;
         height: 50px;
+        margin: 0 5px;
     }
 
     .user__image-preview img,
@@ -472,28 +440,38 @@
         font-size: 20px;
     }
 
-    .message-container {
-        height: auto;
-        min-height: 600px;
+    .item-image {
+        margin: 0;
     }
 }
 
 @media (max-width: 480px) {
     .chat-page {
-        flex-direction: column; /* 縦方向に並べる */
+        flex-direction: column;
     }
 
     .left-side,
     .right-content {
-        width: 100%; /* 全幅表示 */
-        min-width: auto; /* 幅を自動調整 */
+        width: 100%;
+        min-width: auto;
         max-width: none;
         height: auto;
         padding: 10px;
     }
 
+    .content__row {
+        padding: 10px;
+        justify-content: center;
+        flex-direction: column;
+    }
+
     .left-side__ttl {
         margin: 0;
+    }
+
+    .left-side li {
+        width: 60%;
+        margin: 10px auto;
     }
 
     .second-content__text {
@@ -503,18 +481,23 @@
 
     .user__image-preview,
     .user__image-preview__small {
-        width: 40px; /* サイズ調整 */
-        height: 40px; /* サイズ調整 */
+        width: 40px;
+        height: 40px;
+        margin: 0 5px;
     }
 
     .user__image-preview img,
     .user__image-preview__small img {
-        width: 40px; /* サイズ調整 */
-        height: 40px; /* サイズ調整 */
+        width: 40px;
+        height: 40px;
+    }
+
+    .first-content__button {
+        font-size: 13px;
     }
 
     .first-content__ttl {
-        font-size: 20px; /* フォントサイズ調整 */
+        font-size: 20px;
     }
 
     .second-content__row {
@@ -524,10 +507,21 @@
     }
 
     .message-container {
-        height: auto; /* 高さ自動調整 */
+        height: auto;
         min-height: 300px;
     }
 
-    .message__input-container {
+    .file__upload {
+        margin: 0 1px 0 3px;
+        padding: 10px 5px;
+    }
+
+    .message-send__button {
+        padding: 0;
+    }
+
+    .message-send__button img {
+        width: 40px;
+        height: 40px;
     }
 }

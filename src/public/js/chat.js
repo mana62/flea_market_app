@@ -1,6 +1,5 @@
 "use strict";
 
-// 編集部分の表示
 function showEditForm(id) {
     const editForm = document.getElementById(`editForm${id}`);
     if (editForm) {
@@ -15,7 +14,6 @@ function hideEditForm(id) {
     }
 }
 
-// 画像選択時にファイル名を表示
 document
     .getElementById("file-upload")
     .addEventListener("change", function (event) {
@@ -29,7 +27,6 @@ document
         }
     });
 
-// モーダルウィンドウを開く
 function openRatingModal() {
     const ratingModal = document.getElementById("ratingModal");
     if (ratingModal) {
@@ -39,7 +36,6 @@ function openRatingModal() {
     }
 }
 
-// モーダルウィンドウを閉じる
 function hideRatingModal() {
     const ratingModal = document.getElementById("ratingModal");
     if (ratingModal) {
@@ -49,9 +45,7 @@ function hideRatingModal() {
     }
 }
 
-// DOMContentLoaded イベントリスナー
 document.addEventListener("DOMContentLoaded", function () {
-    // テキストの保存
     const chatForm = document.querySelector("form[action$='chat.store']");
     if (chatForm) {
         chatForm.addEventListener("submit", function () {
@@ -59,8 +53,6 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("chat-input").value = "";
         });
     }
-
-    // モーダルウィンドウの中の評価
     const stars = document.querySelectorAll(".review__stars .star");
     const ratingInput = document.getElementById("rating-value");
 
@@ -69,7 +61,6 @@ document.addEventListener("DOMContentLoaded", function () {
             const value = this.getAttribute("data-value");
             ratingInput.value = value;
 
-            // クリックした星まで色を付ける
             stars.forEach((s) => {
                 s.classList.remove("selected");
                 if (s.getAttribute("data-value") <= value) {
@@ -80,33 +71,57 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-// 未読メッセージを既読にする
 const chatRoomIdInput = document.querySelector('input[name="chatRoomId"]');
 if (chatRoomIdInput) {
     const chatRoomId = chatRoomIdInput.value;
     fetch(`/notifications/read/${chatRoomId}`, {
         method: "POST",
         headers: {
-            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
+            "X-CSRF-TOKEN": document
+                .querySelector('meta[name="csrf-token"]')
+                .getAttribute("content"),
             "Content-Type": "application/json",
         },
     })
-    .then(response => response.json())
-    .then(data => {
-        console.log("未読メッセージを既読にしました", data);
-        // 未読カウントを更新
-        document.querySelectorAll(".notification-count").forEach(el => {
-            el.textContent = data.unread_count > 0 ? data.unread_count : "";
-        });
-    })
-    .catch(error => console.error("エラー:", error));
+        .then((response) => response.json())
+        .then((data) => {
+            document.querySelectorAll(".notification-count").forEach((el) => {
+                el.textContent = data.unread_count > 0 ? data.unread_count : "";
+            });
+        })
+        .catch((error) => console.error("エラー:", error));
 }
 
-// 取引完了ボタンのイベント
 const completeButton = document.querySelector(".complete-button");
 if (completeButton) {
     completeButton.addEventListener("click", function () {
-        // 取引完了処理（APIリクエストなど）
-        console.log("取引完了処理");
+        console.log("取引完了");
     });
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    const chatInput = document.getElementById("chat-input");
+
+    if (!chatInput) return;
+
+    chatInput.addEventListener("input", function () {
+        const chatRoomId = chatInput.dataset.chatRoomId;
+        const url = chatInput.dataset.route;
+
+        if (!chatRoomId || !url) return;
+
+        fetch(url, {
+            method: "POST",
+            headers: {
+                "X-CSRF-TOKEN": document
+                    .querySelector('meta[name="csrf-token"]')
+                    .getAttribute("content"),
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                chat_room_id: chatRoomId,
+                content: chatInput.value,
+            }),
+        }).catch((error) => console.error("セッション保存エラー:", error));
+    });
+});

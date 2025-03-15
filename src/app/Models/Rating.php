@@ -21,11 +21,6 @@ class Rating extends Model
         return $this->belongsTo(ChatRoom::class);
     }
 
-    public function notifications()
-    {
-        return $this->hasMany(Notification::class);
-    }
-
     public function rater()
     {
         return $this->belongsTo(User::class, 'rater_id');

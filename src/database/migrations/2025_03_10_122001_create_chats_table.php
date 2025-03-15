@@ -16,7 +16,7 @@ class CreateChatsTable extends Migration
         Schema::create('chats', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('chat_room_id')->constrained('chat_rooms')->onDelete('cascade');            
+            $table->foreignId('chat_room_id')->constrained('chat_rooms')->onDelete('cascade');
             $table->text('content');
             $table->string('image')->nullable();
             $table->enum('read_status', ['unread', 'read'])->default('unread');
