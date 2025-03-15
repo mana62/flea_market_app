@@ -65,6 +65,10 @@
         @foreach ($items as $item)
             <div class="item">
                 <div class="item-image">
+                    @if ($tab === 'sell' && $item->is_sold)
+                    <span class="sold-label">SOLD</span>
+                    @endif
+
                     @if ($tab === 'progress' && $item->chatRoom)
                         <a href="{{ route('chat', ['item_id' => $item->id]) }}">
                         @else

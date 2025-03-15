@@ -111,6 +111,22 @@
     position: relative;
 }
 
+.sold-label {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-25deg);
+    background: rgba(234, 130, 130, 0.9);
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 10px 60px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    z-index: 10;
+    white-space: nowrap;
+}
+
 .notification-count__small {
     position: absolute;
     top: 5px; 
@@ -151,7 +167,7 @@
 .item-name {
     text-align: left;
     font-size: 18px;
-    padding: 10px 0 0 30px;
+    padding: 10px 0 30px 30px;
 }
 
 .item-status {

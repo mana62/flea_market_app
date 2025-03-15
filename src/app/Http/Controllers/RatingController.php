@@ -9,6 +9,8 @@ use App\Models\Notification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\TransactionCompletedMail;
 
 class RatingController extends Controller
 {
@@ -26,77 +28,74 @@ class RatingController extends Controller
                 ->exists();
 
             if ($alreadyRated) {
-                return response()->json(['success' => false, 'message' => '既に評価済みです']);
+                return redirect()->route('item')->with('error', '既に評価済みです');
             }
 
-            // 購入者が出品者にした評価を保存
+            // ユーザーが出品者なのか購入者なのか判定
+            $isBuyer = ($chatRoom->buyer_id === $user->id);
+            $isSeller = ($chatRoom->seller_id === $user->id);
+
+            // 評価を保存
             Rating::create([
                 'chat_room_id' => $chatRoom->id,
                 'rater_id' => $user->id,
-                'rated_id' => ($chatRoom->buyer_id === $user->id) ? $chatRoom->seller_id : $chatRoom->buyer_id,
+                'rated_id' => $isBuyer ? $chatRoom->seller_id : $chatRoom->buyer_id,
                 'rating' => $request->rating,
             ]);
 
-            // 出品者に評価したことの通知を送信
-            Notification::create([
-                'user_id' => $chatRoom->seller_id,
-                'item_id' => $chatRoom->item_id,
-                'chat_id' => $chatRoom->id,
-                'type' => 'rating',
-                'notification_status' => 'unread',
-            ]);
+            // // 通知を送信（評価したことを通知）
+            // Notification::create([
+            //     'user_id' => $isBuyer ? $chatRoom->seller_id : $chatRoom->buyer_id,
+            //     'item_id' => $chatRoom->item_id,
+            //     'chat_id' => $chatRoom->id,
+            //     'type' => 'rating',
+            //     'notification_status' => 'unread',
+            // ]);
 
-            // 双方の評価が完了したか確認
-            $hasBuyerRated = Rating::where('chat_room_id', $chatRoom->id)
-                ->where('rater_id', $chatRoom->buyer_id)
-                ->exists();
+            // ステータスの更新（購入者が評価したら buyer_rated, 出品者が評価したら completed）
+            if ($isBuyer) {
+                $chatRoom->update(['transaction_status' => 'buyer_rated']);
+                // 🔥 出品者にメール通知（購入者が評価したタイミングで送信）
+                Mail::to($chatRoom->seller->email)->queue(new TransactionCompletedMail($chatRoom));
+            }
 
-            $hasSellerRated = Rating::where('chat_room_id', $chatRoom->id)
-                ->where('rater_id', $chatRoom->seller_id)
-                ->exists();
-
-            if ($hasBuyerRated && $hasSellerRated) {
-                // 両者が評価済みなら取引完了
+            if ($isSeller && $chatRoom->transaction_status === 'buyer_rated') {
                 $chatRoom->update(['transaction_status' => 'completed']);
+                // 🔥 取引完了通知
 
-                // 購入者に取引完了の通知を送信
-                Notification::create([
-                    'user_id' => $chatRoom->buyer_id,
-                    'item_id' => $chatRoom->item_id,
-                    'chat_id' => $chatRoom->id,
-                    'type' => 'done',
-                    'notification_status' => 'unread',
-                ]);
-
-                // 出品者に取引完了の通知を送信
-                Notification::create([
-                    'user_id' => $chatRoom->seller_id,
-                    'item_id' => $chatRoom->item_id,
-                    'chat_id' => $chatRoom->id,
-                    'type' => 'done',
-                    'notification_status' => 'unread',
-                ]);
-
-                // 取引関連データの削除
-                if (Session::has("progress_{$chatRoom->item_id}")) {
-                    Session::forget("progress_{$chatRoom->item_id}");
-                }
-
-                // 関連する通知を削除（未読・取引関連の通知）
+                // 取引完了後、取引中のリストから削除（アイテムは削除しない）
+                Session::forget("progress_{$chatRoom->item_id}");
                 Notification::where('chat_id', $chatRoom->id)->delete();
-            } else {
-                // 購入者が評価したら 'rated' に変更
-                if ($chatRoom->buyer_id === $user->id) {
-                    $chatRoom->update(['transaction_status' => 'rated']);
-                }
             }
 
             DB::commit();
 
-            return response()->json(['success' => true, 'message' => '評価を送信しました']);
+            return redirect()->route('item')->with('message', '評価を送信しました');
         } catch (\Exception $e) {
             DB::rollBack();
-            return response()->json(['success' => false, 'message' => 'エラーが発生しました', 'error' => $e->getMessage()], 500);
+            return redirect()->route('item')->with('error', 'エラーが発生しました: ' . $e->getMessage());
         }
+    }
+
+    /**
+     * 取引完了時の通知を送信する
+     */
+    private function sendTransactionCompletedNotifications($chatRoom)
+    {
+        // Notification::create([
+        //     'user_id' => $chatRoom->buyer_id,
+        //     'item_id' => $chatRoom->item_id,
+        //     'chat_id' => $chatRoom->id,
+        //     'type' => 'done',
+        //     'notification_status' => 'unread',
+        // ]);
+
+        // Notification::create([
+        //     'user_id' => $chatRoom->seller_id,
+        //     'item_id' => $chatRoom->item_id,
+        //     'chat_id' => $chatRoom->id,
+        //     'type' => 'done',
+        //     'notification_status' => 'unread',
+        // ]);
     }
 }
