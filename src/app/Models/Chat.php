@@ -25,14 +25,8 @@ class Chat extends Model
         return $this->belongsTo(ChatRoom::class);
     }
 
-    public function notifications()
-    {
-        return $this->hasMany(Notification::class);
-    }
-
     public function item()
     {
         return $this->chatRoom->belongsTo(Item::class);
     }
-
 }

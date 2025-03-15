@@ -25,19 +25,19 @@ class ChatRoom extends Model
     const STATUS_COMPLETED = 'completed';
 
     public function isActive()
-{
-    return $this->transaction_status === 'active';
-}
+    {
+        return $this->transaction_status === 'active';
+    }
 
-public function isBuyerRated()
-{
-    return $this->transaction_status === self::STATUS_BUYER_RATED;
-}
+    public function isBuyerRated()
+    {
+        return $this->transaction_status === 'buyer_rated';
+    }
 
-public function isCompleted()
-{
-    return $this->transaction_status === self::STATUS_COMPLETED;
-}
+    public function isCompleted()
+    {
+        return $this->transaction_status === 'completed';
+    }
 
     protected $casts = [
         'seller_id' => 'integer',
@@ -55,14 +55,14 @@ public function isCompleted()
     }
 
     public function isSeller($user)
-{
-    return intval($this->seller_id) === intval($user->id);
-}
+    {
+        return intval($this->seller_id) === intval($user->id);
+    }
 
-public function isBuyer($user)
-{
-    return intval($this->buyer_id) === intval($user->id);
-}
+    public function isBuyer($user)
+    {
+        return intval($this->buyer_id) === intval($user->id);
+    }
 
     public function seller()
     {

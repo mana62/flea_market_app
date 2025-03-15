@@ -49,10 +49,9 @@
         <li>
             <a href="{{ url('/mypage?page=progress') }}" class="{{ $tab === 'progress' ? 'active' : '' }}">
                 取引中の商品
-                {{-- 取引があるアイテムを取得 --}}
                 @if ($activeTransactionCount > 0)
-                <span class="notification-count">{{ $activeTransactionCount }}</span>
-            @endif
+                    <span class="notification-count">{{ $activeTransactionCount }}</span>
+                @endif
             </a>
         </li>
     </ul>
@@ -66,7 +65,7 @@
             <div class="item">
                 <div class="item-image">
                     @if ($tab === 'sell' && $item->is_sold)
-                    <span class="sold-label">SOLD</span>
+                        <span class="sold-label">SOLD</span>
                     @endif
 
                     @if ($tab === 'progress' && $item->chatRoom)
@@ -77,11 +76,14 @@
                     <img src="{{ $item->image ? asset('storage/item_images/' . $item->image) : asset('image/dummy.jpg') }}"
                         alt="{{ $item->name }}">
                     </a>
-                    @if ($tab === 'progress' && isset($unreadMessageCounts[$item->chatRoom->id]) && $unreadMessageCounts[$item->chatRoom->id] > 0)
-                    <span class="notification-count notification-count__small">
-                        {{ $unreadMessageCounts[$item->chatRoom->id] }}
-                    </span>
-                @endif
+                    @if (
+                        $tab === 'progress' &&
+                            isset($unreadMessageCounts[$item->chatRoom->id]) &&
+                            $unreadMessageCounts[$item->chatRoom->id] > 0)
+                        <span class="notification-count notification-count__small">
+                            {{ $unreadMessageCounts[$item->chatRoom->id] }}
+                        </span>
+                    @endif
                 </div>
                 <div class="item-name">{{ $item->name }}</div>
             </div>
