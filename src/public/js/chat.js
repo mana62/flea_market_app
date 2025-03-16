@@ -92,13 +92,6 @@ if (chatRoomIdInput) {
         .catch((error) => console.error("エラー:", error));
 }
 
-const completeButton = document.querySelector(".complete-button");
-if (completeButton) {
-    completeButton.addEventListener("click", function () {
-        console.log("取引完了");
-    });
-}
-
 document.addEventListener("DOMContentLoaded", function () {
     const chatInput = document.getElementById("chat-input");
 

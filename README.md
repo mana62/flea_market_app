@@ -137,7 +137,7 @@ MAIL_FROM_ADDRESS=test@example.com<br>
 MAIL_FROM_NAME="flea_market_app"<br>
 <br>
 
-※ https://stripe.com/jpから下記2つのキーを取得して記載する ※
+※ https://stripe.com/jp から下記2つのキーを取得して記載する ※<br>
 STRIPE_KEY=<br>
 STRIPE_SECRET=<br>
 
@@ -155,7 +155,7 @@ DB_USERNAME=test_user<br>
 DB_PASSWORD=test<br>
 <br>
 
-※ https://stripe.com/jpから下記2つのキーを取得して記載する ※
+※ https://stripe.com/jpから 下記2つのキーを取得して記載する ※<br>
 STRIPE_KEY=<br>
 STRIPE_SECRET=<br>
 <br>
