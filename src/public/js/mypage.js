@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             data.unread_count > 0 ? data.unread_count : "";
                     });
             })
-            .catch((error) => console.error("通知の更新エラー:", error));
+            .catch((error) => console.error("更新エラー:", error));
     }
 
     function readNotice(chatRoomId) {
@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             data.unread_count > 0 ? data.unread_count : "";
                     });
             })
-            .catch((error) => console.error("通知の既読処理エラー:", error));
+            .catch((error) => console.error("既読処理エラー:", error));
     }
 
     const chatRoomIdInput = document.querySelector('input[name="chatRoomId"]');

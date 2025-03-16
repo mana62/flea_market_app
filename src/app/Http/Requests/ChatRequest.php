@@ -25,7 +25,7 @@ class ChatRequest extends FormRequest
     {
         return [
             'content' => ['required', 'string', 'max:400'],
-            'image' => ['nullable', 'file', 'mimes:jpeg,png'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png'],
         ];
     }
 
